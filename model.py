@@ -102,13 +102,16 @@ class Place(db.Model):
 
 class Category(db.Model):
     """Category that days can belong to"""
+
+    __tablename__ = 'categories'
+
     cat_id = db.Column(db.String(16),
                        nullable=False)
 
     def __repr__(self):
         """Helpful representation when printed."""
 
-        return "<Category cat_id=%s" % self.cat_id
+        return "<Category cat_id=%s>" % self.cat_id
 
 
 # Helper functions
