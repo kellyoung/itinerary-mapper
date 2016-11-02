@@ -96,6 +96,10 @@ class Place(db.Model):
     day_id = db.Column(db.Integer,
                        db.ForeignKey('days.day_id'),
                        nullable=False)
+    #  iffy about having trip_id
+    trip_id = db.Column(db.Integer,
+                        db.ForeignKey('trips.trip_id'),
+                        nullable=False)
     cat_id = db.Column(db.String(16),
                        db.ForeignKey('categories.cat_id'),
                        nullable=False)
@@ -103,9 +107,10 @@ class Place(db.Model):
 
     day = db.relationship('Day', backref=db.backref('places',
                                                     order_by=place_id))
-    category = db.relationship('Category',
-                               backref=db.backref('places',
-                                                  order_by=place_id))
+    # iffy about having this relationship
+    trip = db.relationship('Trip',
+                           backref=db.backref('places',
+                                              order_by=place_id))
 
     def __repr__(self):
         """Helpful representation when printed."""
@@ -150,43 +155,43 @@ def example_data():
     pdx_place_one = Place(place_name='Saturday Market',
                           place_loc="Portland Saturday Market, Southwest Naito Parkway, Portland, OR",
                           latitude=45.522630, longitude=-122.670025,
-                          day_id=1, cat_id='explore')
+                          day_id=1, trip_id=1, cat_id='explore')
     pdx_place_two = Place(place_name='Blue Star Donuts',
                           place_loc="Blue Star Donuts, Southwest Washington Street, Portland, OR",
                           latitude=45.520690, longitude=-122.678911,
-                          day_id=1, cat_id='eat')
+                          day_id=1, trip_id=1, cat_id='eat')
     pdx_place_three = Place(place_name='Ace Hotel',
                             place_loc="Ace Hotel Portland, Southwest Stark Street, Portland, OR",
                             latitude=45.521089, longitude=-122.677568,
-                            day_id=1, cat_id='sleep')
+                            day_id=1, trip_id=1, cat_id='sleep')
     pdx_place_four = Place(place_name='Oregon Historical Society',
                            place_loc="Oregon Historical Society, Southwest Park Avenue, Portland, OR",
                            latitude=45.515738, longitude=-122.683275,
-                           day_id=2, cat_id='explore')
+                           day_id=2, trip_id=1, cat_id='explore')
     pdx_place_five = Place(place_name='Pine State Biscuits',
                            place_loc="Pine State Biscuits, Northeast Schuyler Street, Portland, OR",
                            latitude=45.535732, longitude=-122.644831,
-                           day_id=2, cat_id='eat')
+                           day_id=2, trip_id=1, cat_id='eat')
     bcn_place_one = Place(place_name='Kirin Dim Sum',
                           place_loc="Kirin Restaurant, Alberni Street, Vancouver, BC, Canada",
                           latitude=49.288621, longitude=-123.128863,
-                          day_id=3, cat_id='eat')
+                          day_id=3, trip_id=2, cat_id='eat')
     bcn_place_two = Place(place_name='Vancouver Library',
                           place_loc="Vancouver Public Library- Central Branch, West Georgia Street, Vancouver, BC, Canada",
                           latitude=49.285096, longitude=-123.122143,
-                          day_id=3, cat_id='explore')
+                          day_id=3, trip_id=2, cat_id='explore')
     tw_place_one = Place(place_name='Taiwan National Palace Museum',
                          place_loc="National Palace Museum, Section 2, Zhishan Road, Shilin District, Taipei City, Taiwan",
                          latitude=25.102355, longitude=121.548493,
-                         day_id=4, cat_id='explore')
+                         day_id=4, trip_id=3, cat_id='explore')
     tw_place_two = Place(place_name='Kaohsiung Station',
                          place_loc="Kaohsiung Station, Sanmin District, Kaohsiung City, Taiwan",
                          latitude=22.639761, longitude=120.302107,
-                         day_id=5, cat_id='transport')
+                         day_id=5, trip_id=3, cat_id='transport')
     tw_place_three = Place(place_name='Din Tai Fung',
                            place_loc="Din Tai Fung, City Hall Road, Xinyi District, Taipei City, Taiwan",
                            latitude=25.028702, longitude=121.576957,
-                           day_id=6, cat_id='eat')
+                           day_id=6, trip_id=3, cat_id='eat')
 
     db.session.add_all([liz, leslie, portland, vancouver, taiwan,
                         pdx_day_one, pdx_day_two, bcn_day_one, tw_day_one,
