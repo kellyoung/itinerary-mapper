@@ -7,20 +7,21 @@ from flask import (Flask, render_template, redirect, request, flash,
 
 # from flask_debugtoolbar import DebugToolbarExtension
 
-# from model import User, Trip, Day, Place, Category, connect_to_db, db
+from model import User, Trip, Place, Category, connect_to_db, db
 
 app = Flask(__name__)
 
 app.secret_key="PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
 app.jinja_env.undefined = StrictUndefined
+app.jinja_env.auto_reload = True
 
 
 if __name__ == '__main__':
 
     app.debug = True
 
-    # connect_to_db(app)
+    connect_to_db(app)
 
     # DebugToolBarExtension(app)
 
