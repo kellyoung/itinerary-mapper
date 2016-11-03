@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Itinerary Mapper{% endblock %}
+{% block content %}
+
+    {% if not username %}
+        <h4>Create an Account</h4>
+        <form action='/create_user' method='POST'>
+            <label for='name'>Name: </label><br>
+            <input type='text' name='name' required><br>
+            <label for='username'>Username: </label><br>
+            <input type='text' name='username' required><br>
+            <label for='password'>Password: </label><br>
+            <input type='password' name='password' required><br>
+            <input type='submit' value='Create User'>
+        </form>
+        <br>
+        <h4>Login</h4>
+        <form action='/login' method='POST'>
+            <label for='username'>Username: </label><br>
+            <input type='text' name='username' required><br>
+            <label for='password'>Password: </label><br>
+            <input type='password' name='password' required><br>
+            <input type='submit' value='Login'>
+        </form>
+        <br>
+
+    {% else %}
+        <form action='/logout'>
+            <input type='submit' value='Logout'>
+        </form>
+        {% if not user_trip %}
+            <form action='/create_trip' method='POST'>
+                <label for='tripname'>Name your trip: </label><br>
+                <input type='text' name='tripname' required><br>
+                Trip dates:<br>
+                <label for="from">From</label>
+                <input type="text" id="from" name="from">
+                <label for="to">to</label>
+                <input type="text" id="to" name="to"><br>
+                <input type='submit' value='Create Trip'>
+            </form>
+        {% else %}
+            <form action='/create_trip/{{ username }}/{{ user_trip.trip_id }}'>
+            <input type='submit' value='Go to trip'>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <script>
+      $( function() {
+        var dateFormat = "mm/dd/yy",
+          from = $( "#from" )
+            .datepicker({
+              defaultDate: "+1w",
+              changeMonth: true,
+              changeYear: true,
+              numberOfMonths: 1
+            })
+            .on( "change", function() {
+              to.datepicker( "option", "minDate", getDate( this ) );
+            }),
+          to = $( "#to" ).datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1
+            
+          })
+          .on( "change", function() {
+            from.datepicker( "option", "maxDate", getDate( this ) );
+          });
+     
+        function getDate( element ) {
+          var date;
+          try {
+            date = $.datepicker.parseDate( dateFormat, element.value );
+          } catch( error ) {
+            date = null;
+          }
+     
+          return date;
+        }
+      } );
+    </script>
+{% endblock %}
