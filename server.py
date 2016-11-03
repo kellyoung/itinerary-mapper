@@ -99,19 +99,32 @@ def create_user():
     return redirect('/')
 
 
-@app.route('/create_trip', methods=['POST'])
-def create_trip():
-    """
-    Adds trip information to database, then redirects to
-    the trip's editing page.
-    """
-    trip_name = request.form.get('tripname')
-    from_date = request.form.get('from')
-    to_date = request.form.get('to')
+# @app.route('/create_trip', methods=['POST'])
+# def create_trip():
+#     """
+#     Adds trip information to database, then redirects to
+#     the trip's editing page.
+#     """
+#     trip_name = request.form.get('tripname')
+#     from_date = request.form.get('from')
+#     to_date = request.form.get('to')
 
-    print trip_name, from_date, to_date
+#     # list of datetime.date objects
+#     trip_dates = []
 
-    return redirect('/')
+#     # converts string dates to datetime objects then date objects
+#     first_day = datetime.datetime.strp(from_date, FILL IN HERE)
+#     first_day = first_day.date()
+
+#     last_day = datetime.datetime.strp(to_date, FILL IN HERE)
+#     last_day = last_day.date()
+
+#     delta = last_day - first_day
+
+#     for i in range(delta.days + 1):
+#         trip_dates.append(first_day + datetime.timedelta(days=i))
+
+#     return redirect('/')
 
 if __name__ == '__main__':
 
