@@ -9,6 +9,8 @@ from flask import (Flask, render_template, redirect, request, flash,
 
 from model import User, Trip, Place, Category, connect_to_db, db
 
+import datetime
+
 app = Flask(__name__)
 
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
@@ -99,32 +101,64 @@ def create_user():
     return redirect('/')
 
 
-# @app.route('/create_trip', methods=['POST'])
-# def create_trip():
-#     """
-#     Adds trip information to database, then redirects to
-#     the trip's editing page.
-#     """
-#     trip_name = request.form.get('tripname')
-#     from_date = request.form.get('from')
-#     to_date = request.form.get('to')
+@app.route('/create_trip/<username>/<trip_id>')
+def trip_page(username, trip_id):
+    in_session = session.get('username')
 
-#     # list of datetime.date objects
-#     trip_dates = []
+    if in_session:
+        user = User.query.get(username)
+        trip = Trip.query.get(trip_id)
 
-#     # converts string dates to datetime objects then date objects
-#     first_day = datetime.datetime.strp(from_date, FILL IN HERE)
-#     first_day = first_day.date()
+        # list of datetime.date objects
+        trip_dates = []
 
-#     last_day = datetime.datetime.strp(to_date, FILL IN HERE)
-#     last_day = last_day.date()
+        delta = trip.end_date - trip.start_date
 
-#     delta = last_day - first_day
+        for index, i in enumerate(range(delta.days + 1)):
+            trip_dates.append((index+1, trip.start_date + datetime.timedelta(days=i)))
 
-#     for i in range(delta.days + 1):
-#         trip_dates.append(first_day + datetime.timedelta(days=i))
+        return render_template('trip_page.html',
+                               user=user,
+                               trip=trip,
+                               trip_dates=trip_dates)
+    else:
+        flash('You must be logged in to view this page.')
+        return redirect('/')
 
-#     return redirect('/')
+
+@app.route('/create_trip', methods=['POST'])
+def create_trip():
+    """
+    Adds trip information to database, then redirects to
+    the trip's editing page.
+    """
+    username = session.get('username')
+    print username
+    trip_name = request.form.get('tripname')
+    from_date = request.form.get('from')
+    to_date = request.form.get('to')
+
+    # DOESN't SEEM TO BE NECESSARY converts string dates to date objects
+    # first_day = datetime.datetime.strptime(from_date, '%m/%d/%Y').date()
+    # last_day = datetime.datetime.strptime(to_date, '%m/%d/%Y').date()
+
+    #add info to trips table in database
+    new_trip = Trip(trip_name=trip_name, start_date=from_date, end_date=to_date,
+                    username=username)
+
+    db.session.add(new_trip)
+    db.session.commit()
+
+    #get trip_id to pass into url along with username
+    target_trip = Trip.query.filter(Trip.username == username,
+                                    Trip.trip_name == trip_name,
+                                    Trip.start_date == from_date,
+                                    Trip.end_date == to_date).first()
+    print target_trip.trip_name, target_trip.trip_id
+
+    
+
+    return redirect('/create_trip/%s/%s' % (username, target_trip.trip_id))
 
 if __name__ == '__main__':
 
