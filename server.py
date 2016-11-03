@@ -54,7 +54,7 @@ def login():
         flash('Please enter a username and password.')
     elif check_username and check_username.password == password:
         session['username'] = check_username.username
-        flash('Welcome back, %s!' % check_username.name)
+        flash('Welcome, %s!' % check_username.name)
     elif check_username:
         flash('Incorrect Password. Please try again.')
     else:
@@ -105,7 +105,7 @@ def create_user():
 def trip_page(username, trip_id):
     in_session = session.get('username')
 
-    if in_session:
+    if in_session == username:
         user = User.query.get(username)
         trip = Trip.query.get(trip_id)
 
@@ -115,14 +115,16 @@ def trip_page(username, trip_id):
         delta = trip.end_date - trip.start_date
 
         for index, i in enumerate(range(delta.days + 1)):
-            trip_dates.append((index+1, trip.start_date + datetime.timedelta(days=i)))
+            trip_date = trip.start_date + datetime.timedelta(days=i)
+            trip_date_str = trip_date.strftime("%B %d, %Y")
+            trip_dates.append((index+1, trip_date, trip_date_str))
 
         return render_template('trip_page.html',
                                user=user,
                                trip=trip,
                                trip_dates=trip_dates)
     else:
-        flash('You must be logged in to view this page.')
+        flash('You do not have access to this page.')
         return redirect('/')
 
 
@@ -155,8 +157,6 @@ def create_trip():
                                     Trip.start_date == from_date,
                                     Trip.end_date == to_date).first()
     print target_trip.trip_name, target_trip.trip_id
-
-    
 
     return redirect('/create_trip/%s/%s' % (username, target_trip.trip_id))
 

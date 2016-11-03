@@ -1,18 +1,53 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="/static/css/add_trip_map.css">
+{% endblock %}
 {% block content %}
     <h2>{{ trip.trip_name }}</h2>
     <h3>By: {{ user.name }}</h3>
     <br>
-    <ul>
+    <form action='/add_place' method='POST'>
+        <label for='placename'>Place Name: </label><br>
+        <input type='text' name='placename' required><br>
+        <label for='place-search'>Search for Place: </label><br>
+        <input id="place-search" type="text" placeholder="Search Box">
+        <div id="placemap"></div>
+        <label for='tripday'>Day of Visit: </label><br>
+        <select name="tripday">
+            {% for day in trip_dates %}
+                <option value="{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
+            {% endfor %}
+        </select><br>
+        <label for='tripcat'>This is a Place to: </label><br>
+        <select name="tripcat">
+            <option value="eat">Eat</option>
+            <option value="eat">Sleep</option>
+            <option value="eat">Explore</option>
+            <option value="eat">Travel</option>
+        </select><br>
+        <label for='tripnotes'>Notes: </label><br>
+        <div>
+            <textarea name="tripnotes"></textarea>
+        </div>
+        <input type='submit' value='Add Place'>
+    </form>
+    <br><br>
+    <div>
         {% for day in trip_dates %}
-            <li>
-                Day {{ day[0] }}: {{ day[1] }}
-            </li>
+            <div id='day-{{ day[0] }}'>
+                <h4>Day {{ day[0] }}: {{ day[2] }}</h4>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
     <form action='/logout'>
         <input type='submit' value='Logout'>
     </form>
+
+{% endblock %}
+{% block scripts %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqtTnsW7pb8ZCbZ3BY18BqpM-0Jw6xYlg&
+libraries=places&callback=initAutocomplete" async defer></script>
+<script src="/static/js/add_place_map.js"></script>
 {% endblock %}
