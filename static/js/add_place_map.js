@@ -5,7 +5,8 @@
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
+var place;
+var markers = [];
 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('placemap'), {
     center: {lat: -0.0022, lng: -78.4558},
@@ -24,14 +25,14 @@ function initAutocomplete() {
     searchBox.setBounds(map.getBounds());
   });
 
-  var markers = [];
-
+  
+  
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   searchBox.addListener('places_changed', function() {
-    var place = searchBox.getPlaces()[0];
+    place = searchBox.getPlaces()[0];
     console.log(place);
-    if (place.length == 0) {
+    if (place.length === 0) {
       return;
     }
 
@@ -65,4 +66,7 @@ function initAutocomplete() {
     map.fitBounds(bounds);
 
   });
+  console.log(place);
 }
+
+

@@ -7,36 +7,40 @@
     <h2>{{ trip.trip_name }}</h2>
     <h3>By: {{ user.name }}</h3>
     <br>
-    <form action='/add_place' method='POST'>
+    <form id='add-trip-form'>
+        <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'><br>
         <label for='placename'>Place Name: </label><br>
-        <input type='text' name='placename' required><br>
-        <label for='place-search'>Search for Place: </label><br>
-        <input id="place-search" type="text" placeholder="Search Box">
+        <input id="placename" type='text' name='placename' required><br>
+        <label for='placesearch'>Search for Place: </label><br>
+        <input id="place-search" name="placesearch" type="text" placeholder="Search Box" required>
         <div id="placemap"></div>
         <label for='tripday'>Day of Visit: </label><br>
-        <select name="tripday">
+        <select id="tripday" name="tripday" required>
+            <option disabled selected value> -- Select -- </option>
             {% for day in trip_dates %}
-                <option value="{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
+                <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
             {% endfor %}
         </select><br>
         <label for='tripcat'>This is a Place to: </label><br>
-        <select name="tripcat">
+        <select id="tripcat" name="tripcat" required>
+            <option disabled selected value> -- Select -- </option>
             <option value="eat">Eat</option>
-            <option value="eat">Sleep</option>
-            <option value="eat">Explore</option>
-            <option value="eat">Travel</option>
+            <option value="sleep">Sleep</option>
+            <option value="explore">Explore</option>
+            <option value="transport">Voyage</option>
         </select><br>
         <label for='tripnotes'>Notes: </label><br>
         <div>
-            <textarea name="tripnotes"></textarea>
+            <textarea id="tripnotes" name="tripnotes"></textarea>
         </div>
-        <input type='submit' value='Add Place'>
+        <input id="add-place" type='submit' value='Add Place'>
     </form>
     <br><br>
     <div>
         {% for day in trip_dates %}
             <div id='day-{{ day[0] }}'>
                 <h4>Day {{ day[0] }}: {{ day[2] }}</h4>
+                
             </div>
         {% endfor %}
     </div>
@@ -47,7 +51,8 @@
 
 {% endblock %}
 {% block scripts %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqtTnsW7pb8ZCbZ3BY18BqpM-0Jw6xYlg&
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=initAutocomplete" async defer></script>
 <script src="/static/js/add_place_map.js"></script>
+<script src="/static/js/add_new_place.js"></script>
 {% endblock %}
