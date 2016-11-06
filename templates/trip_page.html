@@ -40,7 +40,23 @@
         {% for day in trip_dates %}
             <div id='day-{{ day[0] }}'>
                 <h4>Day {{ day[0] }}: {{ day[2] }}</h4>
-                
+                {% for place in trip_places %}
+                    {% if place.day_num == day[0] %}
+                        <div id='place-div-{{ place.place_id }}' class='place-div'>
+                            <h5>Day:</h5>
+                            <p>Day {{ place.day_num }}: {{ place.date }}</p>
+                            <h5>Category:</h5>
+                            <p>{{ place.cat_id }}</p>
+                            <h5>Place Name:</h5>
+                            <p>{{ place.place_name }}</p>
+                            <h5>Place Address:</h5>
+                            <p>{{ place.place_loc }}</p>
+                            <h5>Notes:</h5>
+                            <p>{{ place.notes }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
             </div>
         {% endfor %}
     </div>

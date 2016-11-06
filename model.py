@@ -164,11 +164,12 @@ def example_data():
                            latitude=25.028702, longitude=121.576957, day_num=3,
                            date=datetime.date(2016, 10, 3), trip_id=3, cat_id='eat')
 
-    db.session.add_all([liz, leslie, portland, vancouver, taiwan,
-                        eat, sleep, explore, transport, pdx_place_one,
-                        pdx_place_two, pdx_place_three,
-                        pdx_place_four, pdx_place_five, bcn_place_one,
-                        bcn_place_two, tw_place_one, tw_place_two, tw_place_three])
+    # db.session.add_all([liz, leslie, portland, vancouver, taiwan,
+    #                     eat, sleep, explore, transport, pdx_place_one,
+    #                     pdx_place_two, pdx_place_three,
+    #                     pdx_place_four, pdx_place_five, bcn_place_one,
+    #                     bcn_place_two, tw_place_one, tw_place_two, tw_place_three])
+    db.session.add_all([eat, sleep, explore, transport])
 
     db.session.commit()
 

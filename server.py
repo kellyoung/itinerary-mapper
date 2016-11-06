@@ -119,11 +119,13 @@ def trip_page(username, trip_id):
             trip_date_str = trip_date.strftime("%B %d, %Y")
             trip_dates.append((index+1, trip_date, trip_date_str))
 
+        trip_places = Place.query.filter(Place.trip_id == trip_id).all()
         # need to pass in all places too to be used in JINJA
         return render_template('trip_page.html',
                                user=user,
                                trip=trip,
-                               trip_dates=trip_dates)
+                               trip_dates=trip_dates,
+                               trip_places=trip_places)
     else:
         flash('You do not have access to this page.')
         return redirect('/')
@@ -181,47 +183,23 @@ def add_place():
     db.session.add(new_place)
     db.session.commit()
 
-    current_trip = Trip.query.get(trip_id)
+    new_place_div = """
+                    <div id='place-div-%s' class='place-div'>
+                    <h5>Day:</h5>
+                    <p>Day %s: %s</p>
+                    <h5>Category:</h5>
+                    <p>%s</p>
+                    <h5>Place Name:</h5>
+                    <p>%s</p>
+                    <h5>Place Address:</h5>
+                    <p>%s</p>
+                    <h5>Notes:</h5>
+                    <p>%s</p>
+                    </div>
+                    """ % (new_place.place_id, day_num, date, cat_id, place_name,
+                           place_loc, notes)
 
-    date_options = ''
-
-    delta = current_trip.end_date - current_trip.start_date
-
-    for index, i in enumerate(range(delta.days + 1)):
-        trip_date = current_trip.start_date + datetime.timedelta(days=i)
-        date_options += "<option value='%s, %s'>Day %s: %s</option>" % (index+1,
-                                                                        trip_date,
-                                                                        index+1,
-                                                                        trip_date)
-
-    new_div = """<form id='place'>
-        <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'><br>
-        <label for='placename'>Place Name: </label><br>
-        <input id="placename" type='text' name='placename' required><br>
-        <label for='placesearch'>Search for Place: </label><br>
-        <input id="place-search" name="placesearch" type="text" placeholder="Search Box" required>
-        <div id="placemap"></div>
-        <label for='tripday'>Day of Visit: </label><br>
-        <select id="tripday" name="tripday" required>
-            <option disabled selected value> -- Select -- </option>
-            %s
-        </select><br>
-        <label for='tripcat'>This is a Place to: </label><br>
-        <select id="tripcat" name="tripcat" required>
-            <option disabled selected value> -- Select -- </option>
-            <option value="eat">Eat</option>
-            <option value="sleep">Sleep</option>
-            <option value="explore">Explore</option>
-            <option value="transport">Voyage</option>
-        </select><br>
-        <label for='tripnotes'>Notes: </label><br>
-        <div>
-            <textarea id="tripnotes" name="tripnotes"></textarea>
-        </div>
-        <input id="add-place" type='submit' value='Add Place'>
-    </form>""" % date_options
-
-    return jsonify({'place_id': new_place.place_id, 'new_div': new_div})
+    return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div})
 
 
 if __name__ == '__main__':
