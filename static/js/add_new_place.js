@@ -1,19 +1,19 @@
 //need place from add_place_map.js
 
 //add a place
-var params;
+var add_place_params;
 function addPlace(evt) {
     evt.preventDefault();
 
     
     var day_info = $('#tripday').val().split(',');
 
-    params = {
+    add_place_params = {
         'trip_id': $('#trip_id').val(),
         'placename': $('#placename').val(),
-        'placesearch': place.formatted_address,
-        'latitude': place.geometry.location.lat(),
-        'longitude': place.geometry.location.lng(),
+        'placesearch': addPlace.formatted_address,
+        'latitude': addPlace.geometry.location.lat(),
+        'longitude': addPlace.geometry.location.lng(),
         'visitday': day_info[1],
         'daynum': day_info[0],
         'category': $('#tripcat').val(),
@@ -25,11 +25,9 @@ function addPlace(evt) {
     });
 
 
-    var dayDiv = '#day-'+params.daynum;
+    var dayDiv = '#day-'+add_place_params.daynum;
     var place_id;
-    $.post('/add_place.json', params, function(results){
-        console.log(results.place_id);
-        console.log(results.new_place_div);
+    $.post('/add_place.json', add_place_params, function(results){
         $(dayDiv).append(results.new_place_div);
     });
 }

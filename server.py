@@ -109,7 +109,6 @@ def trip_page(username, trip_id):
         user = User.query.get(username)
         trip = Trip.query.get(trip_id)
 
-        # list of datetime.date objects
         trip_dates = []
 
         delta = trip.end_date - trip.start_date
@@ -195,12 +194,28 @@ def add_place():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
+                    <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
+                      Edit Place
+                    </button>
                     </div>
                     """ % (new_place.place_id, day_num, date, cat_id, place_name,
                            place_loc, notes)
 
     return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div})
 
+
+@app.route('/edit_place_info.json')
+def get_place_info():
+    place_id = request.args.get('place_id')
+    select_place = Place.query.get(place_id)
+    formatted_date = select_place.date.strftime("%Y-%m-%d")
+
+    return jsonify({'place_id': place_id, 'place_name': select_place.place_name,
+                    'place_loc': select_place.place_loc, 'latitude': select_place.latitude,
+                    'longitude': select_place.longitude, 'day_num': select_place.day_num,
+                    'date': select_place.date, 'trip_id': select_place.trip_id,
+                    'cat_id': select_place.cat_id, 'notes': select_place.notes,
+                    'formatted_date': formatted_date})
 
 if __name__ == '__main__':
 

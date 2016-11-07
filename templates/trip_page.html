@@ -36,6 +36,54 @@
         <input id="add-place" type='submit' value='Add Place'>
     </form>
     <br><br>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div id='modal-form' class="modal-body">
+            <form id='edit-place-form'>
+                <input type='hidden' id='edit-place_id' name='edit-place_id'><br>
+                <input type='hidden' id='edit-trip_id' name='edit-trip_id' value='{{ trip.trip_id}}'><br>
+                <label for='edit-placename'>Place Name: </label><br>
+                <input id="edit-placename" type='text' name='edit-placename' required><br>
+                <label for='edit-placesearch'>Search for Place: </label><br>
+                <input id="edit-place-search" name="edit-placesearch" type="text" placeholder="Search Box" required>
+                <div id="edit-placemap"></div>
+                <label for='edit-tripday'>Day of Visit: </label><br>
+                <select id="edit-tripday" name="edit-tripday" required>
+                    <option disabled selected value> -- Select -- </option>
+                    {% for day in trip_dates %}
+                        <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
+                    {% endfor %}
+                </select><br>
+                <label for='edit-tripcat'>This is a Place to: </label><br>
+                <select id="edit-tripcat" name="edit-tripcat" required>
+                    <option disabled selected value> -- Select -- </option>
+                    <option value="eat">Eat</option>
+                    <option value="sleep">Sleep</option>
+                    <option value="explore">Explore</option>
+                    <option value="transport">Voyage</option>
+                </select><br>
+                <label for='edit-tripnotes'>Notes: </label><br>
+                <div>
+                    <textarea id="edit-tripnotes" name="edit-tripnotes"></textarea>
+                </div>
+                <input id="edit-place" type='submit' value='Edit Place'>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div>
         {% for day in trip_dates %}
             <div id='day-{{ day[0] }}'>
@@ -53,6 +101,10 @@
                             <p>{{ place.place_loc }}</p>
                             <h5>Notes:</h5>
                             <p>{{ place.notes }}</p>
+                            <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
+                              Edit Place
+                            </button>
+
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -71,4 +123,5 @@
 libraries=places&callback=initAutocomplete" async defer></script>
 <script src="/static/js/add_place_map.js"></script>
 <script src="/static/js/add_new_place.js"></script>
+<script src="/static/js/edit_place_form.js"></script>
 {% endblock %}

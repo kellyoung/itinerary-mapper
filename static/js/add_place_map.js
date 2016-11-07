@@ -5,8 +5,8 @@
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-var place;
-var markers = [];
+var addPlace;
+var addMarkers = [];
 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('placemap'), {
     center: {lat: -0.0022, lng: -78.4558},
@@ -30,14 +30,14 @@ function initAutocomplete() {
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   searchBox.addListener('places_changed', function() {
-    place = searchBox.getPlaces()[0];
-    console.log(place);
-    if (place.length === 0) {
+    addPlace = searchBox.getPlaces()[0];
+    console.log(addPlace);
+    if (addPlace.length === 0) {
       return;
     }
 
     // Clear out the old markers.
-    markers.forEach(function(marker) {
+    addMarkers.forEach(function(marker) {
       marker.setMap(null);
     });
 
@@ -53,20 +53,22 @@ function initAutocomplete() {
     new google.maps.Marker({
       map: map,
       icon: icon,
-      title: place.name,
-      position: place.geometry.location
+      title: addPlace.name,
+      position: addPlace.geometry.location
     });
 
-    if (place.geometry.viewport) {
+    if (addPlace.geometry.viewport) {
         // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
+        bounds.union(addPlace.geometry.viewport);
     } else {
-        bounds.extend(place.geometry.location);
+        bounds.extend(addPlace.geometry.location);
     }
     map.fitBounds(bounds);
 
   });
-  console.log(place);
+  console.log(addPlace);
 }
+
+
 
 
