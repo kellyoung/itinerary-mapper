@@ -194,14 +194,16 @@ def add_place():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
-                    <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
+                    <button type="button" id="newly-added" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                       Edit Place
                     </button>
+                    <div>Map Div</div>
                     </div>
                     """ % (new_place.place_id, day_num, date, cat_id, place_name,
                            place_loc, notes)
 
     return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div})
+
 
 
 @app.route('/edit_place_info.json')

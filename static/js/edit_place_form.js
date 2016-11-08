@@ -2,7 +2,6 @@
 function displayForm(){
     var parentDiv = $(this).parent();
     var divPlaceID = parentDiv.attr('id').split('-')[2];
-    console.log(divPlaceID);
     
     editFormParams = {
         'place_id': divPlaceID
@@ -24,4 +23,5 @@ function displayForm(){
 }
 
 
- $('.edit-btn').on('click', displayForm);
+ $(document).on('click', '.edit-btn', displayForm);
+

@@ -4,7 +4,10 @@
   height: 250px;
   width: 400px;
 }
-
+#edit-placemap {
+  height: 250px;
+  width: 400px;
+}
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
@@ -26,14 +29,14 @@
   width: 300px;
 }
 
-#pac-input:focus {
+#place-search-input:focus {
   border-color: #4d90fe;
 }
 
-.pac-container {
+/*.pac-container {
   font-family: Roboto;
 }
-
+*/
 #type-selector {
   color: #fff;
   background-color: #4d90fe;

@@ -29,6 +29,7 @@ function addPlace(evt) {
     var place_id;
     $.post('/add_place.json', add_place_params, function(results){
         $(dayDiv).append(results.new_place_div);
+        
     });
 }
 

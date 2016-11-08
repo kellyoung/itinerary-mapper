@@ -6,8 +6,9 @@
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 var addPlace;
-var addMarkers = [];
+var editPlace;
 function initAutocomplete() {
+  //first map for add place
   var map = new google.maps.Map(document.getElementById('placemap'), {
     center: {lat: -0.0022, lng: -78.4558},
     zoom: 1,
@@ -15,6 +16,7 @@ function initAutocomplete() {
     
     streetViewControl: false
   });
+
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('place-search');
@@ -26,7 +28,7 @@ function initAutocomplete() {
   });
 
   
-  
+  var addMarkers = [];
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   searchBox.addListener('places_changed', function() {
@@ -36,10 +38,13 @@ function initAutocomplete() {
       return;
     }
 
+    
     // Clear out the old markers.
     addMarkers.forEach(function(marker) {
       marker.setMap(null);
     });
+    
+    addMarkers = [];
 
     var bounds = new google.maps.LatLngBounds();
     var icon = {
@@ -50,12 +55,12 @@ function initAutocomplete() {
       scaledSize: new google.maps.Size(25, 25)
     };
 
-    new google.maps.Marker({
+    addMarkers.push(new google.maps.Marker({
       map: map,
       icon: icon,
       title: addPlace.name,
       position: addPlace.geometry.location
-    });
+    }));
 
     if (addPlace.geometry.viewport) {
         // Only geocodes have viewport.
@@ -65,8 +70,18 @@ function initAutocomplete() {
     }
     map.fitBounds(bounds);
 
+    //second map for edit place
+    
   });
+  
   console.log(addPlace);
+  var editMap = new google.maps.Map(document.getElementById('edit-placemap'), {
+      center: {lat: -0.0022, lng: -78.4558},
+      zoom: 5
+      // mapTypeControl: false,
+    
+    // streetViewControl: false
+  });
 }
 
 
