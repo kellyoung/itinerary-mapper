@@ -7,9 +7,12 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 var addPlace;
 var editPlace;
+var editMap;
+var map;
+
 function initAutocomplete() {
   //first map for add place
-  var map = new google.maps.Map(document.getElementById('placemap'), {
+  map = new google.maps.Map(document.getElementById('placemap'), {
     center: {lat: -0.0022, lng: -78.4558},
     zoom: 1,
     mapTypeControl: false,
@@ -21,6 +24,7 @@ function initAutocomplete() {
   // Create the search box and link it to the UI element.
   var input = document.getElementById('place-search');
   var searchBox = new google.maps.places.SearchBox(input);
+
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function() {
@@ -38,7 +42,7 @@ function initAutocomplete() {
       return;
     }
 
-    
+  
     // Clear out the old markers.
     addMarkers.forEach(function(marker) {
       marker.setMap(null);
@@ -69,21 +73,64 @@ function initAutocomplete() {
         bounds.extend(addPlace.geometry.location);
     }
     map.fitBounds(bounds);
-
-    //second map for edit place
-    
   });
-  
-  console.log(addPlace);
-  var editMap = new google.maps.Map(document.getElementById('edit-placemap'), {
-      center: {lat: -0.0022, lng: -78.4558},
-      zoom: 5
-      // mapTypeControl: false,
     
-    // streetViewControl: false
+  console.log(addPlace);
+
+  //second map for edit place
+  editMap = new google.maps.Map(document.getElementById('edit-placemap'), {
+    center: {lat: -0.0022, lng: -78.4558},
+    zoom: 1,
+    mapTypeControl: false,
+    
+    streetViewControl: false
+  });
+
+  var editInput = document.getElementById('edit-place-search');
+  var editSearchBox = new google.maps.places.SearchBox(editInput);
+
+  var editMarkers = [];
+
+  editMap.addListener('bounds_changed', function() {
+    editSearchBox.setBounds(map.getBounds());
+  });
+
+  editSearchBox.addListener('places_changed', function() {
+    editPlace = editSearchBox.getPlaces()[0];
+    console.log(editPlace);
+    if (editPlace.length === 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    editMarkers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    
+    editMarkers = [];
+
+    var bounds = new google.maps.LatLngBounds();
+    var icon = {
+      url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(25, 25)
+    };
+
+    editMarkers.push(new google.maps.Marker({
+      map: editMap,
+      icon: icon,
+      title: editPlace.name,
+      position: editPlace.geometry.location
+    }));
+
+    if (editPlace.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(editPlace.geometry.viewport);
+    } else {
+        bounds.extend(editPlace.geometry.location);
+    }
+    editMap.fitBounds(bounds);
   });
 }
-
-
-
-

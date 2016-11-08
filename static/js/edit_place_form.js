@@ -1,4 +1,8 @@
- var editFormParams;
+ $("#editModal").on("shown.bs.modal", function () {
+    google.maps.event.trigger(editMap, "resize");
+});
+
+var editFormParams;
 function displayForm(){
     var parentDiv = $(this).parent();
     var divPlaceID = parentDiv.attr('id').split('-')[2];

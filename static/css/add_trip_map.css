@@ -27,6 +27,7 @@
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 300px;
+  z-index: 20;
 }
 
 #place-search-input:focus {
@@ -51,4 +52,11 @@
 #target {
   width: 345px;
 }
+
+.modal{
+    z-index: 20;   
+}
+.modal-backdrop{
+    z-index: 10;        
+}​
 

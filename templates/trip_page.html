@@ -116,8 +116,7 @@
     <form action='/logout'>
         <input type='submit' value='Logout'>
     </form>
-
-{% endblock %}
+    {% endblock %}
 {% block scripts %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=initAutocomplete" async defer></script>
@@ -125,3 +124,5 @@ libraries=places&callback=initAutocomplete" async defer></script>
 <script src="/static/js/add_new_place.js"></script>
 <script src="/static/js/edit_place_form.js"></script>
 {% endblock %}
+
+
