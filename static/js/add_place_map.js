@@ -1,10 +1,4 @@
 
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search 
-// will return the first place it finds.
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 var addPlace;
 var editPlace;
 var editMap;
@@ -77,60 +71,11 @@ function initAutocomplete() {
     
   console.log(addPlace);
 
-  //second map for edit place
-  editMap = new google.maps.Map(document.getElementById('edit-placemap'), {
-    center: {lat: -0.0022, lng: -78.4558},
-    zoom: 1,
-    mapTypeControl: false,
-    
-    streetViewControl: false
-  });
+  //addPlaceToDB in add_new_place.js
+  $('#add-trip-form').on('submit', addPlaceToDB);
+  
+  //open edit form modal, displayForm in edit_form.js
+  $(document).on('click', '.edit-btn', displayForm);
 
-  var editInput = document.getElementById('edit-place-search');
-  var editSearchBox = new google.maps.places.SearchBox(editInput);
-
-  var editMarkers = [];
-
-  editMap.addListener('bounds_changed', function() {
-    editSearchBox.setBounds(map.getBounds());
-  });
-
-  editSearchBox.addListener('places_changed', function() {
-    editPlace = editSearchBox.getPlaces()[0];
-    console.log(editPlace);
-    if (editPlace.length === 0) {
-      return;
-    }
-
-    // Clear out the old markers.
-    editMarkers.forEach(function(marker) {
-      marker.setMap(null);
-    });
-    
-    editMarkers = [];
-
-    var bounds = new google.maps.LatLngBounds();
-    var icon = {
-      url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(25, 25)
-    };
-
-    editMarkers.push(new google.maps.Marker({
-      map: editMap,
-      icon: icon,
-      title: editPlace.name,
-      position: editPlace.geometry.location
-    }));
-
-    if (editPlace.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(editPlace.geometry.viewport);
-    } else {
-        bounds.extend(editPlace.geometry.location);
-    }
-    editMap.fitBounds(bounds);
-  });
+  
 }
