@@ -76,6 +76,7 @@ function initAutocomplete() {
   
   //open edit form modal, displayForm in edit_form.js
   $(document).on('click', '.edit-btn', displayForm);
+
   //delete place that is clicked, sendDeleteInfo from edit_form.js
   $('#delete-place-btn').on('click', sendDeleteInfo);
   
