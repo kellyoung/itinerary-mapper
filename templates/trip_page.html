@@ -73,19 +73,23 @@
                 <div>
                     <textarea id="edit-tripnotes" name="edit-tripnotes"></textarea>
                 </div>
-                <input id="edit-place" type='submit' value='Edit Place'>
             </form>
+            
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-danger" id='delete-place-btn' value="Delete Place">
+                Delete Place
+            </button>
+            <button type="submit" class="btn btn-primary" form="edit-place-form" value="Edit Place" id='edit-place-btn'>
+                Edit Place
+            </button>
           </div>
+          
         </div>
       </div>
     </div>
 
     <div>
-        <div id='testmap'></div>
         {% for day in trip_dates %}
             <div id='day-{{ day[0] }}'>
                 <h4>Day {{ day[0] }}: {{ day[2] }}</h4>

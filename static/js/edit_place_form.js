@@ -4,6 +4,7 @@
     editMap.setCenter(currentCenter);
 });
 
+
 var editFormParams;
 function displayForm(){
     var parentDiv = $(this).parent();
@@ -98,6 +99,50 @@ function displayForm(){
     
 }
 
+//send info to server to delete place and refresh page
+function sendDeleteInfo(){
+    var delete_place_id = $("#edit-place_id").val();
+    var deletePlaceParams = {
+        place_id: delete_place_id
+    };
 
- // $(document).on('click', '.edit-btn', displayForm);
+    $.post('/delete_place.json', deletePlaceParams, function(results){
+        console.log(results.status);
+        location.reload();
+    });
+}
+
+//send info to server to update place and refresh page
+function sendEditInfo(evt){
+    evt.preventDefault();
+    var place_id = $('#edit-place_id').val();
+    var place_name = $('#edit-placename').val();
+    var place_search = $('#edit-place-search').val();
+    var visit_day = $('#edit-tripday').val();
+    var category = $('#edit-tripcat').val();
+    var notes = $('#edit-tripnotes').val();
+
+    var editPlaceParams = {
+        place_id: place_id,
+        place_name: place_name,
+        place_search: place_search,
+        visit_day: visit_day,
+        category: category,
+        notes: notes
+    };
+
+    //check to see if there was a new place (editPlace), if there is pass in lat and long
+    if (editPlace) {
+        editPlaceParams.latitude = editPlace.geometry.location.lat();
+        editPlaceParams.longitude = editPlace.geometry.location.lng();
+    }
+    editPlace = '';
+    console.log(editPlaceParams);
+    $.post('/edit_place.json', editPlaceParams, function(results){
+        console.log(results.status);
+        location.reload();
+    });
+}
+
+$('#edit-place-btn').on('click', sendEditInfo);
 

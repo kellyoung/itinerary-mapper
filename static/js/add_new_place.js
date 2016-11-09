@@ -33,4 +33,3 @@ function addPlaceToDB(evt) {
     });
 }
 
-// $('#add-trip-form').on('submit', addPlace);

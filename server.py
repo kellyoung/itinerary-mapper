@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import (Flask, render_template, redirect, request, flash,
-                   session, jsonify)
+                   session, jsonify, url_for)
 
 # from flask_debugtoolbar import DebugToolbarExtension
 
@@ -205,9 +205,12 @@ def add_place():
     return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div})
 
 
-
 @app.route('/edit_place_info.json')
 def get_place_info():
+    """
+    Passes back info to Edit place Form
+    """
+
     place_id = request.args.get('place_id')
     select_place = Place.query.get(place_id)
     formatted_date = select_place.date.strftime("%Y-%m-%d")
@@ -218,6 +221,64 @@ def get_place_info():
                     'date': select_place.date, 'trip_id': select_place.trip_id,
                     'cat_id': select_place.cat_id, 'notes': select_place.notes,
                     'formatted_date': formatted_date})
+
+
+@app.route('/delete_place.json', methods=['POST'])
+def delete_place():
+    """
+    Deletes a place by trip_id submitted and rerenders the create trip page.
+    """
+
+    place_id = request.form.get('place_id')
+
+    place_to_delete = Place.query.get(int(place_id))
+
+    db.session.delete(place_to_delete)
+    db.session.commit()
+    #  destination = url_for('.create_trip', username=username, trip_id=trip_id)
+
+    return jsonify({'status': 'Deleted'})
+
+
+@app.route('/edit_place.json', methods=['POST'])
+def edit_place():
+    place_id = request.form.get('place_id')
+    place_name = request.form.get('place_name')
+    place_search = request.form.get('place_search')
+    visit_day = request.form.get('visit_day')
+    day_num, date = visit_day.split(',')
+    category = request.form.get('category')
+    notes = request.form.get('notes')
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
+
+    place_to_edit = Place.query.get(int(place_id))
+
+    if place_name != place_to_edit.place_name:
+        place_to_edit.place_name = place_name
+
+    if place_search != place_to_edit.place_loc:
+        place_to_edit.place_loc = place_search
+
+    if int(day_num) != place_to_edit.day_num:
+        place_to_edit.day_num = int(day_num)
+
+    if date != place_to_edit.date.strftime("%Y-%m-%d"):
+        place_to_edit.date = date
+
+    if category != place_to_edit.cat_id:
+        place_to_edit.cat_id = category
+
+    if notes != place_to_edit.notes:
+        place_to_edit.notes = notes
+
+    if latitude and longitude:
+        place_to_edit.latitude = latitude
+        place_to_edit.longitude = longitude
+
+    db.session.commit()
+
+    return jsonify({'status': 'Edited'})
 
 if __name__ == '__main__':
 
