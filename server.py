@@ -280,6 +280,17 @@ def edit_place():
 
     return jsonify({'status': 'Edited'})
 
+
+@app.route('/<username>/<trip_id>/mapview')
+def display_map(username, trip_id):
+    user = User.query.get(username)
+    trip = Trip.query.get(trip_id)
+
+    return render_template('map_view.html',
+                           user=user,
+                           trip=trip)
+
+
 if __name__ == '__main__':
 
     app.debug = True

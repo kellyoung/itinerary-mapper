@@ -38,6 +38,7 @@ class Trip(db.Model):
     username = db.Column(db.String(64),
                          db.ForeignKey('users.username'),
                          nullable=False)
+    published = db.Column(db.Boolean, nullable=False, default=False)
 
     user = db.relationship('User',
                            backref=db.backref('trips',

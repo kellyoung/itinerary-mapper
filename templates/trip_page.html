@@ -118,9 +118,11 @@
         {% endfor %}
     </div>
 
-    <form action='/logout'>
+    <form action='/logout' class='btn'>
         <input type='submit' value='Logout'>
     </form>
+
+    <a class="btn btn-large btn-info" href='/{{user.username}}/{{ trip.trip_id}}/mapview'>Go to Map</a>
     {% endblock %}
 {% block scripts %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
