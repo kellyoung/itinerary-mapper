@@ -283,13 +283,40 @@ def edit_place():
 
 @app.route('/<username>/<trip_id>/mapview')
 def display_map(username, trip_id):
+    """
+    Show a page of the trip as a map view. Has logic in
+    render template to render differently based on whether
+    if user is logged in, trip is published, and if trip is
+    private.
+    """
     user = User.query.get(username)
     trip = Trip.query.get(trip_id)
+    username = session.get('username')
 
-    return render_template('map_view.html',
-                           user=user,
-                           trip=trip)
+    if username or trip.published:
+        return render_template('map_view.html',
+                               user=user,
+                               trip=trip,
+                               username=username)
+    else:
+        flash('Sorry! You don\'t have access to this page.')
+        return redirect('/')
 
+
+@app.route('/publish_trip.json', methods=['POST'])
+def publish_trip():
+    trip_id = request.form.get('trip_id')
+    target_trip = Trip.query.get(int(trip_id))
+
+    if target_trip.published:
+        target_trip.published = False
+    else:
+        target_trip.published = True
+
+    print target_trip.published
+    db.session.commit()
+
+    return jsonify({'status': target_trip.published})
 
 if __name__ == '__main__':
 

@@ -79,5 +79,9 @@ function initAutocomplete() {
 
   //delete place that is clicked, sendDeleteInfo from edit_form.js
   $('#delete-place-btn').on('click', sendDeleteInfo);
+
+  $('#edit-place-btn').on('click', sendEditInfo);
+
+  $('#publish-btn').on('click', publishTrip);
   
 }

@@ -109,7 +109,6 @@
                             <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                               Edit Place
                             </button>
-                            <div>Map Div</div>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -118,10 +117,14 @@
         {% endfor %}
     </div>
 
-    <form action='/logout' class='btn'>
-        <input type='submit' value='Logout'>
+    <form id='publish-form'>
+        <input type='hidden' value='{{ trip.trip_id}}' name='publish_trip_id' id='publish_trip_id'>
     </form>
+    <button type="submit" class="btn btn-primary" form="publish-form" id='publish-btn'>
+            Make Trip Public
+    </button>
 
+    <a class="btn btn-primary" href='/logout'>Logout</a>
     <a class="btn btn-large btn-info" href='/{{user.username}}/{{ trip.trip_id}}/mapview'>Go to Map</a>
     {% endblock %}
 {% block scripts %}
@@ -130,6 +133,7 @@ libraries=places&callback=initAutocomplete" async defer></script>
 <script src="/static/js/add_place_map.js"></script>
 <script src="/static/js/add_new_place.js"></script>
 <script src="/static/js/edit_place_form.js"></script>
+<script src="/static/js/trip_page.js"></script>
 {% endblock %}
 
 
