@@ -38,7 +38,8 @@ function createAllPlacesMap(results){
             title: results[place].title,
             position: latLng,
             content: content,
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ dayNum + '|' + markerColor + '|000000'
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
+                  dayNum + '|' + markerColor + '|000000'
         });
 
         var infowindow = new google.maps.InfoWindow();
