@@ -61,7 +61,7 @@ function displayForm(){
           
 
           editMap.addListener('bounds_changed', function() {
-            editSearchBox.setBounds(map.getBounds());
+            editSearchBox.setBounds(editMap.getBounds());
           });
 
           editSearchBox.addListener('places_changed', function() {
@@ -144,5 +144,4 @@ function sendEditInfo(evt){
     });
 }
 
-$('#edit-place-btn').on('click', sendEditInfo);
 

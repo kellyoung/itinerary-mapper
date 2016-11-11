@@ -124,12 +124,13 @@
             Make Trip Public
     </button>
 
+
     <a class="btn btn-primary" href='/logout'>Logout</a>
     <a class="btn btn-large btn-info" href='/{{user.username}}/{{ trip.trip_id}}/mapview'>Go to Map</a>
     {% endblock %}
 {% block scripts %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
-libraries=places&callback=initAutocomplete" async defer></script>
+libraries=places&callback=tripPageMaps" async defer></script>
 <script src="/static/js/add_place_map.js"></script>
 <script src="/static/js/add_new_place.js"></script>
 <script src="/static/js/edit_place_form.js"></script>

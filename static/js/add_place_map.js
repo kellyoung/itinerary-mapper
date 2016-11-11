@@ -2,11 +2,11 @@
 var addPlace;
 var editPlace;
 var editMap;
-var map;
+var addMap;
 
-function initAutocomplete() {
+function tripPageMaps() {
   //first map for add place
-  map = new google.maps.Map(document.getElementById('placemap'), {
+  addMap = new google.maps.Map(document.getElementById('placemap'), {
     center: {lat: -0.0022, lng: -78.4558},
     zoom: 1,
     mapTypeControl: false,
@@ -21,8 +21,8 @@ function initAutocomplete() {
 
 
   // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function() {
-    searchBox.setBounds(map.getBounds());
+  addMap.addListener('bounds_changed', function() {
+    searchBox.setBounds(addMap.getBounds());
   });
 
   
@@ -45,17 +45,9 @@ function initAutocomplete() {
     addMarkers = [];
 
     var bounds = new google.maps.LatLngBounds();
-    var icon = {
-      url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
-      size: new google.maps.Size(71, 71),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(25, 25)
-    };
 
     addMarkers.push(new google.maps.Marker({
-      map: map,
-      icon: icon,
+      map: addMap,
       title: addPlace.name,
       position: addPlace.geometry.location
     }));
@@ -66,7 +58,7 @@ function initAutocomplete() {
     } else {
         bounds.extend(addPlace.geometry.location);
     }
-    map.fitBounds(bounds);
+    addMap.fitBounds(bounds);
   });
     
   console.log(addPlace);
@@ -83,5 +75,6 @@ function initAutocomplete() {
   $('#edit-place-btn').on('click', sendEditInfo);
 
   $('#publish-btn').on('click', publishTrip);
+
   
 }

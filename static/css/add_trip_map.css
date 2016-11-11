@@ -8,6 +8,11 @@
   height: 250px;
   width: 400px;
 }
+
+#final-map {
+  height: 500px;
+  width: 100%;
+}
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;

@@ -197,7 +197,6 @@ def add_place():
                     <button type="button" id="newly-added" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                       Edit Place
                     </button>
-                    <div>Map Div</div>
                     </div>
                     """ % (new_place.place_id, day_num, date, cat_id, place_name,
                            place_loc, notes)
@@ -317,6 +316,47 @@ def publish_trip():
     db.session.commit()
 
     return jsonify({'status': target_trip.published})
+
+
+@app.route('/places_to_map.json')
+def return_all_places():
+    """passes back info of all places in trip as json"""
+    # get trip by id and find all its places
+    trip_id = request.args.get('trip_id')
+    places = Trip.query.get(int(trip_id)).places
+
+    # the info to be passed back to front end
+    all_places = {}
+
+    # get info for each place and add it to the all_places dictionary
+    for place in places:
+        title = place.place_name
+        day_num = place.day_num
+        category = place.cat_id
+        latitude = place.latitude
+        longitude = place.longitude
+        content = """
+                    <div id='place-div-%s' class='place-div'>
+                    <h5>Day:</h5>
+                    <p>Day %s: %s</p>
+                    <h5>Category:</h5>
+                    <p>%s</p>
+                    <h5>Place Name:</h5>
+                    <p>%s</p>
+                    <h5>Place Address:</h5>
+                    <p>%s</p>
+                    <h5>Notes:</h5>
+                    <p>%s</p>
+                    </div>
+                    """ % (place.place_id, day_num, place.date, category, title,
+                           place.place_loc, place.notes)
+        place_info = {'title': title, 'day_num': day_num, 'category': category,
+                      'latitude': latitude, 'longitude': longitude, 'content': content}
+        all_places[place.place_id] = place_info
+
+    # jsonify it to be processed in front end
+    return jsonify(all_places)
+
 
 if __name__ == '__main__':
 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ trip.trip_name }}{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="/static/css/add_trip_map.css">
+{% endblock %}
+
+{% block content %}
+    <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
+    {% if username %}
+        <a class="btn btn-primary" href='/logout'>Logout</a>
+        <a class="btn btn-large btn-info" href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>Go back to Trip Creation</a>
+    {% endif %}
+    <div id='final-map'></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
+libraries=places&callback=createAllPlacesMap" async defer></script>
+<!-- <script src="/static/js/add_place_map.js"></script> -->
+<script src="/static/js/map_view.js"></script>
+{% endblock %}
