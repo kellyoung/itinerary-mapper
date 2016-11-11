@@ -21,7 +21,7 @@ function createAllPlacesMap(results){
             title: results[place].title,
             position: latLng,
             content: content,
-            label: String(results[place].day_num),
+            label: String(results[place].day_num)
         });
 
         var infowindow = new google.maps.InfoWindow();
