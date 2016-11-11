@@ -217,7 +217,7 @@ def get_place_info():
     return jsonify({'place_id': place_id, 'place_name': select_place.place_name,
                     'place_loc': select_place.place_loc, 'latitude': select_place.latitude,
                     'longitude': select_place.longitude, 'day_num': select_place.day_num,
-                    'date': select_place.date, 'trip_id': select_place.trip_id,
+                    'trip_id': select_place.trip_id,
                     'cat_id': select_place.cat_id, 'notes': select_place.notes,
                     'formatted_date': formatted_date})
 
