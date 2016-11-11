@@ -5,6 +5,26 @@ var editMap;
 var addMap;
 
 function tripPageMaps() {
+  //adds a Google map and places search bar to the add place form
+  addPlaceFormMap();
+
+  //addPlaceToDB in add_new_place.js
+  $('#add-trip-form').on('submit', addPlaceToDB);
+  
+  //open edit form modal, displayForm in edit_form.js
+  $(document).on('click', '.edit-btn', displayForm);
+
+  //delete place that is clicked, sendDeleteInfo from edit_form.js
+  $('#delete-place-btn').on('click', sendDeleteInfo);
+
+  $('#edit-place-btn').on('click', sendEditInfo);
+
+  $('#publish-btn').on('click', publishTrip);
+
+  
+}
+
+function addPlaceFormMap(){
   //first map for add place
   addMap = new google.maps.Map(document.getElementById('placemap'), {
     center: {lat: -0.0022, lng: -78.4558},
@@ -62,19 +82,4 @@ function tripPageMaps() {
   });
     
   console.log(addPlace);
-
-  //addPlaceToDB in add_new_place.js
-  $('#add-trip-form').on('submit', addPlaceToDB);
-  
-  //open edit form modal, displayForm in edit_form.js
-  $(document).on('click', '.edit-btn', displayForm);
-
-  //delete place that is clicked, sendDeleteInfo from edit_form.js
-  $('#delete-place-btn').on('click', sendDeleteInfo);
-
-  $('#edit-place-btn').on('click', sendEditInfo);
-
-  $('#publish-btn').on('click', publishTrip);
-
-  
 }
