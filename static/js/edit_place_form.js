@@ -102,6 +102,7 @@ function displayForm(){
 //send info to server to delete place and refresh page
 function sendDeleteInfo(){
     var delete_place_id = $("#edit-place_id").val();
+    console.log(delete_place_id);
     var deletePlaceParams = {
         place_id: delete_place_id
     };
@@ -116,6 +117,7 @@ function sendDeleteInfo(){
 function sendEditInfo(evt){
     evt.preventDefault();
     var place_id = $('#edit-place_id').val();
+    console.log(place_id);
     var place_name = $('#edit-placename').val();
     var place_search = $('#edit-place-search').val();
     var visit_day = $('#edit-tripday').val();
