@@ -9,20 +9,36 @@ function createAllPlacesMap(results){
 
     var placesLatLng=[];
 
-
+    
     for(var place in results){
         var latLng = new google.maps.LatLng(results[place].latitude, results[place].longitude);
         placesLatLng.push(latLng);
 
         var content = results[place].content;
-        var dayNum = String(results[place].day_num)
+        var dayNum = String(results[place].day_num);
+
+        var markerColor;
+        switch(results[place].category){
+            case 'transport':
+                markerColor = '009688';
+                break;
+            case 'eat':
+                markerColor = 'FFC107';
+                break;
+            case 'explore':
+                markerColor = '8BC34A';
+                break;
+            case 'sleep':
+                markerColor = '00BCD4';
+                break;
+        }
 
         var marker = new google.maps.Marker({
             map: finalMap,
             title: results[place].title,
             position: latLng,
             content: content,
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+dayNum+'|FF0000|000000'
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+ dayNum + '|' + markerColor + '|000000'
         });
 
         var infowindow = new google.maps.InfoWindow();
