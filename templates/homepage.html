@@ -29,7 +29,7 @@
             <input type='submit' value='Logout'>
         </form>
         {% if not user_trip %}
-            <form action='/create_trip' method='POST'>
+            <form id='create-trip'>
                 <label for='tripname'>Name your trip: </label><br>
                 <input type='text' name='tripname' required><br>
                 <label for='trip-loc-search'>Where to?</label><br>
@@ -48,40 +48,46 @@
         {% endif %}
     {% endif %}
 
-    <script>
-      $( function() {
-        var dateFormat = "mm/dd/yy",
-          from = $( "#from" )
-            .datepicker({
-              defaultDate: "+1w",
-              changeMonth: true,
-              changeYear: true,
-              numberOfMonths: 1
-            })
-            .on( "change", function() {
-              to.datepicker( "option", "minDate", getDate( this ) );
-            }),
-          to = $( "#to" ).datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            numberOfMonths: 1
-            
-          })
-          .on( "change", function() {
-            from.datepicker( "option", "maxDate", getDate( this ) );
-          });
-     
-        function getDate( element ) {
-          var date;
-          try {
-            date = $.datepicker.parseDate( dateFormat, element.value );
-          } catch( error ) {
-            date = null;
-          }
-     
-          return date;
-        }
-      } );
-      </script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $( function() {
+    var dateFormat = "mm/dd/yy",
+      from = $( "#from" )
+        .datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          changeYear: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1
+        
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+
+      return date;
+    }
+  } );
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
+libraries=places&callback=tripLocSearch" async defer></script>
+<script src="/static/js/trip_location_searchbar.js"></script>
 {% endblock %}
