@@ -15,13 +15,14 @@ function createAllPlacesMap(results){
         placesLatLng.push(latLng);
 
         var content = results[place].content;
+        var dayNum = String(results[place].day_num)
 
         var marker = new google.maps.Marker({
             map: finalMap,
             title: results[place].title,
             position: latLng,
             content: content,
-            label: String(results[place].day_num)
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+dayNum+'|FF0000|000000'
         });
 
         var infowindow = new google.maps.InfoWindow();
@@ -46,3 +47,4 @@ function mapPlaces(){
 }
 
 $(document).ready(mapPlaces);
+

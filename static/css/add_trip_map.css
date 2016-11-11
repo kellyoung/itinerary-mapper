@@ -1,5 +1,3 @@
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
 #placemap {
   height: 250px;
   width: 400px;
@@ -39,10 +37,6 @@
   border-color: #4d90fe;
 }
 
-/*.pac-container {
-  font-family: Roboto;
-}
-*/
 #type-selector {
   color: #fff;
   background-color: #4d90fe;
@@ -64,4 +58,3 @@
 .modal-backdrop{
     z-index: 10;        
 }​
-
