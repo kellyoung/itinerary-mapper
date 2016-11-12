@@ -17,23 +17,25 @@ function tripPageMaps() {
   //delete place that is clicked, sendDeleteInfo from edit_form.js
   $('#delete-place-btn').on('click', sendDeleteInfo);
 
+  //edit place on click, sendEditInfo from edit_form.js
   $('#edit-place-btn').on('click', sendEditInfo);
 
+  //toggle trip to be public or private. publishTrip from trip_page.js
   $('#publish-btn').on('click', publishTrip);
-
-  
 }
+
 
 function addPlaceFormMap(){
   //first map for add place
+  var tripLat = parseFloat($('#trip_lat').val());
+  var tripLong = parseFloat($('#trip_long').val());
   addMap = new google.maps.Map(document.getElementById('placemap'), {
-    center: {lat: -0.0022, lng: -78.4558},
-    zoom: 1,
+    center: {lat: tripLat, lng: tripLong},
+    zoom: 3,
     mapTypeControl: false,
     
     streetViewControl: false
   });
-
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('place-search');

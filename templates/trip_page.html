@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="/static/css/add_trip_map.css">
 {% endblock %}
 {% block content %}
+    <input type='hidden' id='trip_lat' value='{{ trip.latitude }}'>
+    <input type='hidden' id='trip_long' value='{{ trip.longitude }}'>
     <h2>{{ trip.trip_name }}</h2>
     <h3>By: {{ user.name }}</h3>
     <br>

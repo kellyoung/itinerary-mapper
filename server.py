@@ -160,6 +160,15 @@ def create_trip():
     return redirect('/create_trip/%s/%s' % (username, new_trip.trip_id))
 
 
+@app.route('/trip_coordinates.json')
+def give_trip_coordinates():
+    """
+    JSON of the trip coordinates to be passed to the Add Place Map
+    Needs the current trip_id's info
+    """
+    pass
+
+
 @app.route('/add_place.json', methods=['POST'])
 def add_place():
     """
