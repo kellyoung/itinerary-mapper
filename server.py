@@ -137,10 +137,11 @@ def create_trip():
     the trip's editing page.
     """
     username = session.get('username')
-    print username
     trip_name = request.form.get('tripname')
     from_date = request.form.get('from')
     to_date = request.form.get('to')
+    latitude, longitude = request.form.get('coordinates').split(',')
+    loc_name = request.form.get('loc-name')
 
     # DOESN't SEEM TO BE NECESSARY converts string dates to date objects
     # first_day = datetime.datetime.strptime(from_date, '%m/%d/%Y').date()
@@ -148,7 +149,8 @@ def create_trip():
 
     #add info to trips table in database
     new_trip = Trip(trip_name=trip_name, start_date=from_date, end_date=to_date,
-                    username=username)
+                    username=username, latitude=latitude, longitude=longitude,
+                    general_loc=loc_name)
 
     db.session.add(new_trip)
     db.session.commit()
