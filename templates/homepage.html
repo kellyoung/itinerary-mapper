@@ -44,8 +44,8 @@
                 <input type='submit' value='Create Trip' id='submit-trip'>
             </form>
         {% else %}
-            <form action='/create_trip/{{ username }}/{{ user_trip.trip_id }}'>
-            <input type='submit' value='Go to trip'>
+            <form action='/{{ username }}/trips'>
+            <input type='submit' value='Go to Trips'>
             </form>
         {% endif %}
     {% endif %}

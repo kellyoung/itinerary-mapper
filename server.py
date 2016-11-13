@@ -101,6 +101,21 @@ def create_user():
     return redirect('/')
 
 
+@app.route('/<username>/trips')
+def all_trips_page(username):
+    in_session = session.get('username')
+
+    if in_session == username:
+        user = User.query.get(username)
+        user_trips = user.trips
+        return render_template('all_trips.html',
+                               user=user,
+                               user_trips=user_trips)
+    else:
+        flash('You do not have access to this page.')
+        return redirect('/')
+
+
 @app.route('/create_trip/<username>/<trip_id>')
 def trip_page(username, trip_id):
     in_session = session.get('username')
