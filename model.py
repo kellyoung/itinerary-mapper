@@ -35,6 +35,7 @@ class Trip(db.Model):
     general_loc = db.Column(db.String(256), nullable=True)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
+    viewport = db.Column(db.Text, nullable=True)
     username = db.Column(db.String(64),
                          db.ForeignKey('users.username'),
                          nullable=False)

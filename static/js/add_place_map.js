@@ -3,10 +3,13 @@ var addPlace;
 var editPlace;
 var editMap;
 var addMap;
+var tripViewPort;
+
 
 function tripPageMaps() {
-  //adds a Google map and places search bar to the add place form
-  addPlaceFormMap();
+
+  //requests trip map info and uses it to display Google Maps
+  addPlaceMapInfo();
 
   //addPlaceToDB in add_new_place.js
   $('#add-trip-form').on('submit', addPlaceToDB);
@@ -24,19 +27,52 @@ function tripPageMaps() {
   $('#publish-btn').on('click', publishTrip);
 }
 
+function addPlaceMapInfo(){
+  var tripLat;
+  var tripLong;
+  //AJAX request to get map bounds and latitude and longitude from database
+  var params = {
+                  'trip_id': $('#trip_id').val()
+               };
 
-function addPlaceFormMap(){
-  //first map for add place
-  var tripLat = parseFloat($('#trip_lat').val());
-  var tripLong = parseFloat($('#trip_long').val());
+  $.get('/trip_loc_info.json', params, function(results){
+    console.log(results);
+    tripLat = results.latitude;
+    tripLong = results.longitude;
+    tripViewPort = JSON.parse(results.viewport);
+
+    console.log(tripViewPort);
+    console.log(tripLat);
+    console.log(tripLong);
+    //call addPlaceFormMap with the parameters
+    addPlaceFormMap(tripLat, tripLong, tripViewPort);
+
+  });
+  
+}
+
+function addPlaceFormMap(latitude, longitude, viewport){
+  var addMapBounds;
+  if (viewport){
+    addMapBounds = new google.maps.LatLngBounds(
+                        new google.maps.LatLng(viewport.south, viewport.west),
+                        new google.maps.LatLng(viewport.north, viewport.east)
+                      );
+  }
+  
+
   addMap = new google.maps.Map(document.getElementById('placemap'), {
-    center: {lat: tripLat, lng: tripLong},
+    center: {lat: latitude, lng: longitude},
     zoom: 3,
     mapTypeControl: false,
     
     streetViewControl: false
   });
 
+  if (addMapBounds){
+    addMap.fitBounds(addMapBounds);
+  }
+  
   // Create the search box and link it to the UI element.
   var input = document.getElementById('place-search');
   var searchBox = new google.maps.places.SearchBox(input);

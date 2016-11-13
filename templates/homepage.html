@@ -29,11 +29,11 @@
             <input type='submit' value='Logout'>
         </form>
         {% if not user_trip %}
-            <form action='/create_trip' method='POST' id='create-trip'>
-                <div id='create-trip-loc'></div>
-                <div id='create-trip-loc-name'></div>
+            <form id='create-trip'>
+                <!-- <div id='create-trip-loc'></div>
+                <div id='create-trip-loc-name'></div> -->
                 <label for='tripname'>Name your trip: </label><br>
-                <input type='text' name='tripname' required><br>
+                <input type='text' name='tripname' id='tripname' required><br>
                 <label for='trip-loc-search'>Where to?</label><br>
                 <input id="trip-loc-search" name="trip-loc-search" type="text" placeholder="Search Box" required><br>
                 Trip dates:<br>
@@ -41,7 +41,7 @@
                 <input type="text" id="from" name="from" required>
                 <label for="to">to</label>
                 <input type="text" id="to" name="to" required><br>
-                <input type='submit' value='Create Trip'>
+                <input type='submit' value='Create Trip' id='submit-trip'>
             </form>
         {% else %}
             <form action='/create_trip/{{ username }}/{{ user_trip.trip_id }}'>

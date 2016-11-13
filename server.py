@@ -130,7 +130,7 @@ def trip_page(username, trip_id):
         return redirect('/')
 
 
-@app.route('/create_trip', methods=['POST'])
+@app.route('/create_trip.json', methods=['POST'])
 def create_trip():
     """
     Adds trip information to database, then redirects to
@@ -140,33 +140,51 @@ def create_trip():
     trip_name = request.form.get('tripname')
     from_date = request.form.get('from')
     to_date = request.form.get('to')
-    latitude, longitude = request.form.get('coordinates').split(',')
+    # latitude, longitude = request.form.get('coordinates').split(',')
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
     loc_name = request.form.get('loc-name')
+    viewport = request.form.get('viewport')
+    print viewport
 
     # DOESN't SEEM TO BE NECESSARY converts string dates to date objects
     # first_day = datetime.datetime.strptime(from_date, '%m/%d/%Y').date()
     # last_day = datetime.datetime.strptime(to_date, '%m/%d/%Y').date()
 
-    #add info to trips table in database
+    # add info to trips table in database
     new_trip = Trip(trip_name=trip_name, start_date=from_date, end_date=to_date,
                     username=username, latitude=latitude, longitude=longitude,
-                    general_loc=loc_name)
+                    viewport=viewport, general_loc=loc_name)
 
     db.session.add(new_trip)
     db.session.commit()
 
-    print new_trip.trip_id
+    # print trip_name, from_date, to_date, latitude, longitude, loc_name, viewport
 
-    return redirect('/create_trip/%s/%s' % (username, new_trip.trip_id))
+    # return redirect('/create_trip/%s/%s' % (username, new_trip.trip_id))
+
+    return jsonify({'status': 'success', 'username': new_trip.username,
+                    'trip_id': new_trip.trip_id})
 
 
-@app.route('/trip_coordinates.json')
-def give_trip_coordinates():
+@app.route('/trip_loc_info.json')
+def trip_loc_info():
     """
-    JSON of the trip coordinates to be passed to the Add Place Map
+    JSON of the trip map info to be passed to the Add Place Map
     Needs the current trip_id's info
     """
-    pass
+    trip_id = int(request.args.get('trip_id'))
+    trip = Trip.query.get(trip_id)
+
+    print trip
+
+    latitude = trip.latitude
+    longitude = trip.longitude
+    viewport = trip.viewport
+    print latitude, longitude
+    print viewport
+
+    return jsonify({'latitude': latitude, 'longitude': longitude, 'viewport': viewport})
 
 
 @app.route('/add_place.json', methods=['POST'])
