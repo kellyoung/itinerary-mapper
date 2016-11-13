@@ -107,7 +107,9 @@ def all_trips_page(username):
 
     if in_session == username:
         user = User.query.get(username)
-        user_trips = user.trips
+        # user_trips = user.trips.order_by(Trip.start_date)
+        user_trips = Trip.query.filter(Trip.username ==
+                                       user.username).order_by(Trip.start_date).all()
         return render_template('all_trips.html',
                                user=user,
                                user_trips=user_trips)
