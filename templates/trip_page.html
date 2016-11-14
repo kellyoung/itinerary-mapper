@@ -121,13 +121,17 @@
     <form id='publish-form'>
         <input type='hidden' value='{{ trip.trip_id}}' name='publish_trip_id' id='publish_trip_id'>
     </form>
-    <button type="submit" class="btn btn-primary" form="publish-form" id='publish-btn'>
+    <button type="submit" class="btn btn-primary" form="publish-form" id='delete-trip-btn'>
             Make Trip Public
     </button>
 
 
     <a class="btn btn-primary" href='/logout'>Logout</a>
-    <a class="btn btn-large btn-info" href='/{{user.username}}/{{ trip.trip_id}}/mapview'>Go to Map</a>
+    <a class="btn btn-info" href='/{{user.username}}/{{ trip.trip_id}}/mapview'>Go to Map</a>
+    <a class="btn btn-info" href='/{{user.username}}/trips'>Back to All Trips</a>
+    <button type="button" class="btn btn-danger"  id='publish-btn'>
+            Delete Trip
+    </button>
     {% endblock %}
 {% block scripts %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
