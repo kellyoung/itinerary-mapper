@@ -326,6 +326,45 @@ def edit_place():
     return jsonify({'status': 'Edited'})
 
 
+@app.route('/publish_trip.json', methods=['POST'])
+def publish_trip():
+    trip_id = request.form.get('trip_id')
+    target_trip = Trip.query.get(int(trip_id))
+
+    if target_trip.published:
+        target_trip.published = False
+    else:
+        target_trip.published = True
+
+    print target_trip.published
+    db.session.commit()
+
+    return jsonify({'status': target_trip.published})
+
+
+@app.route('/delete_trip.json', methods=['POST'])
+def delete_trip():
+    trip_id = int(request.form.get('trip_id'))
+
+    trip_places = Place.query.filter(Place.trip_id == trip_id).all()
+    trip = Trip.query.get(trip_id)
+
+    print trip_places
+    print trip
+
+    # get the username to be passed
+    username = trip.username
+    # delete all places first
+    for place in trip_places:
+        db.session.delete(place)
+    # then delete the trip itself
+    db.session.delete(trip)
+
+    db.session.commit()
+
+    return jsonify({'status': 'success', 'username': username})
+
+
 @app.route('/<username>/<trip_id>/mapview')
 def display_map(username, trip_id):
     """
@@ -346,22 +385,6 @@ def display_map(username, trip_id):
     else:
         flash('Sorry! You don\'t have access to this page.')
         return redirect('/')
-
-
-@app.route('/publish_trip.json', methods=['POST'])
-def publish_trip():
-    trip_id = request.form.get('trip_id')
-    target_trip = Trip.query.get(int(trip_id))
-
-    if target_trip.published:
-        target_trip.published = False
-    else:
-        target_trip.published = True
-
-    print target_trip.published
-    db.session.commit()
-
-    return jsonify({'status': target_trip.published})
 
 
 @app.route('/places_to_map.json')

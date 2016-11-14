@@ -27,6 +27,9 @@ function tripPageMaps() {
 
   //toggle trip to be public or private. publishTrip from trip_page.js
   $('#publish-btn').on('click', publishTrip);
+
+  //deletes trip. deleteTrip from trip_page.js
+  $('#delete-trip-btn').on('click', deleteTrip);
 }
 
 function addPlaceMapInfo(){
