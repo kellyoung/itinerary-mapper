@@ -28,7 +28,6 @@
         <form action='/logout'>
             <input type='submit' value='Logout'>
         </form>
-        {% if not user_trip %}
             <form id='create-trip'>
                 <!-- <div id='create-trip-loc'></div>
                 <div id='create-trip-loc-name'></div> -->
@@ -43,11 +42,9 @@
                 <input type="text" id="to" name="to" required><br>
                 <input type='submit' value='Create Trip' id='submit-trip'>
             </form>
-        {% else %}
             <form action='/{{ username }}/trips'>
             <input type='submit' value='Go to Trips'>
             </form>
-        {% endif %}
     {% endif %}
 
 {% endblock %}
