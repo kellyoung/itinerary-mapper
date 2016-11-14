@@ -1,6 +1,6 @@
 function publishTrip(evt){
     evt.preventDefault();
-    var params = {'trip_id': $('#publish_trip_id').val()};
+    var params = {'trip_id': $('#trip_id').val()};
     
     $.post('/publish_trip.json', params, function(results){
         console.log(results.status);
@@ -13,3 +13,7 @@ function publishTrip(evt){
     });
 }
 
+// to be executed in add_place_map, to stay consistent
+// function deleteTrip(){
+//     var params = {'trip_id': $()}
+// }
