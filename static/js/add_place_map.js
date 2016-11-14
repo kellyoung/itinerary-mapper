@@ -1,4 +1,6 @@
 
+// bad naming of file but basically the page with all the functionalities being
+// executed in my google maps API callback function
 var addPlace;
 var editPlace;
 var editMap;
