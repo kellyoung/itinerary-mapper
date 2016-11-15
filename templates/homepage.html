@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block title %}Itinerary Mapper{% endblock %}
 {% block content %}
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1200587173334573',
+          xfbml      : true,
+          version    : 'v2.8'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true">
+    </fb:login-button>
+    <!-- <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState();"></div> -->
+
+    <div id="status">
+    </div>
+
 
     {% if not username %}
         <h4>Create an Account</h4>
@@ -86,6 +110,7 @@
     }
   } );
 </script>
+<script src="/static/js/fb_login.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
 <script src="/static/js/trip_location_searchbar.js"></script>
