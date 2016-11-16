@@ -17,7 +17,7 @@ function displayForm(){
     $.get('/edit_place_info.json', editFormParams, function(results){
         $("#edit-place_id").val(divPlaceID);
         $("#edit-placename").val(results.place_name);
-        $("#edit-place-search").val(results.place_loc);
+        $("#edit-place-search").val(decode_utf8(results.place_loc));
         $("#edit-tripnotes").val(results.notes);
 
         var selectedDate = '#edit-tripday option[value="'+results.day_num+','+results.formatted_date+'"]';

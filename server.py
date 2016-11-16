@@ -248,7 +248,7 @@ def add_place():
                     """ % (new_place.place_id, day_num, date, cat_id, place_name,
                            place_loc, notes)
 
-    return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div})
+    return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div, 'place_loc': new_place.place_loc})
 
 
 @app.route('/edit_place_info.json')
