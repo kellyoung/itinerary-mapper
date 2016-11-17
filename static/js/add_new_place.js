@@ -16,7 +16,9 @@ function addPlaceToDB(evt) {
     var form_data = new FormData();
     console.log('HELLO');
     var day_info = $('#tripday').val().split(',');
-
+    var place_picture = $('input[type=file]')[0].files[0];
+    
+    console.log(place_picture);
     form_data.append("trip_id", $('#trip_id').val());
     form_data.append("placename", $('#placename').val());
     form_data.append("placesearch", encode_utf8(addPlace.formatted_address));
@@ -26,7 +28,10 @@ function addPlaceToDB(evt) {
     form_data.append("daynum", day_info[0]);
     form_data.append("category", $('#tripcat').val());
     form_data.append("notes", $('#tripnotes').val());
-    form_data.append('pic', $('input[type=file]')[0].files[0]);
+    if(place_picture){
+        form_data.append('pic', place_picture);
+    }
+    
 
 
 
@@ -47,7 +52,6 @@ function addPlaceToDB(evt) {
     $( '#add-trip-form' ).each(function(){
         this.reset();
     });
-    console.log(form_data);
 
     var dayDiv = '#day-'+day_info[0];
     var place_id;
@@ -66,10 +70,9 @@ function addPlaceToDB(evt) {
         processData: false,
         // ... Other options like success and etc
         success: function(results){
-            console.log(results);
+            console.log(decode_utf8(results.place_loc));
             $(dayDiv).append(decode_utf8(results.new_place_div));
         }
     });
-    console.log('test');
 }
 

@@ -1,4 +1,5 @@
 """Itinerary Mapper"""
+import os
 
 from jinja2 import StrictUndefined
 
@@ -16,8 +17,15 @@ app = Flask(__name__)
 
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route('/')
@@ -137,6 +145,17 @@ def trip_page(username, trip_id):
             trip_dates.append((index+1, trip_date, trip_date_str))
 
         trip_places = Place.query.filter(Place.trip_id == trip_id).all()
+
+        # do this when have time to figure out encoding
+        # trip_places_utf = []
+
+        # for place in trip_places:
+        #     print place.place_loc
+        #     print type(place.place_loc)
+        #     # print type(place.place_loc.encode('utf-8'))
+        #     place_loc = unicode(place.place_loc)
+        #     trip_places_utf.append((place, place_loc))
+
         # need to pass in all places too to be used in JINJA
         return render_template('trip_page.html',
                                user=user,
@@ -221,6 +240,16 @@ def add_place():
     trip_id = int(request.form.get('trip_id'))
     cat_id = request.form.get('category')
     notes = request.form.get('notes')
+    check_pic = request.form.get('pic')
+
+    pic_file = None
+    if check_pic:
+        pic_file = request.files['pic']
+    # go to the else and add a default pic into the database if nothing
+
+    if pic_file and allowed_file(pic_file.filename):
+        filename = secure_filename(pic_file.filename)
+        pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
     new_place = Place(place_name=place_name, place_loc=place_loc,
                       latitude=latitude, longitude=longitude, day_num=day_num,
