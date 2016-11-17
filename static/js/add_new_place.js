@@ -14,11 +14,9 @@ function addPlaceToDB(evt) {
     evt.preventDefault();
 
     var form_data = new FormData();
-    console.log('HELLO');
     var day_info = $('#tripday').val().split(',');
     var place_picture = $('input[type=file]')[0].files[0];
     
-    console.log(place_picture);
     form_data.append("trip_id", $('#trip_id').val());
     form_data.append("placename", $('#placename').val());
     form_data.append("placesearch", encode_utf8(addPlace.formatted_address));
@@ -31,7 +29,6 @@ function addPlaceToDB(evt) {
     if(place_picture){
         form_data.append('pic', place_picture);
     }
-    console.log(form_data);
     
 
 

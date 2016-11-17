@@ -85,7 +85,7 @@ class Place(db.Model):
                        db.ForeignKey('categories.cat_id'),
                        nullable=False)
     notes = db.Column(db.Text, nullable=True)
-
+    pic_file = db.Column(db.String(256), nullable=True)
     trip = db.relationship('Trip',
                            backref=db.backref('places',
                                               order_by=place_id))

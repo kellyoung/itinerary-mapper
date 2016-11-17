@@ -260,7 +260,17 @@ def add_place():
             extension = pic_file.filename.rsplit('.', 1)[1]
             filename = secure_filename('%s.%s' % (new_place.place_id, extension))
             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    # go to the else and add a default pic into the database if nothing
+            #  add filename to database
+            print filename
+            new_place.pic_file = filename
+    else:
+        # go to the else and add a default pic into the database if nothing
+        # need to find out what category it's in
+        filename = cat_id + '.png'
+        print filename
+        new_place.pic_file = filename
+
+    db.session.commit()
 
     new_place_div = """
                     <div id='place-div-%s' class='place-div'>
