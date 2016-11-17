@@ -7,8 +7,9 @@
     <h2>{{ trip.trip_name }}</h2>
     <h3>By: {{ user.name }}</h3>
     <br>
-    <form id='add-trip-form'>
+    <form id='add-trip-form' enctype="multipart/form-data">
         <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'><br>
+        <input type="file" name="file" id="place-pic-file">
         <label for='placename'>Place Name: </label><br>
         <input id="placename" type='text' name='placename' required><br>
         <label for='placesearch'>Search for Place: </label><br>
@@ -33,8 +34,10 @@
         <div>
             <textarea id="tripnotes" name="tripnotes"></textarea>
         </div>
+        
         <input id="add-place" type='submit' value='Add Place'>
     </form>
+
     <br><br>
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
