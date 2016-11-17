@@ -18,10 +18,11 @@ app = Flask(__name__)
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
-app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -241,13 +242,8 @@ def add_place():
     cat_id = request.form.get('category')
     notes = request.form.get('notes')
 
-    if 'pic' in request.files:
-        print 'GET PICTURE HERE'
-        pic_file = request.files['pic']
-        if allowed_file(pic_file.filename):
-            filename = secure_filename(pic_file.filename)
-            pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    # go to the else and add a default pic into the database if nothing
+    # i need to add the picture in after creating new place so i can access
+    # the place_id
 
     new_place = Place(place_name=place_name, place_loc=place_loc,
                       latitude=latitude, longitude=longitude, day_num=day_num,
@@ -255,6 +251,16 @@ def add_place():
 
     db.session.add(new_place)
     db.session.commit()
+
+    if 'pic' in request.files:
+        print 'GET PICTURE HERE'
+        pic_file = request.files['pic']
+        if allowed_file(pic_file.filename):
+            # I want to convert the filename
+            extension = pic_file.filename.rsplit('.', 1)[1]
+            filename = secure_filename('%s.%s' % (new_place.place_id, extension))
+            pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # go to the else and add a default pic into the database if nothing
 
     new_place_div = """
                     <div id='place-div-%s' class='place-div'>
