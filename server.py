@@ -240,16 +240,14 @@ def add_place():
     trip_id = int(request.form.get('trip_id'))
     cat_id = request.form.get('category')
     notes = request.form.get('notes')
-    check_pic = request.form.get('pic')
 
-    pic_file = None
-    if check_pic:
+    if 'pic' in request.files:
+        print 'GET PICTURE HERE'
         pic_file = request.files['pic']
+        if allowed_file(pic_file.filename):
+            filename = secure_filename(pic_file.filename)
+            pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     # go to the else and add a default pic into the database if nothing
-
-    if pic_file and allowed_file(pic_file.filename):
-        filename = secure_filename(pic_file.filename)
-        pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
     new_place = Place(place_name=place_name, place_loc=place_loc,
                       latitude=latitude, longitude=longitude, day_num=day_num,

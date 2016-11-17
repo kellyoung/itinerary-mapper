@@ -31,6 +31,7 @@ function addPlaceToDB(evt) {
     if(place_picture){
         form_data.append('pic', place_picture);
     }
+    console.log(form_data);
     
 
 
