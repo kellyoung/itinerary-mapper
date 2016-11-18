@@ -96,19 +96,19 @@
             <div id='day-{{ day[0] }}'>
                 <h4>Day {{ day[0] }}: {{ day[2] }}</h4>
                 {% for place in trip_places %}
-                    {% if place.day_num == day[0] %}
-                        <div id='place-div-{{ place.place_id }}' class='place-div'>
+                    {% if place[0].day_num == day[0] %}
+                        <div id='place-div-{{ place[0].place_id }}' class='place-div'>
                             <h5>Day:</h5>
-                            <p>Day {{ place.day_num }}: {{ place.date }}</p>
+                            <p>Day {{ place[0].day_num }}: {{ place[0].date }}</p>
                             <h5>Category:</h5>
-                            <p>{{ place.cat_id }}</p>
+                            <p>{{ place[0].cat_id }}</p>
                             <h5>Place Name:</h5>
-                            <p>{{ place.place_name }}</p>
+                            <p>{{ place[0].place_name }}</p>
                             <h5>Place Address:</h5>
-                            <p>{{ place.place_loc }}</p>
+                            <p class='utf-8'>{{ place[1].decode('utf-8') }}</p>
                             <h5>Notes:</h5>
-                            <p>{{ place.notes }}</p>
-                            <img src='/uploads/{{ place.pic_file }}'>
+                            <p>{{ place[0].notes }}</p>
+                            <img src='/uploads/{{ place[0].pic_file }}'>
                             <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                               Edit Place
                             </button>

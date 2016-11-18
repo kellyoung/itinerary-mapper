@@ -68,6 +68,8 @@ function addPlaceToDB(evt) {
         processData: false,
         // ... Other options like success and etc
         success: function(results){
+            console.log(typeof results.place_loc);
+            console.log(typeof decode_utf8(results.place_loc));
             console.log(decode_utf8(results.place_loc));
             $(dayDiv).append(decode_utf8(results.new_place_div));
         }

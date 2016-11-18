@@ -7,9 +7,8 @@ var editMap;
 var addMap;
 var tripViewPort;
 
-
 function tripPageMaps() {
-
+  convertUTF();
   //requests trip map info and uses it to display Google Maps
   addPlaceMapInfo();
 

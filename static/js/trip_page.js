@@ -1,3 +1,4 @@
+var placeLocs = [];
 function publishTrip(evt){
     evt.preventDefault();
     var params = {'trip_id': $('#trip_id').val()};
@@ -22,4 +23,17 @@ function deleteTrip(){
         window.location.replace("/" + results.username +
                                 "/trips");
     });
+}
+
+//function to try decoding/encoding utf-8
+function convertUTF(){
+    $(".utf-8").each(function(){ placeLocs.push($(this).text());});
+
+    $('.utf-8').each(function(){
+        var decoded = decode_utf8($(this).text());
+        console.log(decoded);
+        $(this).html(decoded);
+    });
+    // decode_utf8($('.utf-8').html());
+    // unicodeTest = $('.utf-8').html();
 }

@@ -1,5 +1,6 @@
 """Itinerary Mapper"""
 import os
+import sys
 
 from jinja2 import StrictUndefined
 
@@ -22,6 +23,9 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
+
+reload(sys)
+sys.setdefaultencoding("UTF-8")
 
 
 def allowed_file(filename):
@@ -154,21 +158,22 @@ def trip_page(username, trip_id):
         trip_places = Place.query.filter(Place.trip_id == trip_id).all()
 
         # do this when have time to figure out encoding
-        # trip_places_utf = []
+        trip_places_utf = []
 
-        # for place in trip_places:
-        #     print place.place_loc
-        #     print type(place.place_loc)
-        #     # print type(place.place_loc.encode('utf-8'))
-        #     place_loc = unicode(place.place_loc)
-        #     trip_places_utf.append((place, place_loc))
+        for place in trip_places:
+            print place.place_loc
+            print type(place.place_loc)
+            print type(unicode(place.place_loc))
+            place_loc = place.place_loc.encode('utf-8')
+            print type(place_loc)
+            trip_places_utf.append((place, place_loc))
 
         # need to pass in all places too to be used in JINJA
         return render_template('trip_page.html',
                                user=user,
                                trip=trip,
                                trip_dates=trip_dates,
-                               trip_places=trip_places)
+                               trip_places=trip_places_utf)
     else:
         flash('You do not have access to this page.')
         return redirect('/')
