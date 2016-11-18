@@ -31,22 +31,6 @@ function addPlaceToDB(evt) {
     }
     
 
-
-
-
-    // add_place_params = {
-    //     'trip_id': $('#trip_id').val(),
-    //     'placename': $('#placename').val(),
-    //     'placesearch': encode_utf8(addPlace.formatted_address),
-    //     'latitude': addPlace.geometry.location.lat(),
-    //     'longitude': addPlace.geometry.location.lng(),
-    //     'visitday': day_info[1],
-    //     'daynum': day_info[0],
-    //     'category': $('#tripcat').val(),
-    //     'notes': $('#tripnotes').val(),
-    //     'pic':$('input[type=file]')[0].files[0]
-    // };
-
     $( '#add-trip-form' ).each(function(){
         this.reset();
     });

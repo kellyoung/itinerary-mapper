@@ -1,6 +1,6 @@
 """Itinerary Mapper"""
 import os
-import sys
+# import sys
 
 from jinja2 import StrictUndefined
 
@@ -19,13 +19,13 @@ app = Flask(__name__)
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
-app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
-reload(sys)
-sys.setdefaultencoding("UTF-8")
+# reload(sys)
+# sys.setdefaultencoding("UTF-8")
 
 
 def allowed_file(filename):
@@ -156,8 +156,6 @@ def trip_page(username, trip_id):
             trip_dates.append((index+1, trip_date, trip_date_str))
 
         trip_places = Place.query.filter(Place.trip_id == trip_id).all()
-
-        # do this when have time to figure out encoding
         trip_places_utf = []
 
         for place in trip_places:
@@ -353,8 +351,28 @@ def edit_place():
     notes = request.form.get('notes')
     latitude = request.form.get('latitude')
     longitude = request.form.get('longitude')
+    delete_pic = request.form.get('delete')
 
     place_to_edit = Place.query.get(int(place_id))
+
+    if 'pic' in request.files:
+        print 'NEW PICTURE HERE'
+        pic_file = request.files['pic']
+        if allowed_file(pic_file.filename):
+            # I want to convert the filename
+            keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
+            if place_to_edit.pic_file not in keep_files:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
+                                       place_to_edit.pic_file))
+            extension = pic_file.filename.rsplit('.', 1)[1]
+            filename = secure_filename('%s.%s' % (place_to_edit.place_id,
+                                       extension))
+            pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            place_to_edit.pic_file = filename
+    elif delete_pic == 'yes':
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
+                               place_to_edit.pic_file))
+        place_to_edit.pic_file = '%s.png' % category
 
     if place_name != place_to_edit.place_name:
         place_to_edit.place_name = place_name

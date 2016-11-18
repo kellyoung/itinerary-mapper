@@ -115,34 +115,71 @@ function sendDeleteInfo(){
 
 //send info to server to update place and refresh page
 function sendEditInfo(evt){
-    evt.preventDefault();
-    var place_id = $('#edit-place_id').val();
-    console.log(place_id);
-    var place_name = $('#edit-placename').val();
-    var place_search = $('#edit-place-search').val();
-    var visit_day = $('#edit-tripday').val();
-    var category = $('#edit-tripcat').val();
-    var notes = $('#edit-tripnotes').val();
 
-    var editPlaceParams = {
-        place_id: place_id,
-        place_name: place_name,
-        place_search: place_search,
-        visit_day: visit_day,
-        category: category,
-        notes: notes
-    };
+    evt.preventDefault();
+    var form_data = new FormData();
+
+    form_data.append("place_id", $('#edit-place_id').val());
+    form_data.append("place_name", $('#edit-placename').val());
+    form_data.append("place_search", $('#edit-place-search').val());
+    form_data.append("visit_day", $('#edit-tripday').val());
+    form_data.append("category", $('#edit-tripcat').val());
+    form_data.append("notes", $('#edit-tripnotes').val());
+
+    var edit_place_picture = $('#edit-place-pic-file')[0].files[0];
+    console.log(edit_place_picture);
+    if(edit_place_picture){
+        form_data.append('pic', edit_place_picture);
+    }
+    var delete_pic = $('#delete-file').is(":checked");
+    console.log(delete_pic);
+    if(delete_pic){
+        form_data.append('delete', 'yes');
+    }
+    else{
+        form_data.append('delete', 'no');
+    }
+
+    // var place_id = $('#edit-place_id').val();
+    // console.log(place_id);
+    // var place_name = $('#edit-placename').val();
+    // var place_search = $('#edit-place-search').val();
+    // var visit_day = $('#edit-tripday').val();
+    // var category = $('#edit-tripcat').val();
+    // var notes = $('#edit-tripnotes').val();
+
+    // var editPlaceParams = {
+    //     place_id: place_id,
+    //     place_name: place_name,
+    //     place_search: place_search,
+    //     visit_day: visit_day,
+    //     category: category,
+    //     notes: notes
+    // };
 
     //check to see if there was a new place (editPlace), if there is pass in lat and long
     if (editPlace) {
-        editPlaceParams.latitude = editPlace.geometry.location.lat();
-        editPlaceParams.longitude = editPlace.geometry.location.lng();
+        form_data.append("latitude", editPlace.geometry.location.lat());
+        form_data.append("longitude", editPlace.geometry.location.lng());
     }
+
     editPlace = '';
-    console.log(editPlaceParams);
-    $.post('/edit_place.json', editPlaceParams, function(results){
-        console.log(results.status);
-        location.reload();
+    // $.post('/edit_place.json', form_data, function(results){
+    //     console.log(results.status);
+    //     location.reload();
+    // });
+    $.ajax({
+        url: '/edit_place.json',
+        data: form_data,
+        type: 'POST',
+        // THIS MUST BE DONE FOR FILE UPLOADING
+        contentType: false,
+        processData: false,
+        // ... Other options like success and etc
+        success: function(results){
+            console.log(results.status);
+            location.reload();
+        }
     });
 }
 

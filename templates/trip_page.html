@@ -9,7 +9,6 @@
     <br>
     <form id='add-trip-form' enctype="multipart/form-data">
         <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'><br>
-        <input type="file" name="file" id="place-pic-file">
         <label for='placename'>Place Name: </label><br>
         <input id="placename" type='text' name='placename' required><br>
         <label for='placesearch'>Search for Place: </label><br>
@@ -34,7 +33,7 @@
         <div>
             <textarea id="tripnotes" name="tripnotes"></textarea>
         </div>
-        
+        <input type="file" name="file" id="place-pic-file">
         <input id="add-place" type='submit' value='Add Place'>
     </form>
 
@@ -49,7 +48,7 @@
             <h4 class="modal-title" id="editModalLabel">Edit Place</h4>
           </div>
           <div id='modal-form' class="modal-body">
-            <form id='edit-place-form'>
+            <form id='edit-place-form' enctype="multipart/form-data">
                 <input type='hidden' id='edit-place_id' name='edit-place_id'><br>
                 <input type='hidden' id='edit-trip_id' name='edit-trip_id' value='{{ trip.trip_id}}'><br>
                 <label for='edit-placename'>Place Name: </label><br>
@@ -76,6 +75,8 @@
                 <div>
                     <textarea id="edit-tripnotes" name="edit-tripnotes"></textarea>
                 </div>
+                <input type="file" name="file" id="edit-place-pic-file">
+                <input type="checkbox" id='delete-file' name="delete-file"> Delete Picture
             </form>
             
           </div>
