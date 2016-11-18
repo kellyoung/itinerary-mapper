@@ -29,6 +29,12 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+
 @app.route('/')
 def index():
     """
@@ -271,7 +277,8 @@ def add_place():
         new_place.pic_file = filename
 
     db.session.commit()
-
+    img_url = url_for('uploaded_file', filename=new_place.pic_file)
+    print img_url
     new_place_div = """
                     <div id='place-div-%s' class='place-div'>
                     <h5>Day:</h5>
@@ -284,12 +291,13 @@ def add_place():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
+                    <img src='%s' alt='%s picture'>
                     <button type="button" id="newly-added" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                       Edit Place
                     </button>
                     </div>
                     """ % (new_place.place_id, day_num, date, cat_id, place_name,
-                           place_loc, notes)
+                           place_loc, notes, img_url, place_name)
 
     return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div, 'place_loc': new_place.place_loc})
 
