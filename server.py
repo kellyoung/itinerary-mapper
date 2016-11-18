@@ -456,6 +456,7 @@ def return_all_places():
         category = place.cat_id
         latitude = place.latitude
         longitude = place.longitude
+        img_url = url_for('uploaded_file', filename=place.pic_file)
         content = """
                     <div id='place-div-%s' class='place-div'>
                     <h5>Day:</h5>
@@ -468,9 +469,10 @@ def return_all_places():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
+                    <img src='%s'>
                     </div>
                     """ % (place.place_id, day_num, place.date, category, title,
-                           place.place_loc, place.notes)
+                           place.place_loc, place.notes, img_url)
         place_info = {'title': title, 'day_num': day_num, 'category': category,
                       'latitude': latitude, 'longitude': longitude, 'content': content}
         all_places[place.place_id] = place_info
