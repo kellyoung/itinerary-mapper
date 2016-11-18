@@ -35,8 +35,15 @@ function createAllPlacesMap(results){
 
         var marker = new google.maps.Marker({
             map: finalMap,
+            place: {
+            location: latLng,
+            query: results[place].place_loc
+
+            },
+
             title: results[place].title,
-            position: latLng,
+            
+            // position: latLng,
             content: content,
             icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
                   dayNum + '|' + markerColor + '|000000'

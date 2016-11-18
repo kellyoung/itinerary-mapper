@@ -454,6 +454,7 @@ def return_all_places():
         title = place.place_name
         day_num = place.day_num
         category = place.cat_id
+        place_loc = place.place_loc
         latitude = place.latitude
         longitude = place.longitude
         img_url = url_for('uploaded_file', filename=place.pic_file)
@@ -474,7 +475,8 @@ def return_all_places():
                     """ % (place.place_id, day_num, place.date, category, title,
                            place.place_loc, place.notes, img_url)
         place_info = {'title': title, 'day_num': day_num, 'category': category,
-                      'latitude': latitude, 'longitude': longitude, 'content': content}
+                      'latitude': latitude, 'longitude': longitude, 'content': content,
+                      'place_loc': place_loc}
         all_places[place.place_id] = place_info
 
     # jsonify it to be processed in front end
