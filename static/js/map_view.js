@@ -1,14 +1,48 @@
-function createAllPlacesMap(results){
+var finalMap;
+var placesLatLng=[];
+function allPlacesControl(controlDiv, map, bounds) {
+    // Set CSS for the control border.
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#fff';
+    controlUI.style.border = '2px solid #fff';
+    controlUI.style.borderRadius = '0px';
+    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.marginBottom = '10px';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Click to see all Places';
+    controlDiv.appendChild(controlUI);
+
+    // Set CSS for the control interior.
+    var controlText = document.createElement('div');
+    controlText.style.color = 'rgb(25,25,25)';
+    controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+    controlText.style.fontSize = '16px';
+    controlText.style.lineHeight = '24px';
+    controlText.style.paddingLeft = '5px';
+    controlText.style.paddingRight = '5px';
+    controlText.innerHTML = 'All Places';
+    controlUI.appendChild(controlText);
+
+    // Setup the click event listeners: simply set the map to Chicago.
+    controlUI.addEventListener('click', function() {
+        var latlngbounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < bounds.length; i++) {
+            latlngbounds.extend(placesLatLng[i]);
+        }
+        finalMap.fitBounds(latlngbounds);
+    });
+    // console.log('control button!!!');
+
+}
+window.createAllPlacesMap = function(results){
     console.log(results);
 
-    var finalMap = new google.maps.Map(document.getElementById("final-map"), {
+    finalMap = new google.maps.Map(document.getElementById("final-map"), {
                 center: new google.maps.LatLng(0, 0),
                 zoom: 0,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-
-    var placesLatLng=[];
-
     
     for(var place in results){
         var latLng = new google.maps.LatLng(results[place].latitude, results[place].longitude);
@@ -62,8 +96,14 @@ function createAllPlacesMap(results){
         latlngbounds.extend(placesLatLng[i]);
     }
     finalMap.fitBounds(latlngbounds);
-    
-}
+
+    var allPlacesControlDiv = document.createElement('div');
+    var allPlacesControl = new allPlacesControl(allPlacesControlDiv, finalMap, placesLatLng);
+
+    centerControlDiv.index = 5;
+    finalMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
+
+};
 
 function mapPlaces(){
     var params = {'trip_id': $('#map-trip_id').val()};
