@@ -54,16 +54,16 @@ window.createAllPlacesMap = function(results){
         var markerColor;
         switch(results[place].category){
             case 'transport':
-                markerColor = '009688';
+                markerColor = '0C9FF9';
                 break;
             case 'eat':
-                markerColor = 'FFC107';
+                markerColor = 'FF8B29';
                 break;
             case 'explore':
                 markerColor = '8BC34A';
                 break;
             case 'sleep':
-                markerColor = '00BCD4';
+                markerColor = 'FF3891';
                 break;
         }
 
@@ -98,10 +98,10 @@ window.createAllPlacesMap = function(results){
     finalMap.fitBounds(latlngbounds);
 
     var allPlacesControlDiv = document.createElement('div');
-    var allPlacesControl = new allPlacesControl(allPlacesControlDiv, finalMap, placesLatLng);
+    var allPlacesButton  = new allPlacesControl(allPlacesControlDiv, finalMap, placesLatLng);
 
-    centerControlDiv.index = 5;
-    finalMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
+    allPlacesControlDiv.index = 5;
+    finalMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(allPlacesControlDiv);
 
 };
 
