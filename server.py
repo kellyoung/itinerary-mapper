@@ -377,12 +377,13 @@ def edit_place():
 
     place_to_edit = Place.query.get(int(place_id))
 
+    keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
+
     if 'pic' in request.files:
         print 'NEW PICTURE HERE'
         pic_file = request.files['pic']
         if allowed_file(pic_file.filename):
             # I want to convert the filename
-            keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
             if place_to_edit.pic_file not in keep_files:
                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
                                        place_to_edit.pic_file))
@@ -391,7 +392,7 @@ def edit_place():
                                        extension))
             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             place_to_edit.pic_file = filename
-    elif delete_pic == 'yes':
+    elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
                                place_to_edit.pic_file))
         place_to_edit.pic_file = '%s.png' % category
@@ -409,7 +410,14 @@ def edit_place():
         place_to_edit.date = date
 
     if category != place_to_edit.cat_id:
+        # if place_to_edit.pic_file == '%s.png' % place_to_edit.cat_id:
+            
+        #     print place_to_edit.pic_file
         place_to_edit.cat_id = category
+        if place_to_edit.pic_file in keep_files:
+            print 'KEEEP FILE KEEEEEP FILE'
+            place_to_edit.pic_file = '%s.png' % category
+
 
     if notes != place_to_edit.notes:
         place_to_edit.notes = notes
