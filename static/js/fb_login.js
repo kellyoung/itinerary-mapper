@@ -76,12 +76,10 @@
 
     var token = response.authResponse.accessToken;
     console.log(token);
-    var params = { 'token': response.authResponse.accessToken,
-                   'user_id': response.authResponse.userID };
+    var params = { 'token': response.authResponse.accessToken};
     console.log(params);
-    $.post('/fb_login', params, function(results){
-        console.log(results.status);
-        window.reload();
+    $.post('/fb_login.json', params, function(){
+        console.log('test');
     });
 
     FB.api('/me', {fields: 'name, id'}, function(response) {
