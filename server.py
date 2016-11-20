@@ -364,6 +364,8 @@ def delete_place():
 
 @app.route('/edit_place.json', methods=['POST'])
 def edit_place():
+    """Takes input from the edit form and decides how to update database"""
+
     place_id = request.form.get('place_id')
     place_name = request.form.get('place_name')
     place_search = request.form.get('place_search')
@@ -380,8 +382,8 @@ def edit_place():
     keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
 
     if 'pic' in request.files:
-        print 'NEW PICTURE HERE'
         pic_file = request.files['pic']
+
         if allowed_file(pic_file.filename):
             # I want to convert the filename
             if place_to_edit.pic_file not in keep_files:
@@ -392,7 +394,9 @@ def edit_place():
                                        extension))
             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             place_to_edit.pic_file = filename
+
     elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
+        # make sure to only delete a picture if it isn't a default one.
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
                                place_to_edit.pic_file))
         place_to_edit.pic_file = '%s.png' % category
@@ -410,14 +414,10 @@ def edit_place():
         place_to_edit.date = date
 
     if category != place_to_edit.cat_id:
-        # if place_to_edit.pic_file == '%s.png' % place_to_edit.cat_id:
-            
-        #     print place_to_edit.pic_file
         place_to_edit.cat_id = category
+        # updating the category also updates pic if using a default pic
         if place_to_edit.pic_file in keep_files:
-            print 'KEEEP FILE KEEEEEP FILE'
             place_to_edit.pic_file = '%s.png' % category
-
 
     if notes != place_to_edit.notes:
         place_to_edit.notes = notes

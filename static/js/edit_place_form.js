@@ -109,7 +109,7 @@ function sendDeleteInfo(){
 
     $.post('/delete_place.json', deletePlaceParams, function(results){
         console.log(results.status);
-        location.reload();
+        location.reload(true);
     });
 }
 
