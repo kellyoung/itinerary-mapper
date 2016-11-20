@@ -104,7 +104,7 @@ function sendDeleteInfo(){
     var delete_place_id = $("#edit-place_id").val();
     console.log(delete_place_id);
     var deletePlaceParams = {
-        place_id: delete_place_id
+        'place_id': delete_place_id
     };
 
     $.post('/delete_place.json', deletePlaceParams, function(results){

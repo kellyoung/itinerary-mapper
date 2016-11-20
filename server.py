@@ -1,6 +1,7 @@
 """Itinerary Mapper"""
 import os
-# import sys
+
+import facebook
 
 from jinja2 import StrictUndefined
 
@@ -50,12 +51,8 @@ def index():
     # check to see if user is logged in
     username = session.get('username')
 
-    # check to see if the user has a trip or not
-    user_trip = Trip.query.filter(Trip.username == username).first()
-
     return render_template('homepage.html',
-                           username=username,
-                           user_trip=user_trip)
+                           username=username)
 
 
 @app.route('/login', methods=['POST'])
@@ -81,6 +78,32 @@ def login():
         flash('The username and password do not exist. Try again.')
 
     return redirect('/')
+
+
+# @app.route('/fb_login', methods=['POST'])
+# def fb_login():
+#     """Checks to see if user has logged in before, if not, store info in DB"""
+#     user_id = request.form.get('user_id')
+#     token = request.form.get('token')
+
+#     graph = facebook.GraphAPI(token)
+#     graph.get_object(id='me')
+#     args = {'fields': 'name'}
+#     profile = graph.get_object('me', **args)
+#     print profile
+
+#     check_username = db.session.query(User).filter(User.username ==
+#                                                    user_id).first()
+
+#     if not check_username:
+#         # will need to fix password part, password should be an opt. parameter
+#         # this will prevent people from trying to manually enter into FB accounts
+#         # and won't have to store sensitive data
+#         new_user = User(name=profile.name, username=user_id, password='fb_user')
+#         db.session.add(new_user)
+#         db.session.commit()
+#     flash('Welcome, %s!') % profile.name
+#     return jsonify({'status': 'success'})
 
 
 @app.route('/logout')
