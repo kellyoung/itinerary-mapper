@@ -13,7 +13,7 @@
             <label for='name'>Name: </label><br>
             <input type='text' name='name' required><br>
             <label for='username'>Username: </label><br>
-            <input type='text' name='username' required><br>
+            <input type='text' name='username' class='char-restrict' required><br>
             <label for='password'>Password: </label><br>
             <input type='password' name='password' required><br>
             <input type='submit' value='Create User'>
@@ -22,7 +22,7 @@
         <h4>Login</h4>
         <form action='/login' method='POST'>
             <label for='username'>Username: </label><br>
-            <input type='text' name='username' required><br>
+            <input type='text' name='username' class='char-restrict' required><br>
             <label for='password'>Password: </label><br>
             <input type='password' name='password' required><br>
             <input type='submit' value='Login'>
@@ -91,7 +91,20 @@
     }
   } );
 </script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+<script>
+  // script to restrict the kind of characters allowed
+  $(".char-restrict").bind("keypress", function (event) {
+      if (event.charCode !== 0) {
+          var regex = new RegExp("^[a-zA-Z0-9]+$");
+          var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+          if (!regex.test(key)) {
+              event.preventDefault();
+              return false;
+          }
+      }
+  });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- <script src="/static/js/fb_login.js"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
