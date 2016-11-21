@@ -510,8 +510,12 @@ def return_all_places():
         place_loc = place.place_loc
         latitude = place.latitude
         longitude = place.longitude
-        img_url = url_for('uploaded_file', filename=place.pic_file)
-        content = """
+
+        default_pics = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
+        if place.pic_file not in default_pics:
+            img_url = url_for('uploaded_file', filename=place.pic_file)
+
+            content = """
                     <div id='place-div-%s' class='place-div'>
                     <h5>Day:</h5>
                     <p>Day %s: %s</p>
@@ -527,6 +531,22 @@ def return_all_places():
                     </div>
                     """ % (place.place_id, day_num, place.date, category, title,
                            place.place_loc, place.notes, img_url)
+        else:
+            content = """
+                    <div id='place-div-%s' class='place-div'>
+                    <h5>Day:</h5>
+                    <p>Day %s: %s</p>
+                    <h5>Category:</h5>
+                    <p>%s</p>
+                    <h5>Place Name:</h5>
+                    <p>%s</p>
+                    <h5>Place Address:</h5>
+                    <p>%s</p>
+                    <h5>Notes:</h5>
+                    <p>%s</p>
+                    </div>
+                    """ % (place.place_id, day_num, place.date, category, title,
+                           place.place_loc, place.notes)
         place_info = {'title': title, 'day_num': day_num, 'category': category,
                       'latitude': latitude, 'longitude': longitude, 'content': content,
                       'place_loc': place_loc}

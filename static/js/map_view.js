@@ -1,6 +1,6 @@
 var finalMap;
 var placesLatLng=[];
-function allPlacesControl(controlDiv, map, bounds) {
+window.allPlacesControl = function(controlDiv, map, bounds) {
     // Set CSS for the control border.
     var controlUI = document.createElement('div');
     controlUI.style.backgroundColor = '#fff';
@@ -34,7 +34,8 @@ function allPlacesControl(controlDiv, map, bounds) {
     });
     // console.log('control button!!!');
 
-}
+};
+
 window.createAllPlacesMap = function(results){
     console.log(results);
 
@@ -43,7 +44,12 @@ window.createAllPlacesMap = function(results){
                 zoom: 0,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-    
+
+    // object with the categories and a list for each marker to be added to
+    categoryFilterMarkers = {'eat': [],
+                             'sleep': [],
+                             'explore': [],
+                             'transport': []};
     for(var place in results){
         var latLng = new google.maps.LatLng(results[place].latitude, results[place].longitude);
         placesLatLng.push(latLng);
@@ -51,8 +57,9 @@ window.createAllPlacesMap = function(results){
         var content = results[place].content;
         var dayNum = String(results[place].day_num);
 
+        var category = results[place].category;
         var markerColor;
-        switch(results[place].category){
+        switch(category){
             case 'transport':
                 markerColor = '0C9FF9';
                 break;
@@ -66,29 +73,30 @@ window.createAllPlacesMap = function(results){
                 markerColor = 'FF3891';
                 break;
         }
-
-        var marker = new google.maps.Marker({
+        categoryFilterMarkers[category].push(new google.maps.Marker({
             map: finalMap,
             place: {
-            location: latLng,
-            query: results[place].place_loc
-
+                location: latLng,
+                query: results[place].place_loc
             },
-
             title: results[place].title,
             
             // position: latLng,
             content: content,
             icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
                   dayNum + '|' + markerColor + '|000000'
-        });
+        }));
 
+        test = categoryFilterMarkers[category][categoryFilterMarkers[category].length-1].getVisible();
+        console.log(test);
         var infowindow = new google.maps.InfoWindow();
 
-        google.maps.event.addListener(marker, 'click', function () {
+        google.maps.event.addListener(categoryFilterMarkers[category][categoryFilterMarkers[category].length-1],
+                                     'click', function () {
                                 infowindow.setContent(this.content);
                                 infowindow.open(this.getMap(), this);
                             });
+        console.log(categoryFilterMarkers);
     }
 
     var latlngbounds = new google.maps.LatLngBounds();
@@ -105,10 +113,82 @@ window.createAllPlacesMap = function(results){
 
 };
 
-function mapPlaces(){
+function createFinalMapPlaces(){
     var params = {'trip_id': $('#map-trip_id').val()};
     $.get('/places_to_map.json', params, createAllPlacesMap);
+
+    $('.map-filters').on('change', 'input[type="checkbox"]', function () {
+        var filter = $(this).val();
+        var filter_id = $(this).attr('id');
+        var filter_cat = filter_id.split('-')[0];
+        console.log(filter_cat);
+        for (i = 0; i < categoryFilterMarkers[filter_cat].length; i++) {
+            //Test to see if the entry matches, for now we'll just make it random to illustrate the concept
+            //e.g. if(filter in sites[i].attrs)
+            if(categoryFilterMarkers[filter_cat][i].getVisible()) {
+                categoryFilterMarkers[filter_cat][i].setVisible(false);
+            } else {
+                categoryFilterMarkers[filter_cat][i].setVisible(true);
+            }
+        }
+    });
+
 }
 
-$(document).ready(mapPlaces);
+$(document).ready(createFinalMapPlaces);
+
+document.getElementById("copyButton").addEventListener("click", function() {
+    copyToClipboard(document.getElementById("copyTarget"));
+});
+
+//copy link to clipboard
+function copyToClipboard(elem) {
+      // create hidden text element, if it doesn't already exist
+    var targetId = "_hiddenCopyText_";
+    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+    var origSelectionStart, origSelectionEnd;
+    if (isInput) {
+        // can just use the original source element for the selection and copy
+        target = elem;
+        origSelectionStart = elem.selectionStart;
+        origSelectionEnd = elem.selectionEnd;
+    } else {
+        // must use a temporary form element for the selection and copy
+        target = document.getElementById(targetId);
+        if (!target) {
+            var target = document.createElement("textarea");
+            target.style.position = "absolute";
+            target.style.left = "-9999px";
+            target.style.top = "0";
+            target.id = targetId;
+            document.body.appendChild(target);
+        }
+        target.textContent = elem.textContent;
+    }
+    // select the content
+    var currentFocus = document.activeElement;
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+    
+    // copy the selection
+    var succeed;
+    try {
+          succeed = document.execCommand("copy");
+    } catch(e) {
+        succeed = false;
+    }
+    // restore original focus
+    if (currentFocus && typeof currentFocus.focus === "function") {
+        currentFocus.focus();
+    }
+    
+    if (isInput) {
+        // restore prior selection
+        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+    } else {
+        // clear temporary content
+        target.textContent = "";
+    }
+    return succeed;
+}
 
