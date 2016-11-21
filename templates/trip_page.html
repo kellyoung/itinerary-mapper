@@ -109,7 +109,8 @@
                             <p class='utf-8'>{{ place[1].decode('utf-8') }}</p>
                             <h5>Notes:</h5>
                             <p>{{ place[0].notes }}</p>
-                            <img src='/uploads/{{ place[0].pic_file }}'>
+                            <div style="width:275px;height:212.5px;overflow:hidden;text-align:center"><img src='/uploads/{{ place[0].pic_file }}' style="width:275px;margin:auto">
+                            </div>
                             <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                               Edit Place
                             </button>

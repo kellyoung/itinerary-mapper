@@ -25,8 +25,6 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
-# reload(sys)
-# sys.setdefaultencoding("UTF-8")
 
 
 def allowed_file(filename):
@@ -166,7 +164,7 @@ def trip_page(username, trip_id):
 
     if in_session == username:
         user = User.query.get(username)
-        trip = Trip.query.get(trip_id)
+        trip = Trip.query.get(int(trip_id))
 
         trip_dates = []
 

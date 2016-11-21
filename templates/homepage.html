@@ -11,11 +11,11 @@
         <h4>Create an Account</h4>
         <form action='/create_user' method='POST'>
             <label for='name'>Name: </label><br>
-            <input type='text' name='name' required><br>
-            <label for='username'>Username: </label><br>
-            <input type='text' name='username' class='char-restrict' required><br>
+            <input type='text' name='name' autocomplete="off" required><br>
+            <label for='username'>Username  (alphanumeric only): </label><br>
+            <input type='text' name='username' class='char-restrict' autocomplete="off" required><br>
             <label for='password'>Password: </label><br>
-            <input type='password' name='password' required><br>
+            <input type='password' name='password' autocomplete="off" required><br>
             <input type='submit' value='Create User'>
         </form>
         <br>
@@ -24,7 +24,7 @@
             <label for='username'>Username: </label><br>
             <input type='text' name='username' class='char-restrict' required><br>
             <label for='password'>Password: </label><br>
-            <input type='password' name='password' required><br>
+            <input type='password' name='password' autocomplete="off" required><br>
             <input type='submit' value='Login'>
         </form>
         <br>
@@ -104,7 +104,7 @@
       }
   });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 <!-- <script src="/static/js/fb_login.js"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
