@@ -26,14 +26,21 @@ app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
 
-
 def allowed_file(filename):
+    """check if file is a valid name
+    >>> allowed_file('dog.png')
+    True
+
+    >>> allowed_file('dog.gif')
+    False
+    """
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    """a route to where files are stored"""
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
 
@@ -158,32 +165,51 @@ def all_trips_page(username):
         return redirect('/')
 
 
+def create_date_range(start, end):
+    """
+    takes a start date object and an end date object
+    and generates the dates between and returns all
+    of the dates as a list. It's a list of tuple that
+    gives day number, trip_date object, and trip_date
+    as a string.
+
+    >>> create_date_range(datetime.date(2010, 5, 24), datetime.date(2010, 5, 25)) # doctest: +NORMALIZE_WHITESPACE
+    [(1, datetime.date(2010, 5, 24), 'May 24, 2010'),
+    (2, datetime.date(2010, 5, 25), 'May 25, 2010')]
+    """
+    trip_dates = []
+
+    delta = end - start
+
+    for index, i in enumerate(range(delta.days + 1)):
+            trip_date = start + datetime.timedelta(days=i)
+            trip_date_str = trip_date.strftime("%B %d, %Y")
+            trip_dates.append((index+1, trip_date, trip_date_str))
+
+    return trip_dates
+
+
 @app.route('/create_trip/<username>/<trip_id>')
 def trip_page(username, trip_id):
+    """
+    Takes information from trip creation form
+    and renders the template with the information.
+    """
     in_session = session.get('username')
 
     if in_session == username:
         user = User.query.get(username)
         trip = Trip.query.get(int(trip_id))
 
-        trip_dates = []
-
-        delta = trip.end_date - trip.start_date
-
-        for index, i in enumerate(range(delta.days + 1)):
-            trip_date = trip.start_date + datetime.timedelta(days=i)
-            trip_date_str = trip_date.strftime("%B %d, %Y")
-            trip_dates.append((index+1, trip_date, trip_date_str))
+        # create dates between start date and end date
+        trip_dates = create_date_range(trip.start_date, trip.end_date)
 
         trip_places = Place.query.filter(Place.trip_id == trip_id).all()
-        trip_places_utf = []
 
+        trip_places_utf = []
         for place in trip_places:
-            print place.place_loc
-            print type(place.place_loc)
-            print type(unicode(place.place_loc))
+            # needs to be encoded in case google places address is non-latin
             place_loc = place.place_loc.encode('utf-8')
-            print type(place_loc)
             trip_places_utf.append((place, place_loc))
 
         # need to pass in all places too to be used in JINJA
@@ -193,6 +219,8 @@ def trip_page(username, trip_id):
                                trip_dates=trip_dates,
                                trip_places=trip_places_utf)
     else:
+        # handle if someone is trying to access the route directly without
+        # signing in
         flash('You do not have access to this page.')
         return redirect('/')
 
@@ -207,12 +235,10 @@ def create_trip():
     trip_name = request.form.get('tripname')
     from_date = request.form.get('from')
     to_date = request.form.get('to')
-    # latitude, longitude = request.form.get('coordinates').split(',')
     latitude = request.form.get('latitude')
     longitude = request.form.get('longitude')
     loc_name = request.form.get('loc-name')
     viewport = request.form.get('viewport')
-    print viewport
 
     # DOESN't SEEM TO BE NECESSARY converts string dates to date objects
     # first_day = datetime.datetime.strptime(from_date, '%m/%d/%Y').date()
@@ -225,10 +251,6 @@ def create_trip():
 
     db.session.add(new_trip)
     db.session.commit()
-
-    # print trip_name, from_date, to_date, latitude, longitude, loc_name, viewport
-
-    # return redirect('/create_trip/%s/%s' % (username, new_trip.trip_id))
 
     return jsonify({'status': 'success', 'username': new_trip.username,
                     'trip_id': new_trip.trip_id})
@@ -243,13 +265,9 @@ def trip_loc_info():
     trip_id = int(request.args.get('trip_id'))
     trip = Trip.query.get(trip_id)
 
-    print trip
-
     latitude = trip.latitude
     longitude = trip.longitude
     viewport = trip.viewport
-    print latitude, longitude
-    print viewport
 
     return jsonify({'latitude': latitude, 'longitude': longitude, 'viewport': viewport})
 
@@ -271,9 +289,6 @@ def add_place():
     cat_id = request.form.get('category')
     notes = request.form.get('notes')
 
-    # i need to add the picture in after creating new place so i can access
-    # the place_id
-
     new_place = Place(place_name=place_name, place_loc=place_loc,
                       latitude=latitude, longitude=longitude, day_num=day_num,
                       date=date, trip_id=trip_id, cat_id=cat_id, notes=notes)
@@ -281,16 +296,16 @@ def add_place():
     db.session.add(new_place)
     db.session.commit()
 
+    # handle pictures
     if 'pic' in request.files:
         print 'GET PICTURE HERE'
         pic_file = request.files['pic']
         if allowed_file(pic_file.filename):
-            # I want to convert the filename
+            # convert the filename to the place_id its associated with
             extension = pic_file.filename.rsplit('.', 1)[1]
             filename = secure_filename('%s.%s' % (new_place.place_id, extension))
             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             #  add filename to database
-            print filename
             new_place.pic_file = filename
     else:
         # go to the else and add a default pic into the database if nothing
@@ -301,7 +316,8 @@ def add_place():
 
     db.session.commit()
     img_url = url_for('uploaded_file', filename=new_place.pic_file)
-    print img_url
+
+    # div that will be added dynamically to page for new place added
     new_place_div = """
                     <div id='place-div-%s' class='place-div'>
                     <h5>Day:</h5>
@@ -314,7 +330,9 @@ def add_place():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
-                    <img src='%s' alt='%s picture'>
+                    <div style="width:275px;height:212.5px;overflow:hidden;text-align:center">
+                    <img src='%s' alt='%s picture' style="width:275px;margin:auto">
+                    </div>
                     <button type="button" id="newly-added" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
                       Edit Place
                     </button>
@@ -328,7 +346,7 @@ def add_place():
 @app.route('/edit_place_info.json')
 def get_place_info():
     """
-    Passes back info to Edit place Form
+    Passes back info to Edit Place Form to display it
     """
 
     place_id = request.args.get('place_id')
@@ -346,7 +364,7 @@ def get_place_info():
 @app.route('/delete_place.json', methods=['POST'])
 def delete_place():
     """
-    Deletes a place by trip_id submitted and rerenders the create trip page.
+    Deletes a place by trip_id submitted and just returns a status update to JS.
     """
 
     place_id = request.form.get('place_id')
@@ -379,18 +397,23 @@ def edit_place():
 
     keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
 
+    # handles what to do in terms of picture updates
     if 'pic' in request.files:
+        # if someone uploads a new picture
         pic_file = request.files['pic']
 
+        # if its an allowed file
         if allowed_file(pic_file.filename):
-            # I want to convert the filename
+            # replace the picture for that file if its not a default pic
             if place_to_edit.pic_file not in keep_files:
+                # first remove old picture
                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
                                        place_to_edit.pic_file))
             extension = pic_file.filename.rsplit('.', 1)[1]
             filename = secure_filename('%s.%s' % (place_to_edit.place_id,
                                        extension))
             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # update in database
             place_to_edit.pic_file = filename
 
     elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
@@ -399,6 +422,7 @@ def edit_place():
                                place_to_edit.pic_file))
         place_to_edit.pic_file = '%s.png' % category
 
+    # below is checking what information was changed and needs to be updated.
     if place_name != place_to_edit.place_name:
         place_to_edit.place_name = place_name
 
@@ -420,7 +444,7 @@ def edit_place():
     if notes != place_to_edit.notes:
         place_to_edit.notes = notes
 
-    if latitude and longitude:
+    if latitude or longitude:
         place_to_edit.latitude = latitude
         place_to_edit.longitude = longitude
 
@@ -431,6 +455,7 @@ def edit_place():
 
 @app.route('/publish_trip.json', methods=['POST'])
 def publish_trip():
+    """toggles if the trip is public or private"""
     trip_id = request.form.get('trip_id')
     target_trip = Trip.query.get(int(trip_id))
 
@@ -439,7 +464,6 @@ def publish_trip():
     else:
         target_trip.published = True
 
-    print target_trip.published
     db.session.commit()
 
     return jsonify({'status': target_trip.published})
@@ -447,6 +471,10 @@ def publish_trip():
 
 @app.route('/delete_trip.json', methods=['POST'])
 def delete_trip():
+    """
+    Deletes trip from the database. Returns a status and also
+    username to take it back to the user's all trips page.
+    """
     trip_id = int(request.form.get('trip_id'))
 
     trip_places = Place.query.filter(Place.trip_id == trip_id).all()
@@ -486,13 +514,17 @@ def display_map(username, trip_id):
                                trip=trip,
                                username=username)
     else:
+        # if trip is not public yet or it isn't the user visiting.
         flash('Sorry! You don\'t have access to this page.')
         return redirect('/')
 
 
 @app.route('/places_to_map.json')
 def return_all_places():
-    """passes back info of all places in trip as json"""
+    """
+    Passes back info of all places in a trip as json to be
+    used to create the Google Maps and markers.
+    """
     # get trip by id and find all its places
     trip_id = request.args.get('trip_id')
     places = Trip.query.get(int(trip_id)).places
@@ -509,6 +541,7 @@ def return_all_places():
         latitude = place.latitude
         longitude = place.longitude
 
+        # only have an img_url if picture is not default, changes html to be passed
         default_pics = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
         if place.pic_file not in default_pics:
             img_url = url_for('uploaded_file', filename=place.pic_file)
@@ -525,7 +558,9 @@ def return_all_places():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
-                    <img src='%s'>
+                    <div style="width:275px;height:212.5px;overflow:hidden;text-align:center">
+                    <img src='%s' style="width:275px;margin:auto">
+                    </div>
                     </div>
                     """ % (place.place_id, day_num, place.date, category, title,
                            place.place_loc, place.notes, img_url)
@@ -545,9 +580,12 @@ def return_all_places():
                     </div>
                     """ % (place.place_id, day_num, place.date, category, title,
                            place.place_loc, place.notes)
+
         place_info = {'title': title, 'day_num': day_num, 'category': category,
                       'latitude': latitude, 'longitude': longitude, 'content': content,
                       'place_loc': place_loc}
+
+        # add to the dictionary with the key of place_id
         all_places[place.place_id] = place_info
 
     # jsonify it to be processed in front end
