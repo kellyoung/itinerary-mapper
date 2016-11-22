@@ -1,5 +1,7 @@
 var finalMap;
 var placesLatLng=[];
+
+// creates a button that centers back to all places
 window.allPlacesControl = function(controlDiv, map, bounds) {
     // Set CSS for the control border.
     var controlUI = document.createElement('div');
@@ -36,6 +38,7 @@ window.allPlacesControl = function(controlDiv, map, bounds) {
 
 };
 
+// create the final map with all of the markers in it
 window.createAllPlacesMap = function(results){
     console.log(results);
 
@@ -115,8 +118,11 @@ window.createAllPlacesMap = function(results){
 
 function createFinalMapPlaces(){
     var params = {'trip_id': $('#map-trip_id').val()};
+    // send to server which trip you are on and then createAllPlacesMap
+    // with information from server.
     $.get('/places_to_map.json', params, createAllPlacesMap);
 
+    // map filters and handle what checking and unchecking does to the map.
     $('.map-filters').on('change', 'input[type="checkbox"]', function () {
         var filter = $(this).val();
         var filter_id = $(this).attr('id');
@@ -135,13 +141,16 @@ function createFinalMapPlaces(){
 
 }
 
+// on document load, create the final map.
 $(document).ready(createFinalMapPlaces);
+
 
 document.getElementById("copyButton").addEventListener("click", function() {
     copyToClipboard(document.getElementById("copyTarget"));
 });
 
-//copy link to clipboard
+
+// copy link to clipboard
 function copyToClipboard(elem) {
       // create hidden text element, if it doesn't already exist
     var targetId = "_hiddenCopyText_";

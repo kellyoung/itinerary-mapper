@@ -29,7 +29,7 @@ window.tripPageMaps = function(){
 
   //deletes trip. deleteTrip from trip_page.js
   $('#delete-trip-btn').on('click', deleteTrip);
-}
+};
 
 function addPlaceMapInfo(){
   var tripLat;
