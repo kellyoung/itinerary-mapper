@@ -25,6 +25,8 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
+# --------------------------------------------------------------------------- #
+
 
 def allowed_file(filename):
     """check if file is a valid name
@@ -240,10 +242,6 @@ def create_trip():
     loc_name = request.form.get('loc-name')
     viewport = request.form.get('viewport')
 
-    # DOESN't SEEM TO BE NECESSARY converts string dates to date objects
-    # first_day = datetime.datetime.strptime(from_date, '%m/%d/%Y').date()
-    # last_day = datetime.datetime.strptime(to_date, '%m/%d/%Y').date()
-
     # add info to trips table in database
     new_trip = Trip(trip_name=trip_name, start_date=from_date, end_date=to_date,
                     username=username, latitude=latitude, longitude=longitude,
@@ -252,7 +250,8 @@ def create_trip():
     db.session.add(new_trip)
     db.session.commit()
 
-    return jsonify({'status': 'success', 'username': new_trip.username,
+    return jsonify({'status': 'success',
+                    'username': new_trip.username,
                     'trip_id': new_trip.trip_id})
 
 
@@ -269,7 +268,9 @@ def trip_loc_info():
     longitude = trip.longitude
     viewport = trip.viewport
 
-    return jsonify({'latitude': latitude, 'longitude': longitude, 'viewport': viewport})
+    return jsonify({'latitude': latitude,
+                    'longitude': longitude,
+                    'viewport': viewport})
 
 
 @app.route('/add_place.json', methods=['POST'])
@@ -303,15 +304,16 @@ def add_place():
         if allowed_file(pic_file.filename):
             # convert the filename to the place_id its associated with
             extension = pic_file.filename.rsplit('.', 1)[1]
-            filename = secure_filename('%s.%s' % (new_place.place_id, extension))
+            filename = secure_filename('%s.%s' % (new_place.place_id,
+                                                  extension))
             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
             #  add filename to database
             new_place.pic_file = filename
     else:
         # go to the else and add a default pic into the database if nothing
         # need to find out what category it's in
         filename = cat_id + '.png'
-        print filename
         new_place.pic_file = filename
 
     db.session.commit()
@@ -330,17 +332,21 @@ def add_place():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
-                    <div style="width:275px;height:212.5px;overflow:hidden;text-align:center">
+                    <div style="width:275px;height:212.5px;overflow:hidden;
+                    text-align:center">
                     <img src='%s' alt='%s picture' style="width:275px;margin:auto">
                     </div>
-                    <button type="button" id="newly-added" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
-                      Edit Place
+                    <button type="button" id="newly-added" class="btn btn-primary
+                    btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
+                    Edit Place
                     </button>
                     </div>
-                    """ % (new_place.place_id, day_num, date, cat_id, place_name,
-                           place_loc, notes, img_url, place_name)
+                    """ % (new_place.place_id, day_num, date, cat_id,
+                           place_name, place_loc, notes, img_url, place_name)
 
-    return jsonify({'place_id': new_place.place_id, 'new_place_div': new_place_div, 'place_loc': new_place.place_loc})
+    return jsonify({'place_id': new_place.place_id,
+                    'new_place_div': new_place_div,
+                    'place_loc': new_place.place_loc})
 
 
 @app.route('/edit_place_info.json')
@@ -353,11 +359,15 @@ def get_place_info():
     select_place = Place.query.get(place_id)
     formatted_date = select_place.date.strftime("%Y-%m-%d")
 
-    return jsonify({'place_id': place_id, 'place_name': select_place.place_name,
-                    'place_loc': select_place.place_loc, 'latitude': select_place.latitude,
-                    'longitude': select_place.longitude, 'day_num': select_place.day_num,
+    return jsonify({'place_id': place_id,
+                    'place_name': select_place.place_name,
+                    'place_loc': select_place.place_loc,
+                    'latitude': select_place.latitude,
+                    'longitude': select_place.longitude,
+                    'day_num': select_place.day_num,
                     'trip_id': select_place.trip_id,
-                    'cat_id': select_place.cat_id, 'notes': select_place.notes,
+                    'cat_id': select_place.cat_id,
+                    'notes': select_place.notes,
                     'formatted_date': formatted_date})
 
 
@@ -373,7 +383,6 @@ def delete_place():
 
     db.session.delete(place_to_delete)
     db.session.commit()
-    #  destination = url_for('.create_trip', username=username, trip_id=trip_id)
 
     return jsonify({'status': 'Deleted'})
 
@@ -409,6 +418,7 @@ def edit_place():
                 # first remove old picture
                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
                                        place_to_edit.pic_file))
+
             extension = pic_file.filename.rsplit('.', 1)[1]
             filename = secure_filename('%s.%s' % (place_to_edit.place_id,
                                        extension))
@@ -480,17 +490,14 @@ def delete_trip():
     trip_places = Place.query.filter(Place.trip_id == trip_id).all()
     trip = Trip.query.get(trip_id)
 
-    print trip_places
-    print trip
-
     # get the username to be passed
     username = trip.username
     # delete all places first
     for place in trip_places:
         db.session.delete(place)
+
     # then delete the trip itself
     db.session.delete(trip)
-
     db.session.commit()
 
     return jsonify({'status': 'success', 'username': username})
@@ -558,7 +565,8 @@ def return_all_places():
                     <p>%s</p>
                     <h5>Notes:</h5>
                     <p>%s</p>
-                    <div style="width:275px;height:212.5px;overflow:hidden;text-align:center">
+                    <div style="width:275px;height:212.5px;
+                    overflow:hidden;text-align:center">
                     <img src='%s' style="width:275px;margin:auto">
                     </div>
                     </div>
@@ -582,8 +590,8 @@ def return_all_places():
                            place.place_loc, place.notes)
 
         place_info = {'title': title, 'day_num': day_num, 'category': category,
-                      'latitude': latitude, 'longitude': longitude, 'content': content,
-                      'place_loc': place_loc}
+                      'latitude': latitude, 'longitude': longitude,
+                      'content': content, 'place_loc': place_loc}
 
         # add to the dictionary with the key of place_id
         all_places[place.place_id] = place_info
@@ -591,6 +599,8 @@ def return_all_places():
     # jsonify it to be processed in front end
     return jsonify(all_places)
 
+
+# --------------------------------------------------------------------------- #
 
 if __name__ == '__main__':
 
