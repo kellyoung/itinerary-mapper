@@ -60,3 +60,22 @@ function addPlaceToDB(evt) {
     });
 }
 
+//function to handle incorrect file types
+function checkFileType(event){
+    var ext = this.value.match(/\.(.+)$/)[1];
+    switch(ext)
+    {
+        case 'jpg':
+        case 'png':
+        case 'jpeg':
+        case 'JPG':
+        case 'PNG':
+            console.log('allowed');
+            break;
+        default:
+            alert('File type not allowed.');
+            this.value='';
+    }
+}
+$('#place-pic-file').on('change', checkFileType);
+$('#edit-place-pic-file').on('change', checkFileType);

@@ -31,7 +31,6 @@ function convertUTF(){
 
     $('.utf-8').each(function(){
         var decoded = decode_utf8($(this).text());
-        console.log(decoded);
         $(this).html(decoded);
     });
     // decode_utf8($('.utf-8').html());
