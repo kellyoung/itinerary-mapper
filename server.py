@@ -1,6 +1,7 @@
 """Itinerary Mapper"""
 import os
 
+import bcrypt
 # import facebook
 
 from jinja2 import StrictUndefined
@@ -42,7 +43,7 @@ def allowed_file(filename):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    """a route to where files are stored"""
+    """a route to where files are stored to access pictures"""
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
 
@@ -73,10 +74,10 @@ def login():
     # check to see if username is valid and in database
     check_username = db.session.query(User).filter(User.username ==
                                                    username).first()
-
     if not username or not password:
         flash('Please enter a username and password.')
-    elif check_username and check_username.password == password:
+
+    if bcrypt.hashpw(str(password), str(check_username.password)) == str(check_username.password):
         session['username'] = check_username.username
         flash('Welcome, %s!' % check_username.name)
     elif check_username:
@@ -132,6 +133,10 @@ def create_user():
     name = request.form.get('name')
     username = request.form.get('username')
     password = request.form.get('password')
+    hashed_pw = bcrypt.hashpw(str(password), bcrypt.gensalt())
+
+    if bcrypt.hashpw(str(password), hashed_pw) == hashed_pw:
+        print "It matches"
 
     # see if user already exists
     check_users_existance = User.query.filter(User.username == username).first()
@@ -141,7 +146,7 @@ def create_user():
         flash('%s is already taken. Please try again.' % username)
     # if username isn't taken, add to the database.
     else:
-        new_user = User(name=name, username=username, password=password)
+        new_user = User(name=name, username=username, password=hashed_pw)
         db.session.add(new_user)
         db.session.commit()
 

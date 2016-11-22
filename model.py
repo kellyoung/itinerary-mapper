@@ -16,7 +16,7 @@ class User(db.Model):
 
     name = db.Column(db.String(64), nullable=False)
     username = db.Column(db.String(64), primary_key=True)
-    password = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
 
     def __repr__(self):
         """Helpful representation when printed"""
@@ -173,7 +173,6 @@ def connect_to_db(app, db_uri='postgresql:///itineraries'):
 
 if __name__ == '__main__':
     #can run module interactiviely and work with database directly
-    db.create_all()
     from server import app
     connect_to_db(app)
     print 'Connected to DB.'
