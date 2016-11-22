@@ -154,7 +154,7 @@ def create_user():
 def all_trips_page(username):
     in_session = session.get('username')
     print 'in username/trips'
-    print type(in_session)
+    print in_session
     if in_session == username:
         user = User.query.get(username)
         # user_trips = user.trips.order_by(Trip.start_date)

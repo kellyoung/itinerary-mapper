@@ -91,7 +91,7 @@ class ItineraryInSessionTests(unittest.TestCase):
 
         with self.client as c:
             with c.session_transaction() as sess:
-                sess['user_id'] = 'lizlemon'
+                sess['username'] = 'lizlemon'
 
     def tearDown(self):
         """Do at end of every test."""
@@ -103,6 +103,14 @@ class ItineraryInSessionTests(unittest.TestCase):
         """Test All Trips page."""
         result = self.client.get("/lizlemon/trips", follow_redirects=True)
         self.assertNotIn('You do not have access to this page.', result.data)
+        self.assertIn('A Weekend in Portland', result.data)
+
+    def test_create_trip_page(self):
+        """Test a specific trip page."""
+        result = self.client.get("/create_trip/lizlemon/1", follow_redirects=True)
+        self.assertNotIn('You do not have access to this page.', result.data)
+        self.assertIn('Saturday Market', result.data)
+        self.assertIn('Blue Star Donuts', result.data)
 
 
 class ItineraryNoSessionTests(unittest.TestCase):
@@ -131,6 +139,13 @@ class ItineraryNoSessionTests(unittest.TestCase):
         result = self.client.get("/lizlemon/trips", follow_redirects=True)
         self.assertIn('You do not have access to this page.', result.data)
         self.assertNotIn('By:', result.data)
+
+    def test_create_trip_page(self):
+        """Test a specific trip page."""
+        result = self.client.get("/create_trip/lizlemon/1", follow_redirects=True)
+        self.assertIn('You do not have access to this page.', result.data)
+        self.assertNotIn('Saturday Market', result.data)
+        self.assertNotIn('Blue Star Donuts', result.data)
 
 
 if __name__ == "__main__":
