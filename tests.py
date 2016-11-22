@@ -74,7 +74,7 @@ class ItineraryDatabaseTests(unittest.TestCase):
         self.assertIn('Please try again.', result.data)
 
 
-class ItineraryInSessionTests(TestCase):
+class ItineraryInSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
 
     def setUp(self):
@@ -84,18 +84,28 @@ class ItineraryInSessionTests(TestCase):
         app.config['SECRET_KEY'] = 'key'
         self.client = app.test_client()
 
+        connect_to_db(app, "postgresql:///testitinerarydb")
+
+        db.create_all()
+        example_data()
+
         with self.client as c:
             with c.session_transaction() as sess:
-                sess['user_id'] = 'test'
+                sess['user_id'] = 'lizlemon'
+
+    def tearDown(self):
+        """Do at end of every test."""
+
+        db.session.close()
+        db.drop_all()
 
     def test_all_trips_page(self):
         """Test All Trips page."""
+        result = self.client.get("/lizlemon/trips", follow_redirects=True)
+        self.assertNotIn('You do not have access to this page.', result.data)
 
-        result = self.client.get("/important")
-        self.assertIn("You are a valued user", result.data)
 
-
-class ItineraryNoSessionTests(TestCase):
+class ItineraryNoSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
 
     def setUp(self):
@@ -104,12 +114,23 @@ class ItineraryNoSessionTests(TestCase):
         app.config['TESTING'] = True
         self.client = app.test_client()
 
-    def test_important_page(self):
-        """Test that user can't see important page when logged out."""
+        connect_to_db(app, "postgresql:///testitinerarydb")
 
-        result = self.client.get("/important", follow_redirects=True)
-        self.assertNotIn("You are a valued user", result.data)
-        self.assertIn("You must be logged in", result.data)
+        db.create_all()
+        example_data()
+
+    def tearDown(self):
+        """Do at end of every test."""
+
+        db.session.close()
+        db.drop_all()
+
+    def test_all_trips_page(self):
+        """Test that user can't see all trips page when logged out."""
+
+        result = self.client.get("/lizlemon/trips", follow_redirects=True)
+        self.assertIn('You do not have access to this page.', result.data)
+        self.assertNotIn('By:', result.data)
 
 
 if __name__ == "__main__":
