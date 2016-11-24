@@ -1,5 +1,7 @@
 import unittest
 
+import datetime
+
 from server import app
 from model import db, example_data, connect_to_db
 
@@ -15,6 +17,16 @@ class ItineraryTests(unittest.TestCase):
         result = self.client.get("/")
         self.assertIn("Create an Account", result.data)
         self.assertNotIn("Logout", result.data)
+
+    def test_create_trip_json(self):
+        result = self.client.post('/create_trip.json',
+                                  data={'username': 'lizlemon',
+                                        'trip_name': 'A Weekend in Portland',
+                                        'start_date': datetime.date(2016, 7, 5),
+                                        'end_date': datetime.date(2016, 7, 6),
+                                        'general_loc': 'Portland, Oregon',
+                                        'latitude': 45.523062,
+                                        'longitude': -122.676482})
 
 
 class ItineraryDatabaseTests(unittest.TestCase):
@@ -50,10 +62,22 @@ class ItineraryDatabaseTests(unittest.TestCase):
     def test_failed_login(self):
         result = self.client.post("/login",
                                   data={"username": "leslieknope",
-                                        "password": "pawneepride"},
+                                        "password": 'pawneepride'},
                                   follow_redirects=True)
         self.assertNotIn('Welcome,', result.data)
         self.assertIn('The username and password do not exist. Try again.', result.data)
+
+    def test_no_input_login(self):
+        result = self.client.post("/login", follow_redirects=True)
+        self.assertNotIn('Welcome', result.data)
+        self.assertIn('enter a username', result.data)
+
+    def test_wrong_pw_login(self):
+        result = self.client.post("/login",
+                                  data={"username": "lizlemon",
+                                        "password": 'pawneepride'},
+                                  follow_redirects=True)
+        self.assertIn('Incorrect Password.', result.data)
 
     def test_success_create_user(self):
         result = self.client.post("/create_user",
@@ -112,6 +136,11 @@ class ItineraryInSessionTests(unittest.TestCase):
         self.assertIn('Saturday Market', result.data)
         self.assertIn('Blue Star Donuts', result.data)
 
+    def test_logout(self):
+        """Test if logout works"""
+        result = self.client.get("/logout", follow_redirects=True)
+        self.assertIn('Logged out of', result.data)
+
 
 class ItineraryNoSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
@@ -146,7 +175,6 @@ class ItineraryNoSessionTests(unittest.TestCase):
         self.assertIn('You do not have access to this page.', result.data)
         self.assertNotIn('Saturday Market', result.data)
         self.assertNotIn('Blue Star Donuts', result.data)
-
 
 if __name__ == "__main__":
     unittest.main()

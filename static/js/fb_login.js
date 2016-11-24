@@ -1,3 +1,5 @@
+
+
 // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -6,8 +8,19 @@
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
+    $(document).ajaxSuccess(function() {
+        window.location.reload(true);
+    });
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      var params = {
+          "user_id": response.authResponse.userID,
+          "access_token": response.authResponse.accessToken
+        };
+      $.post('/fb_login.json', params, function(result){
+          console.log(result.status);
+      });
+
       testAPI(response);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -63,13 +76,13 @@
  
   function testAPI(response) {
 
-    var token = response.authResponse.accessToken;
-    console.log(token);
-    var params = { 'token': response.authResponse.accessToken};
-    console.log(params);
-    $.post('/fb_login.json', params, function(){
-        console.log('test');
-    });
+    // var token = response.authResponse.accessToken;
+    // console.log(token);
+    // var params = { 'token': response.authResponse.accessToken};
+    // console.log(params);
+    // $.post('/fb_login.json', params, function(){
+    //     console.log('test');
+    // });
 
     FB.api('/me', {fields: 'name, id'}, function(response) {
       console.log('Successful login for: ' + response.name);

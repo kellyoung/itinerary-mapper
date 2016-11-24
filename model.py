@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 import datetime
 
+import bcrypt
+
 db = SQLAlchemy()
 
 ###############################################################################
@@ -119,7 +121,9 @@ def example_data():
     """Create example data for the test database."""
 
     # example users
-    liz = User(name='Elizabeth Lemon', username='lizlemon', password='pizza')
+    password = 'pizza'
+    hashed_pw = bcrypt.hashpw(str(password), bcrypt.gensalt())
+    liz = User(name='Elizabeth Lemon', username='lizlemon', password=hashed_pw)
 
     # example trips
     portland = Trip(trip_name='A Weekend in Portland', start_date=datetime.date(2016, 7, 5),

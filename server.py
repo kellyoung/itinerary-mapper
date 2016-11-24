@@ -2,7 +2,8 @@
 import os
 
 import bcrypt
-# import facebook
+
+import facebook
 
 from jinja2 import StrictUndefined
 
@@ -77,13 +78,13 @@ def login():
     if not username or not password:
         flash('Please enter a username and password.')
 
-    if bcrypt.hashpw(str(password), str(check_username.password)) == str(check_username.password):
+    if not check_username:
+        flash('The username and password do not exist. Try again.')
+    elif bcrypt.hashpw(str(password), str(check_username.password)) == str(check_username.password):
         session['username'] = check_username.username
         flash('Welcome, %s!' % check_username.name)
     elif check_username:
         flash('Incorrect Password. Please try again.')
-    else:
-        flash('The username and password do not exist. Try again.')
 
     return redirect('/')
 
@@ -92,25 +93,26 @@ def login():
 # def fb_login():
 #     """Checks to see if user has logged in before, if not, store info in DB"""
 #     token = request.form.get('token')
+#     user_id = request.form.get('user_id')
 
 #     graph = facebook.GraphAPI(token)
-#     args = {'fields': 'name, id'}
+#     args = {'fields': 'name'}
 #     profile = graph.get_object('me', **args)
 #     print profile
 
 #     check_username = db.session.query(User).filter(User.username ==
-#                                                    profile['id']).first()
+#                                                    user_id).first()
 #     session['username'] = profile['id']
 #     print session['username']
 #     if not check_username:
 #         # will need to fix password part, password should be an opt. parameter
 #         # this will prevent people from trying to manually enter into FB accounts
 #         # and won't have to store sensitive data
-#         new_user = User(name=profile['name'], username=profile['id'], password='fb_user')
+#         new_user = User(name=profile['name'], username=user_id, password='fb_user')
 #         db.session.add(new_user)
 #         db.session.commit()
 #     # flash('Welcome, %s!') % profile['name']
-#     return redirect('/')
+#     return jsonify({'status': 'logged in'})
 
 
 @app.route('/logout')
