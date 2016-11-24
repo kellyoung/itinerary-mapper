@@ -152,7 +152,8 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
 
-        flash('The account %s was successfully created. Please log in.' %
+        session['username'] = new_user.username
+        flash('The account %s was successfully created. You are now signed in.' %
               username)
     return redirect('/')
 
