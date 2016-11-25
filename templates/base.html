@@ -1,5 +1,5 @@
 <!doctype html>
-<html manifest="" lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
@@ -8,6 +8,7 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity=
   "sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   {% block style %}
   {% endblock %}
 </head>
@@ -15,19 +16,17 @@
 <body>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul class=flashes>
+        <div class="flash-div">
         {% for message in messages %}
-          <li>{{ message }}</li>
+          <h5 class="flashed-message">{{ message }}</h5>
         {% endfor %}
-        </ul>
+        </div>
       {% endif %}
     {% endwith %}
 
 
-  <div class='container'>
   {% block content %} put your content here {% endblock %}
-  </div>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   {% block scripts %}
   {% endblock %}
 </body>
