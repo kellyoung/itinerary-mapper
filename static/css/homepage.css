@@ -1,0 +1,222 @@
+
+html {
+    height: 100%;
+}
+
+body {
+  background-image: url(/static/homebackgrounddarkened.jpg);
+  background-size: cover;
+  overflow:auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: gray;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.container {
+    width: 100%;
+}
+
+.navbar {
+    background-color: transparent;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    margin-bottom: -10px;
+}
+
+/*.navbar-default {
+    background:transparent;
+}*/
+.navbar-default .navbar-nav li a {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: white;
+    background-color: transparent;
+    outline: none !important;
+    box-shadow: none !important;
+}
+}
+.navbar-default {
+    border:transparent;
+}
+
+.navbar-default .navbar-brand{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar-default .navbar-collapse {
+    border:transparent;
+    box-shadow: none;
+}
+
+
+.navbar a:hover {
+    color: #fa8072 !important;
+    font-weight: bold;
+}
+
+.navbar-default .navbar-toggle {
+     border:transparent;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+button.navbar-toggle:hover{
+    background:none;
+    border:white;
+}
+
+#no-sess-div {
+    color: white;
+}
+#no-sess-div h1 {
+    font-size: 500%;
+    font-weight: normal;
+    letter-spacing: 6px;
+}
+
+#no-sess-div h5 {
+    font-size: 150%;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.modal-dialog {
+    width: 30%;
+    text-align: center;
+    color: gray;
+}
+
+@media screen and (max-width: 767px) {
+    #no-sess-div h1 {
+        font-size: 400%;
+        letter-spacing: 2px;
+    }
+    .modal-dialog {
+    width: auto;
+}
+}
+
+.no-sess-btn {
+    background: transparent;
+    font-size: 14px;
+}
+
+.no-sess-btn:hover{
+    color: #fa8072 !important;
+    font-weight: bold !important;
+}
+
+.btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn.focus, .btn:focus, .btn:hover {
+    color: white;
+}
+
+#no-sess-forms {
+    margin-top: 5px;
+}
+.doc-form input, .modal-form input, #create-trip input {
+    width: 150px;
+    background: transparent;
+    border: white 1.5px solid;
+    border-radius: 10px;
+    border-color: white;
+    text-align: center;
+    margin-bottom: 10px;
+    color: white;
+}
+
+#create-trip input {
+    width: 250px;
+}
+
+#create-trip #from  {
+    width: 150px;
+}
+
+#create-trip #to {
+    width: 150px;
+}
+
+.modal-form input {
+    border-color: gray;
+    color: gray;
+}
+
+.doc-form label , .modal-form label, #create-trip label {
+    font-weight: normal;
+    line-height: 20px;
+    color: white;
+
+}
+
+#create-trip label {
+    font-weight: bold;
+}
+
+.modal-form label {
+    color: gray;
+}
+#login-doc-submit, #create-doc-submit, .modal-form input[type=submit], #create-trip #submit-trip  {
+    font-weight: bold;
+    background-color: #fa8072;
+    border-color: #fa8072;
+    color: white;
+}
+
+#create-trip #submit-trip {
+    width: 100px;
+    margin-top: 8px;
+}
+
+#login-doc-submit {
+    width: 100px;
+}
+
+#create-doc-submit {
+    width: 140px;
+}
+
+.modal-form input[type=submit] {
+    margin-top: 5px;
+    width: 110px;
+}
+
+::-webkit-input-placeholder {
+    color: white;
+    font-style: italic;
+} 
+
+#in-sess-div {
+    margin-top: 40px;
+}
+
+#to-all-trips {
+    background: transparent;
+    border: transparent;
+    color: white;
+    font-style: italic;
+    font-size: 14px;
+    text-decoration: underline;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+#to-all-trips:hover {
+    color: #fa8072;
+}

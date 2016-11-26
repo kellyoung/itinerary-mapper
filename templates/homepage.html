@@ -5,11 +5,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 {% endblock %}
-{% block content %}
+
     <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
     </fb:login-button>
     <div id="status">
     </div> -->
+    {% block navbar %}
     <nav class="navbar navbar-default">
     <div id= "homenavbar"class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,13 +33,15 @@
           <li><a href="#" data-toggle="modal" data-target="#createAccountModal">CREATE ACCOUNT</a></li>
           <li><a href="#" data-toggle="modal" data-target="#loginModal">LOG IN</a></li>
           {% else %}
-          <li><a href="#">LOG OUT</a></li>
+          <li><a href="#" onclick="document.getElementById('to-all-trips').submit();">ALL TRIPS</a></li>
+          <li><a href="#" onclick="document.getElementById('logout').submit();">LOG OUT</a></li>
           {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-
+  {% endblock %}
+{% block content %}
   <div class="container">
     {% if not username %}
         <div class="row" id="no-sess-div">
@@ -66,7 +69,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="loginModalLabel">Log In</h4>
+                <h4 class="modal-title" id="loginModalLabel">LOG IN</h4>
               </div>
               <div class="modal-body">
                 <form action='/login' method='POST' class='modal-form'>
@@ -90,7 +93,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="createAccountModalLabel">Create an Account</h4>
+                <h4 class="modal-title" id="createAccountModalLabel">CREATE AN ACCOUNT</h4>
               </div>
               <div class="modal-body">
                 <form action='/create_user' method='POST' class='modal-form'>
@@ -109,26 +112,29 @@
 
 
     {% else %}
-        <form action='/logout'>
-            <input type='submit' value='Logout'>
+        <form action='/logout' id='logout'>
+            <input hidden type='submit' value='Logout'>
         </form>
+        <div class="row" id="in-sess-div">
+          <div class="col-lg-offset-3 col-lg-6 col-md-12 col-xs-12 text-center">
             <form id='create-trip'>
                 <!-- <div id='create-trip-loc'></div>
                 <div id='create-trip-loc-name'></div> -->
-                <label for='tripname'>Name your trip: </label><br>
+                <label for='tripname'>NAME YOUR TRIP: </label><br>
                 <input type='text' name='tripname' id='tripname' required><br>
-                <label for='trip-loc-search'>Where to?</label><br>
-                <input id="trip-loc-search" name="trip-loc-search" type="text" placeholder="Search Box" required><br>
-                Trip dates:<br>
-                <label for="from">From</label>
-                <input type="text" id="from" name="from" required>
-                <label for="to">to</label>
+                <label for='trip-loc-search'>WHERE DID YOU GO?</label><br>
+                <input id="trip-loc-search" name="trip-loc-search" type="text" placeholder="Search Places" required><br>
+                <label for="from">FROM</label><br>
+                <input type="text" id="from" name="from" required><br>
+                <label for="to">TO</label><br>
                 <input type="text" id="to" name="to" required><br>
-                <input type='submit' value='Create Trip' id='submit-trip'>
+                <input type='submit' value='CREATE TRIP' id='submit-trip'>
             </form>
-            <form action='/{{ username }}/trips'>
-            <input type='submit' value='Go to Trips'>
+            <form action='/{{ username }}/trips' id='to-all-trips'>
+            <input type='submit' value='or go to All Trips' id='to-all-trips'>
             </form>
+          </div>
+        </div>
     {% endif %}
 
 {% endblock %}

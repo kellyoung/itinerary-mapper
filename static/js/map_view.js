@@ -64,16 +64,16 @@ window.createAllPlacesMap = function(results){
         var markerColor;
         switch(category){
             case 'transport':
-                markerColor = '0C9FF9';
+                markerColor = '00db88';
                 break;
             case 'eat':
-                markerColor = 'FF8B29';
+                markerColor = '00dfff';
                 break;
             case 'explore':
-                markerColor = '8BC34A';
+                markerColor = '379434';
                 break;
             case 'sleep':
-                markerColor = 'FF3891';
+                markerColor = '1096e7';
                 break;
         }
         categoryFilterMarkers[category].push(new google.maps.Marker({
