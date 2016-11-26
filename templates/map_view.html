@@ -1,29 +1,59 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
 {% block style %}
-<link rel="stylesheet" href="/static/css/add_trip_map.css">
+<link rel="stylesheet" href="/static/css/map_view.css">
 {% endblock %}
+{% block navbar %}
+    <nav class="navbar navbar-default">
+    <div id= "homenavbar"class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" id="collapse-btn" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#homenavbarcollapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">journeyteller <i class="fa fa-compass"></i></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="homenavbarcollapse">
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">ABOUT</a></li>
+        {% if username %}
+          <li><a href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>BACK TO TRIP PAGE</a></li>
+          <li><a href="/logout">LOG OUT</a></li>
+        {% endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  {% endblock %}
 
 {% block content %}
-<div id="fb-root"></div>
+    <div class="container">
+        <div class="row" id="map-view-row">
+            <div class="col-lg-offset-1 col-lg-10 col-xs-12 text-center" id="map-view-col">
+                <h3>{{ trip.trip_name }}</h3>
+                <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
 
-    <h3>{{ trip.trip_name }}</h3>
-    <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
-    {% if username %}
-        <a class="btn btn-primary" href='/logout'>Logout</a>
-        <a class="btn btn-large btn-info" href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>Go back to Trip Creation</a>
-    {% endif %}
-    <input type="hidden" id="copyTarget" value="http://localhost:5000/{{user.username}}/{{trip.trip_id}}/mapview">
-    <button id="copyButton">Copy Link</button>
-    <div id='final-map'></div>
-    <div class="map-filters">
-        <h5>Category Filters</h5>
-            <!-- <label><input type="checkbox" name="filter" id="all" checked> All &nbsp;</label> -->
-            <label><input type="checkbox" name="filter" id="eat-filter" checked> Eat &nbsp;</label>
-            <label><input type="checkbox" name="filter" id="explore-filter" checked> Explore &nbsp;</label>
-            <label><input type="checkbox" name="filter" id="sleep-filter" checked> Sleep &nbsp;</label>
-            <label><input type="checkbox" name="filter" id="transport-filter" checked> Voyage &nbsp;</label>  
-     </div>
+                <input type="hidden" id="copyTarget" value="http://localhost:5000/{{user.username}}/{{trip.trip_id}}/mapview">
+                <button id="copyButton">Copy Link</button>
+                <!-- <div class="embed-responsive embed-responsive-16by9"> -->
+                    <div id='final-map' ></div>
+                <!-- </div> -->
+                <div class="map-filters">
+                    <h5>Category Filters</h5>
+                        <label><input type="checkbox" name="filter" id="eat-filter" checked> Eat &nbsp;</label>
+                        <label><input type="checkbox" name="filter" id="explore-filter" checked> Explore &nbsp;</label>
+                        <label><input type="checkbox" name="filter" id="sleep-filter" checked> Sleep &nbsp;</label>
+                        <label><input type="checkbox" name="filter" id="transport-filter" checked> Voyage &nbsp;</label>  
+                 </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

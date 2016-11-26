@@ -112,7 +112,7 @@ window.createAllPlacesMap = function(results){
     var allPlacesButton  = new allPlacesControl(allPlacesControlDiv, finalMap, placesLatLng);
 
     allPlacesControlDiv.index = 5;
-    finalMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(allPlacesControlDiv);
+    finalMap.controls[google.maps.ControlPosition.TOP_CENTER].push(allPlacesControlDiv);
 
 };
 
