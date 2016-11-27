@@ -3,7 +3,7 @@ import os
 
 import bcrypt
 
-import facebook
+# import facebook
 
 from jinja2 import StrictUndefined
 

@@ -2,6 +2,61 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+  color: gray;
+}
+
+.container {
+  margin-top: 60px;
+}
+
+.navbar {
+    background-color: #63a39d;
+    background: #63a39d;
+    border-color: #63a39d;
+    box-shadow: none;
+
+}
+
+.navbar a:hover {
+    color: #fa8072 !important;
+    font-weight: bold;
+}
+.navbar-default .navbar-nav li a {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: white;
+    background-color: transparent;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+.navbar-default {
+    border:#63a39d;
+}
+
+.navbar-default {
+    border:#63a39d;
+}
+
+.navbar-default .navbar-brand{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar-default .navbar-collapse {
+    border:transparent;
+    box-shadow: none;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
 }
 
 #placemap {
@@ -13,18 +68,6 @@ html, body {
   width: 400px;
 }
 
-#final-map {
-  width: 90%;
-  height: 65vh;
-}
-
-@media screen and (max-width: 767px) {
-     #final-map {
-      width: 100%;
-      height: 65vh;;
-    }
-}
-}
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
@@ -72,3 +115,4 @@ html, body {
 .modal-backdrop{
     z-index: 10;        
 }​
+

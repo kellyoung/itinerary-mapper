@@ -5,25 +5,28 @@ var placesLatLng=[];
 window.allPlacesControl = function(controlDiv, map, bounds) {
     // Set CSS for the control border.
     var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = '#fff';
-    controlUI.style.border = '2px solid #fff';
-    controlUI.style.borderRadius = '0px';
+    controlDiv.setAttribute("class", "controls" );
+    controlDiv.className = "controls";
+    controlUI.style.backgroundColor = '#fa8072';
+    controlUI.style.borderRadius = '5px';
     controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
     controlUI.style.cursor = 'pointer';
     controlUI.style.marginBottom = '10px';
+    controlUI.style.marginTop = '10px';
     controlUI.style.textAlign = 'center';
     controlUI.title = 'Click to see all Places';
     controlDiv.appendChild(controlUI);
 
     // Set CSS for the control interior.
     var controlText = document.createElement('div');
-    controlText.style.color = 'rgb(25,25,25)';
+    controlText.style.color = '#fff';
     controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-    controlText.style.fontSize = '16px';
+    controlText.style.fontSize = '14px';
+    controlText.style.fontWeight = 'bold';
     controlText.style.lineHeight = '24px';
     controlText.style.paddingLeft = '5px';
     controlText.style.paddingRight = '5px';
-    controlText.innerHTML = 'All Places';
+    controlText.innerHTML = 'ALL PLACES';
     controlUI.appendChild(controlText);
 
     // Setup the click event listeners: simply set the map to Chicago.
@@ -45,7 +48,12 @@ window.createAllPlacesMap = function(results){
     finalMap = new google.maps.Map(document.getElementById("final-map"), {
                 center: new google.maps.LatLng(0, 0),
                 zoom: 0,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: true,
+                fullscreenControl: true,
+                fullscreenControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_LEFT
+                }
             });
 
     // object with the categories and a list for each marker to be added to
@@ -109,6 +117,7 @@ window.createAllPlacesMap = function(results){
     finalMap.fitBounds(latlngbounds);
 
     var allPlacesControlDiv = document.createElement('div');
+    allPlacesControlDiv.className = "controls";
     var allPlacesButton  = new allPlacesControl(allPlacesControlDiv, finalMap, placesLatLng);
 
     allPlacesControlDiv.index = 5;

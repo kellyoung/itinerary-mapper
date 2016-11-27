@@ -2,8 +2,58 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+  color: gray;
 }
 
+.navbar {
+    background-color: #63a39d;
+    background: #63a39d;
+    border-color: #63a39d;
+    box-shadow: none;
+
+}
+
+.navbar a:hover {
+    color: #fa8072 !important;
+    font-weight: bold;
+}
+.navbar-default .navbar-nav li a {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: white;
+    background-color: transparent;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+.navbar-default {
+    border:#63a39d;
+}
+
+.navbar-default .navbar-brand{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar-default .navbar-collapse {
+    border:transparent;
+    box-shadow: none;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+.container {
+    margin-top: 60px;
+}
 #final-map {
   width: 90%;
   height: 65vh;
@@ -27,4 +77,57 @@ html, body {
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
+.filter {
+    margin-right: 35px;
+}
+
+#copyButton {
+    font-weight: bold;
+    background-color: #fa8072;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #fa8072;
+}
+
+#copy-link-row {
+    margin-right: -25px;
+}
+
+#copyTarget {
+    width: 240px;
+    margin-right: 5px;
+    padding: 2px;
+}
+
+#trip-title {
+  letter-spacing: 2px;
+  font-size: 36px;
+  margin-bottom: 0px;
+  margin-top: 2px;
+}
+
+#trip-author {
+    font-size: 16px;
+    margin-top: 2px;
+    margin-bottom: 15px;
+    color: #fa8072;
+}
+
+#eat-filter-label {
+    color: #00dfff;
+}
+
+#explore-filter-label {
+    color: #379434;
+}
+
+#sleep-filter-label {
+    color: #1096e7;
+}
+
+#transport-filter-label {
+    color: #00db88;
+}
+
 
