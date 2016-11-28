@@ -22,6 +22,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/">ABOUT</a></li>
+            <li><a href='/{{user.username}}/{{ trip.trip_id}}/mapview'>GO TO MAP</a></li>
             <li><a href='/{{user.username}}/trips'>ALL TRIPS</a></li>
             <li><a href="/logout">LOG OUT</a></li>
         </ul>
@@ -31,6 +32,17 @@
   {% endblock %}
 {% block content %}
  <div class="container">
+    <div class="row" id="trip-btn-row">
+        <div class="col-xs-12 text-right" id="trip-btn-col">
+            <button type="button" class="btn btn-primary" id='publish-btn'>
+            Make Trip Public
+            </button>
+            <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
+                    Delete Trip
+            </button>
+        </div>
+    </div>
+    
     <div class="row" id="trip-titles-row">
         <div class="col-lg-offset-3 col-lg-6 col-xs-12 text-center" id="trip-titles-col">
             <h2 id="trip-title"> {{ trip.trip_name }}</h2>
@@ -118,21 +130,21 @@
           </div>
           <div id='modal-form' class="modal-body">
             <form id='edit-place-form' enctype="multipart/form-data">
-                <input type='hidden' id='edit-place_id' name='edit-place_id'><br>
-                <input type='hidden' id='edit-trip_id' name='edit-trip_id' value='{{ trip.trip_id}}'><br>
-                <label for='edit-placename'>Place Name: </label><br>
+                <input type='hidden' id='edit-place_id' name='edit-place_id'>
+                <input type='hidden' id='edit-trip_id' name='edit-trip_id' value='{{ trip.trip_id}}'>
+                <label for='edit-placename'>Place Name: </label>
                 <input id="edit-placename" type='text' name='edit-placename' required><br>
-                <label for='edit-placesearch'>Search for Place: </label><br>
+                <label for='edit-placesearch'>Search for Place: </label>
                 <input id="edit-place-search" name="edit-placesearch" type="text" placeholder="Search Box" required>
                 <div id="edit-placemap"></div>
-                <label for='edit-tripday'>Day of Visit: </label><br>
+                <label for='edit-tripday'>Day of Visit: </label>
                 <select id="edit-tripday" name="edit-tripday" required>
                     <option disabled selected value> -- Select -- </option>
                     {% for day in trip_dates %}
                         <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
                     {% endfor %}
                 </select><br>
-                <label for='edit-tripcat'>This is a Place to: </label><br>
+                <label for='edit-tripcat'>This is a Place to: </label>
                 <select id="edit-tripcat" name="edit-tripcat" required>
                     <option disabled selected value> -- Select -- </option>
                     <option value="eat">Eat</option>
@@ -195,13 +207,7 @@
             </div>
         {% endfor %}
 
-    <button type="button" class="btn btn-primary" id='publish-btn'>
-            Make Trip Public
-    </button>
-    <a class="btn btn-info" href='/{{user.username}}/{{ trip.trip_id}}/mapview'>Go to Map</a>
-    <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
-            Delete Trip
-    </button>
+    
 </div>
     {% endblock %}
 {% block scripts %}
