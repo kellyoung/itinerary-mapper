@@ -8,6 +8,7 @@
 var editFormParams;
 function displayForm(){
     var parentDiv = $(this).parent();
+    parentDiv = parentDiv.parent();
     var divPlaceID = parentDiv.attr('id').split('-')[2];
     
     editFormParams = {

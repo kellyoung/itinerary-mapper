@@ -178,28 +178,31 @@
                 <div class="col-xs-12"> <h4>Day {{ day[0] }}: {{ day[2] }}</h4></div>
                 {% for place in trip_places %}
                     {% if place[0].day_num == day[0] %}
-                        <div id='place-div-{{ place[0].place_id }}' class='col-lg-4 col-md-4 col-xs-6 place-div' style='background-color:white;margin:2%;padding:0px'>
-                            <div style="width:100%;height:300px;overflow:hidden;text-align:center" class='place-img-div'><img src='/uploads/{{ place[0].pic_file }}' class='place-img' style="width:100%;margin:auto 0">
+                        <div id='place-div-{{ place[0].place_id }}' class='col-lg-3 col-md-4 col-xs-6 place-div' >
+                            <div class='place-content'>
+                                <div class='place-img-div'>
+                                    <img src='/uploads/{{ place[0].pic_file }}' class='place-img' style="width:100%;margin:auto 0">
+                                </div>
+                                <div class='place-text'>
+                                    <p class='place-text-name text-{{ place[0].cat_id }}'>
+                                        {{ place[0].place_name }}
+                                        {% if place[0].cat_id == 'eat' %}
+                                        <i class="fa fa-cutlery"></i>
+                                        {% elif place[0].cat_id == 'sleep' %}
+                                        <i class="fa fa-bed"></i>
+                                        {% elif place[0].cat_id == 'explore' %}
+                                        <i class="fa fa-globe"></i>
+                                        {% elif place[0].cat_id == 'transport' %}
+                                        <i class="fa fa-paper-plane"></i>
+                                        {% endif %}
+                                    </p>
+                                    <p class='utf-8 place-address'>{{ place[1].decode('utf-8') }}</p>
+
+                                </div>
+                                <button type="button" class="edit-btn" data-toggle="modal" data-target="#editModal">
+                                  Edit Place
+                                </button>
                             </div>
-                            <div class='place-text'>
-                                <p class='place-text-name text-{{ place[0].cat_id }}'>
-                                    {{ place[0].place_name }}
-                                    {% if place[0].cat_id == 'eat' %}
-                                    <i class="fa fa-cutlery"></i>
-                                    {% elif place[0].cat_id == 'sleep' %}
-                                    <i class="fa fa-bed"></i>
-                                    {% elif place[0].cat_id == 'explore' %}
-                                    <i class="fa fa-globe"></i>
-                                    {% elif place[0].cat_id == 'transport' %}
-                                    <i class="fa fa-paper-plane"></i>
-                                    {% endif %}
-                                </p>
-                                <p class='utf-8'>{{ place[1].decode('utf-8') }}</p>
-                            </div>
-                            
-                            <button type="button" class="edit-btn" data-toggle="modal" data-target="#editModal">
-                              Edit Place
-                            </button>
                         </div>
                     {% endif %}
                 {% endfor %}
