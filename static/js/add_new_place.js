@@ -79,3 +79,18 @@ function checkFileType(event){
 }
 $('#place-pic-file').on('change', checkFileType);
 $('#edit-place-pic-file').on('change', checkFileType);
+
+//show and hide add place form_data
+$('#show-add-form-btn').hide();
+
+$('#hide-add-form-btn').on('click', function(){
+    $('#add-trip-div').hide();
+    $('#add-place-row-btns').hide();
+    $('#show-add-form-btn').show();
+});
+
+$('#show-add-form-btn').on('click', function(){
+    $('#add-trip-div').show();
+    $('#add-place-row-btns').show();
+    $('#show-add-form-btn').hide();
+});

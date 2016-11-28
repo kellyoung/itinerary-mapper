@@ -329,32 +329,78 @@ def add_place():
     img_url = url_for('uploaded_file', filename=new_place.pic_file)
 
     # div that will be added dynamically to page for new place added
-    new_place_div = """
-                    <div id='place-div-%s' class='place-div'>
-                    <h5>Day:</h5>
-                    <p>Day %s: %s</p>
-                    <h5>Category:</h5>
-                    <p>%s</p>
-                    <h5>Place Name:</h5>
-                    <p>%s</p>
-                    <h5>Place Address:</h5>
-                    <p>%s</p>
-                    <h5>Notes:</h5>
-                    <p>%s</p>
-                    <div style="width:275px;height:212.5px;overflow:hidden;
-                    text-align:center">
-                    <img src='%s' alt='%s picture' style="width:275px;margin:auto">
+    if cat_id == 'eat':
+        icon = 'cutlery'
+    elif cat_id == 'sleep':
+        icon = 'bed'
+    elif cat_id == 'explore':
+        icon = 'globe'
+    elif cat_id == 'transport':
+        icon = 'paper-plane'
+    # new_place_div = """
+    #                 <div id='place-div-%s' class='col-lg-3 col-md-4 col-xs-6 place-div'
+    #                 style='background-color:white;margin:2%;padding:0px'>
+    #                     <div style="width:100%;height:250px;overflow:hidden;text-align:center">
+    #                         <img src='%s' alt='%s picture' style="width:100%;margin:auto 0">
+    #                     </div>
+    #                     <div class='place-text'>
+    #                         <p class='place-text-name text-%s'>
+    #                             %s
+    #                             <i class="fa fa-%s"></i>
+    #                         <p class='utf-8'>%s</p>
+    #                     </div>
+    #                     <button type="button" id="newly-added" class="edit-btn"
+    #                     data-toggle="modal" data-target="#editModal">
+    #                       Edit Place
+    #                     </button>
+    #                 </div>
+    #                 """ % (new_place.place_id, img_url, place_name,
+    #                        cat_id, place_name, icon, place_loc)
+
+    new_place_div_test = """
+                    <div id='place-div-%s' class='col-lg-4 col-md-4 col-xs-6 place-div'>
+                        <div class='place-img-div'>
+                            <img src='%s' alt='%s picture' class='place-img'>
+                        </div>
+                        <div class='place-text'>
+                            <p class='place-text-name text-%s'>
+                                %s
+                                <i class="fa fa-%s"></i>
+                            <p class='utf-8'>%s</p>
+                        </div>
+                        <button type="button" id="newly-added" class="edit-btn"
+                        data-toggle="modal" data-target="#editModal">
+                          Edit Place
+                        </button>
                     </div>
-                    <button type="button" id="newly-added" class="btn btn-primary
-                    btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
-                    Edit Place
-                    </button>
-                    </div>
-                    """ % (new_place.place_id, day_num, date, cat_id,
-                           place_name, place_loc, notes, img_url, place_name)
+                    """ % (new_place.place_id, img_url, place_name,
+                           cat_id, place_name, icon, place_loc)        
+    # new_place_div = """
+    #                 <div id='place-div-%s' class='place-div'>
+    #                 <h5>Day:</h5>
+    #                 <p>Day %s: %s</p>
+    #                 <h5>Category:</h5>
+    #                 <p>%s</p>
+    #                 <h5>Place Name:</h5>
+    #                 <p>%s</p>
+    #                 <h5>Place Address:</h5>
+    #                 <p>%s</p>
+    #                 <h5>Notes:</h5>
+    #                 <p>%s</p>
+    #                 <div style="width:275px;height:212.5px;overflow:hidden;
+    #                 text-align:center">
+    #                 <img src='%s' alt='%s picture' style="width:275px;margin:auto">
+    #                 </div>
+    #                 <button type="button" id="newly-added" class="btn btn-primary
+    #                 btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
+    #                 Edit Place
+    #                 </button>
+    #                 </div>
+    #                 """ % (new_place.place_id, day_num, date, cat_id,
+    #                        place_name, place_loc, notes, img_url, place_name)
 
     return jsonify({'place_id': new_place.place_id,
-                    'new_place_div': new_place_div,
+                    'new_place_div': new_place_div_test,
                     'place_loc': new_place.place_loc})
 
 

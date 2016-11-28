@@ -7,10 +7,116 @@ html, body {
   color: gray;
 }
 
+#test-box {
+  border: 2px solid black ;
+}
+
+#add-place {
+    font-weight: bold;
+    background-color: #fa8072;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #fa8072;
+}
+
+#show-add-form-btn {
+  font-weight: bold;
+  background-color: #fa8072;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #fa8072;
+}
+#add-place-row label {
+  color: #63a39d;
+  font-weight: normal;
+}
+
+#hide-add-form-btn {
+  border: transparent;
+  background: transparent;
+  font-style: italic;
+}
+#add-place-row textarea{
+  width: 280px;
+  height: 70px;
+  border: none;
+}
+#placename {
+  width: 280px;
+  margin-bottom: 8px;
+}
+
+
+#add-place-row input[type=file] {
+    display: inline;
+    font-style: italic;
+    font-size: 10px;
+    margin-bottom: 8px;
+}
+
+}
+#trip-title {
+  letter-spacing: 2px;
+  font-size: 36px;
+  margin-bottom: 0px;
+  margin-top: 2px;
+}
+
+#trip-author {
+    font-size: 16px;
+    margin-top: 2px;
+    margin-bottom: 15px;
+    color: #fa8072;
+}
+
+
 .container {
   margin-top: 60px;
 }
 
+.day-row h4{
+  color: #63a39d;
+}
+
+.place-div {
+  background-color:white;
+  margin:2%;
+  padding:0
+}
+
+.place-img-div {
+  width:100%;
+  height:300px;
+  overflow:hidden;
+  text-align:center
+}
+
+.place-img {
+  width:100%;
+  margin:auto 0
+}
+
+.place-text-name {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 16px;
+}
+
+.text-eat {
+  color: #00dfff;
+}
+
+.text-sleep {
+  color: #1096e7;
+}
+
+.text-explore {
+  color: #379434;
+}
+
+.text-transport {
+  color: #00db88;
+}
 .navbar {
     background-color: #63a39d;
     background: #63a39d;
@@ -60,14 +166,35 @@ html, body {
 }
 
 #placemap {
-  height: 250px;
-  width: 400px;
+  height: 200px;
+  width: 280px;
+  margin-bottom: 8px;
 }
 #edit-placemap {
   height: 250px;
   width: 400px;
 }
 
+#tripcat {
+  margin-top: 8px;
+}
+
+.edit-btn {
+  border: transparent;
+  background: transparent;
+  color: #fa8072;
+  margin-right: 4%;
+  margin-bottom: 2%;
+  float: right;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.place-text {
+  margin-top: 2%;
+  margin-left: 4%;
+  margin-right: 4%;
+}
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
@@ -86,8 +213,9 @@ html, body {
   font-weight: 300;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
-  width: 300px;
+  width: 280px;
   z-index: 20;
+  margin-bottom: 12px;
 }
 
 #place-search-input:focus {

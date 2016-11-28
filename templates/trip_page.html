@@ -31,40 +31,82 @@
   {% endblock %}
 {% block content %}
  <div class="container">
-    <h2>{{ trip.trip_name }}</h2>
-    <h3>By: {{ user.name }}</h3>
-    <br>
-    <form id='add-trip-form' enctype="multipart/form-data">
-        <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'><br>
-        <label for='placename'>Place Name: </label><br>
-        <input id="placename" type='text' name='placename' required><br>
-        <label for='placesearch'>Search for Place: </label><br>
-        <input id="place-search" name="placesearch" type="text" placeholder="Search Box" required>
-        <div id="placemap"></div>
-        <label for='tripday'>Day of Visit: </label><br>
-        <select id="tripday" name="tripday" required>
-            <option disabled selected value> -- Select -- </option>
-            {% for day in trip_dates %}
-                <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
-            {% endfor %}
-        </select><br>
-        <label for='tripcat'>This is a Place to: </label><br>
-        <select id="tripcat" name="tripcat" required>
-            <option disabled selected value> -- Select -- </option>
-            <option value="eat">Eat</option>
-            <option value="sleep">Sleep</option>
-            <option value="explore">Explore</option>
-            <option value="transport">Voyage</option>
-        </select><br>
-        <label for='tripnotes'>Notes: </label><br>
-        <div>
-            <textarea id="tripnotes" name="tripnotes"></textarea>
+    <div class="row" id="trip-titles-row">
+        <div class="col-lg-offset-3 col-lg-6 col-xs-12 text-center" id="trip-titles-col">
+            <h2 id="trip-title"> {{ trip.trip_name }}</h2>
+            <h5 id="trip-author">By: {{ user.name }}</h5>
+            <br>
         </div>
-        <input type="file" name="file" id="place-pic-file">
-        <input id="add-place" type='submit' value='Add Place'>
-    </form>
+    </div>
+    <div class="row" id="add-place-row">
+                <div id="add-trip-div">
+                <form id='add-trip-form' enctype="multipart/form-data">
 
-    <br><br>
+                    <div class='col-lg-offset-3 col-lg-3  col-md-offset-2 col-md-4 col-xs-12' id="add-form-left">  
+                        
+                        <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'>
+                        <label for='placename'>Name of Place: </label><br>
+                        <input id="placename" type='text' name='placename' required><br>
+
+                        
+                        <label for='tripday'>Day of Visit: </label>
+                        <select id="tripday" name="tripday" required>
+                            <option disabled selected value> -- Select -- </option>
+                            {% for day in trip_dates %}
+                                <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
+                            {% endfor %}
+                        </select><br>
+                        <label for='tripcat'>Category of Place: </label>
+                        <select id="tripcat" name="tripcat" required>
+                            <option disabled selected value> -- Select -- </option>
+                            <option value="eat">Eat</option>
+                            <option value="sleep">Sleep</option>
+                            <option value="explore">Explore</option>
+                            <option value="transport">Voyage</option>
+                        </select><br>
+
+                        <label for='tripcat'>Upload Picture: </label>
+                        <input type="file" name="file" id="place-pic-file"><br>
+
+                        <label for='tripnotes'>Notes: </label><br>
+                        <div>
+                            <textarea id="tripnotes" name="tripnotes"></textarea>
+                        </div>
+
+                        
+                    </div>
+                    <div class='col-lg-3  col-md-4 col-xs-12' id='add-form-right'>
+                        <label for='placesearch'>Location of Place: </label><br>
+                        <input id="place-search" name="placesearch" type="text" placeholder="Search Box" required><br>
+
+                        <div id="placemap"></div>
+                        
+                    </div>
+                    </div>
+                    <div class="row" id="add-place-row-btns">
+                         <div class="col-xs-12 text-center" id="add-place-col-title">
+                            <div id="add-form-btns">
+                                <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
+                                <button id="hide-add-form-btn">Hide Form</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            
+            
+        
+        
+
+        <div class="row">
+            <div class='col-lg-offset-3 col-lg-6  col-md-offset-2 col-md-8 col-xs-12 text-center'>
+                <button type="button" class="btn" id="show-add-form-btn">
+                  SHOW ADD NEW PLACE FORM
+                </button>
+            </div>  
+        </div>
+    
+
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -119,26 +161,31 @@
         </div>
       </div>
     </div>
-    <div>
         {% for day in trip_dates %}
-            <div id='day-{{ day[0] }}'>
-                <h4>Day {{ day[0] }}: {{ day[2] }}</h4>
+            <div id='day-{{ day[0] }}' class="row day-row">
+                <div class="col-xs-12"> <h4>Day {{ day[0] }}: {{ day[2] }}</h4></div>
                 {% for place in trip_places %}
                     {% if place[0].day_num == day[0] %}
-                        <div id='place-div-{{ place[0].place_id }}' class='place-div'>
-                            <h5>Day:</h5>
-                            <p>Day {{ place[0].day_num }}: {{ place[0].date }}</p>
-                            <h5>Category:</h5>
-                            <p>{{ place[0].cat_id }}</p>
-                            <h5>Place Name:</h5>
-                            <p>{{ place[0].place_name }}</p>
-                            <h5>Place Address:</h5>
-                            <p class='utf-8'>{{ place[1].decode('utf-8') }}</p>
-                            <h5>Notes:</h5>
-                            <p>{{ place[0].notes }}</p>
-                            <div style="width:275px;height:212.5px;overflow:hidden;text-align:center"><img src='/uploads/{{ place[0].pic_file }}' style="width:275px;margin:auto">
+                        <div id='place-div-{{ place[0].place_id }}' class='col-lg-4 col-md-4 col-xs-6 place-div' style='background-color:white;margin:2%;padding:0px'>
+                            <div style="width:100%;height:300px;overflow:hidden;text-align:center" class='place-img-div'><img src='/uploads/{{ place[0].pic_file }}' class='place-img' style="width:100%;margin:auto 0">
                             </div>
-                            <button type="button" class="btn btn-primary btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
+                            <div class='place-text'>
+                                <p class='place-text-name text-{{ place[0].cat_id }}'>
+                                    {{ place[0].place_name }}
+                                    {% if place[0].cat_id == 'eat' %}
+                                    <i class="fa fa-cutlery"></i>
+                                    {% elif place[0].cat_id == 'sleep' %}
+                                    <i class="fa fa-bed"></i>
+                                    {% elif place[0].cat_id == 'explore' %}
+                                    <i class="fa fa-globe"></i>
+                                    {% elif place[0].cat_id == 'transport' %}
+                                    <i class="fa fa-paper-plane"></i>
+                                    {% endif %}
+                                </p>
+                                <p class='utf-8'>{{ place[1].decode('utf-8') }}</p>
+                            </div>
+                            
+                            <button type="button" class="edit-btn" data-toggle="modal" data-target="#editModal">
                               Edit Place
                             </button>
                         </div>
@@ -147,7 +194,6 @@
 
             </div>
         {% endfor %}
-    </div>
 
     <button type="button" class="btn btn-primary" id='publish-btn'>
             Make Trip Public
