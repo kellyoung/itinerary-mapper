@@ -11,6 +11,12 @@
   <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity=
   "sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    .flashed-message {
+      padding: 6px;
+      padding-left: 12px;
+    }
+  </style>
   {% block style %}
   {% endblock %}
 </head>
@@ -23,7 +29,7 @@
       {% if messages %}
         <div class="flash-div">
         {% for message in messages %}
-          <h5 class="flashed-message">{{ message }}</h5>
+          <h5 class="flashed-message alert alert-warning">{{ message }}</h5>
         {% endfor %}
         </div>
       {% endif %}
