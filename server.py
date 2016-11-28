@@ -358,23 +358,27 @@ def add_place():
     #                        cat_id, place_name, icon, place_loc)
 
     new_place_div_test = """
-                    <div id='place-div-%s' class='col-lg-4 col-md-4 col-xs-6 place-div'>
+                    <div id='place-div-%s'class='col-lg-3 col-md-4 col-xs-6 place-div'>
+                        <div class='place-content'>
+
                         <div class='place-img-div'>
                             <img src='%s' alt='%s picture' class='place-img'>
                         </div>
+
                         <div class='place-text'>
                             <p class='place-text-name text-%s'>
                                 %s
                                 <i class="fa fa-%s"></i>
-                            <p class='utf-8'>%s</p>
+                            <p class='utf-8 place-address'>%s</p>
                         </div>
                         <button type="button" id="newly-added" class="edit-btn"
                         data-toggle="modal" data-target="#editModal">
                           Edit Place
                         </button>
+                        </div>
                     </div>
                     """ % (new_place.place_id, img_url, place_name,
-                           cat_id, place_name, icon, place_loc)        
+                           cat_id, place_name, icon, place_loc)       
     # new_place_div = """
     #                 <div id='place-div-%s' class='place-div'>
     #                 <h5>Day:</h5>
