@@ -49,3 +49,16 @@ function addTriptoDB(evt){
     
 }
 $('#create-trip').on('submit', addTriptoDB);
+
+//show and hide form
+$('#show-form-btn').hide();
+
+$('#hide-form-btn').on('click', function(){
+    $('#create-trip').hide();
+    $('#show-form-btn').show();
+});
+
+$('#show-form-btn').on('click', function(){
+    $('#create-trip').show();
+    $('#show-form-btn').hide();
+});
