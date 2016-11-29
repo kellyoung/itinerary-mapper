@@ -54,10 +54,32 @@ html, body {
 .container {
     margin-top: 60px;
 }
+
 #final-map {
   width: 90%;
   height: 68vh;
   margin: 0 auto;
+}
+
+.place-div p {
+  line-height: 16px;
+  margin: 4px;
+}
+
+.title-eat {
+  color: #00dfff;
+}
+
+.title-sleep {
+  color: #1096e7;
+}
+
+.title-explore {
+  color: #379434;
+}
+
+.title-transport {
+  color: #00db88;
 }
 
 @media screen and (max-width: 767px) {

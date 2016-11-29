@@ -337,25 +337,6 @@ def add_place():
         icon = 'globe'
     elif cat_id == 'transport':
         icon = 'paper-plane'
-    # new_place_div = """
-    #                 <div id='place-div-%s' class='col-lg-3 col-md-4 col-xs-6 place-div'
-    #                 style='background-color:white;margin:2%;padding:0px'>
-    #                     <div style="width:100%;height:250px;overflow:hidden;text-align:center">
-    #                         <img src='%s' alt='%s picture' style="width:100%;margin:auto 0">
-    #                     </div>
-    #                     <div class='place-text'>
-    #                         <p class='place-text-name text-%s'>
-    #                             %s
-    #                             <i class="fa fa-%s"></i>
-    #                         <p class='utf-8'>%s</p>
-    #                     </div>
-    #                     <button type="button" id="newly-added" class="edit-btn"
-    #                     data-toggle="modal" data-target="#editModal">
-    #                       Edit Place
-    #                     </button>
-    #                 </div>
-    #                 """ % (new_place.place_id, img_url, place_name,
-    #                        cat_id, place_name, icon, place_loc)
 
     new_place_div_test = """
                     <div id='place-div-%s'class='col-lg-3 col-md-4 col-xs-6 place-div'>
@@ -378,30 +359,7 @@ def add_place():
                         </div>
                     </div>
                     """ % (new_place.place_id, img_url, place_name,
-                           cat_id, place_name, icon, place_loc)       
-    # new_place_div = """
-    #                 <div id='place-div-%s' class='place-div'>
-    #                 <h5>Day:</h5>
-    #                 <p>Day %s: %s</p>
-    #                 <h5>Category:</h5>
-    #                 <p>%s</p>
-    #                 <h5>Place Name:</h5>
-    #                 <p>%s</p>
-    #                 <h5>Place Address:</h5>
-    #                 <p>%s</p>
-    #                 <h5>Notes:</h5>
-    #                 <p>%s</p>
-    #                 <div style="width:275px;height:212.5px;overflow:hidden;
-    #                 text-align:center">
-    #                 <img src='%s' alt='%s picture' style="width:275px;margin:auto">
-    #                 </div>
-    #                 <button type="button" id="newly-added" class="btn btn-primary
-    #                 btn-sm edit-btn" data-toggle="modal" data-target="#editModal">
-    #                 Edit Place
-    #                 </button>
-    #                 </div>
-    #                 """ % (new_place.place_id, day_num, date, cat_id,
-    #                        place_name, place_loc, notes, img_url, place_name)
+                           cat_id, place_name, icon, place_loc)
 
     return jsonify({'place_id': new_place.place_id,
                     'new_place_div': new_place_div_test,
@@ -614,38 +572,32 @@ def return_all_places():
 
             content = """
                     <div id='place-div-%s' class='place-div'>
-                    <h5>Day:</h5>
-                    <p>Day %s: %s</p>
-                    <h5>Category:</h5>
-                    <p>%s</p>
-                    <h5>Place Name:</h5>
-                    <p>%s</p>
-                    <h5>Place Address:</h5>
-                    <p>%s</p>
-                    <h5>Notes:</h5>
-                    <p>%s</p>
+
+                    <h5 class='title-%s'>%s</h5>
+
                     <div style="width:275px;height:212.5px;
-                    overflow:hidden;text-align:center">
+                    overflow:hidden;margin: auto" class='place-pic'>
                     <img src='%s' style="width:275px;margin:auto">
                     </div>
+                    <p><b>Day %s:</b> %s</p>
+                    <p><b>Category:</b> %s</p>
+                    <p><b>Place Address:</b> %s</p>
+                    <p><b>Notes:</b> %s</p>            
                     </div>
-                    """ % (place.place_id, day_num, place.date, category, title,
-                           place.place_loc, place.notes, img_url)
+                    """ % (place.place_id, category, title, img_url, day_num, place.date, category,
+                           place.place_loc, place.notes)
         else:
             content = """
                     <div id='place-div-%s' class='place-div'>
-                    <h5>Day:</h5>
-                    <p>Day %s: %s</p>
-                    <h5>Category:</h5>
-                    <p>%s</p>
-                    <h5>Place Name:</h5>
-                    <p>%s</p>
-                    <h5>Place Address:</h5>
-                    <p>%s</p>
-                    <h5>Notes:</h5>
-                    <p>%s</p>
+
+                    <h5 class='title-%s'>%s</h5>
+
+                    <p><b>Day %s:</b> %s</p>
+                    <p><b>Category:</b> %s</p>
+                    <p><b>Place Address:</b> %s</p>
+                    <p><b>Notes:</b> %s</p>            
                     </div>
-                    """ % (place.place_id, day_num, place.date, category, title,
+                    """ % (place.place_id, category, title, day_num, place.date, category,
                            place.place_loc, place.notes)
 
         place_info = {'title': title, 'day_num': day_num, 'category': category,

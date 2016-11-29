@@ -100,7 +100,9 @@ window.createAllPlacesMap = function(results){
 
         test = categoryFilterMarkers[category][categoryFilterMarkers[category].length-1].getVisible();
         console.log(test);
-        var infowindow = new google.maps.InfoWindow();
+        var infowindow = new google.maps.InfoWindow({
+            maxWidth: 300
+        });
 
         google.maps.event.addListener(categoryFilterMarkers[category][categoryFilterMarkers[category].length-1],
                                      'click', function () {
