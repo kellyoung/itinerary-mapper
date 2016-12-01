@@ -31,7 +31,7 @@ html, body {
 }
 
 .trip-link {
-    color: #63a39d;
+    color: gray;
 }
 
 #tripname, #trip-loc-search {
@@ -42,6 +42,19 @@ html, body {
 #from, #to {
     width: 120px;
     margin-bottom: 8px;
+}
+
+#create-trip label{
+  color: #63a39d;
+}
+
+#create-trip input[type=text] {
+  background: transparent;
+  border: 2px solid #63a39d;
+  border-radius: 8px;
+}
+#create-trip {
+  margin-top: 12px;
 }
 
 #submit-trip {

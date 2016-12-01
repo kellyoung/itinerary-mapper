@@ -7,10 +7,6 @@ html, body {
   color: gray;
 }
 
-#test-box {
-  border: 2px solid black ;
-}
-
 #add-place {
     font-weight: bold;
     background-color: #fa8072;
@@ -28,7 +24,7 @@ html, body {
 }
 #add-place-row label {
   color: #63a39d;
-  font-weight: normal;
+  font-weight: bold;
 }
 
 #hide-add-form-btn {
@@ -39,12 +35,17 @@ html, body {
 #add-place-row textarea{
   width: 280px;
   height: 70px;
-  border: none;
+  border: 2px solid #63a39d;
+  background: transparent;
+  border-radius: 8px;
 }
 
 #placename {
   width: 280px;
   margin-bottom: 8px;
+  background: transparent;
+  border: 2px solid #63a39d;
+  border-radius: 8px;
 }
 
 #add-place-row input[type=file] {
@@ -259,6 +260,9 @@ html, body {
   width: 280px;
   z-index: 20;
   margin-bottom: 12px;
+  background: transparent;
+  border: 2px solid #63a39d;
+  border-radius: 8px;
 }
 
 #place-search-input:focus {
