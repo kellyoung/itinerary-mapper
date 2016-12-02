@@ -15,18 +15,7 @@ class ItineraryTests(unittest.TestCase):
 
     def test_homepage_no_login(self):
         result = self.client.get("/")
-        self.assertIn("Create an Account", result.data)
-        self.assertNotIn("Logout", result.data)
-
-    def test_create_trip_json(self):
-        result = self.client.post('/create_trip.json',
-                                  data={'username': 'lizlemon',
-                                        'trip_name': 'A Weekend in Portland',
-                                        'start_date': datetime.date(2016, 7, 5),
-                                        'end_date': datetime.date(2016, 7, 6),
-                                        'general_loc': 'Portland, Oregon',
-                                        'latitude': 45.523062,
-                                        'longitude': -122.676482})
+        self.assertIn("CREATE ACCOUNT", result.data)
 
 
 class ItineraryDatabaseTests(unittest.TestCase):
@@ -55,8 +44,8 @@ class ItineraryDatabaseTests(unittest.TestCase):
                                         "password": "pizza"},
                                   follow_redirects=True)
         self.assertIn('Welcome,', result.data)
-        self.assertIn('Create Trip', result.data)
-        self.assertIn('Go to Trips', result.data)
+        self.assertIn('NAME YOUR TRIP:', result.data)
+        self.assertIn('All Trips', result.data)
         self.assertNotIn('The username and password do not exist. Try again.', result.data)
 
     def test_failed_login(self):
@@ -85,7 +74,7 @@ class ItineraryDatabaseTests(unittest.TestCase):
                                         "password": "bacon",
                                         "name": "Ron Swanson"},
                                   follow_redirects=True)
-        self.assertIn('successfully created. Please log in.', result.data)
+        self.assertIn('successfully created. You are now signed in.', result.data)
         self.assertNotIn('Please try again.', result.data)
 
     def test_failed_create_user(self):
