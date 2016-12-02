@@ -35,7 +35,11 @@
     <div class="row" id="trip-btn-row">
         <div class="col-xs-12 text-right" id="trip-btn-col">
             <button type="button" class="btn btn-primary" id='publish-btn'>
-            Make Trip Public
+            {% if trip.published %}
+                Make Trip Private
+            {% else %}
+                Make Trip Public
+            {% endif %}
             </button>
             <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
                     Delete Trip
