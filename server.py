@@ -38,8 +38,12 @@ def allowed_file(filename):
     >>> allowed_file('dog.gif')
     False
     """
+    print '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
 
 
 @app.route('/uploads/<filename>')
@@ -595,7 +599,7 @@ def return_all_places():
                     <p><b>Day %s:</b> %s</p>
                     <p><b>Category:</b> %s</p>
                     <p><b>Place Address:</b> %s</p>
-                    <p><b>Notes:</b> %s</p>            
+                    <p><b>Notes:</b> %s</p>           
                     </div>
                     """ % (place.place_id, category, title, day_num, place.date, category,
                            place.place_loc, place.notes)

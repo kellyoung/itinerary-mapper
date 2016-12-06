@@ -3,7 +3,9 @@ import unittest
 import datetime
 
 from server import app
-from model import db, example_data, connect_to_db
+from model import db, example_data, connect_to_db, User, Trip, Place, Category
+
+import json
 
 
 class ItineraryTests(unittest.TestCase):
@@ -16,6 +18,7 @@ class ItineraryTests(unittest.TestCase):
     def test_homepage_no_login(self):
         result = self.client.get("/")
         self.assertIn("CREATE ACCOUNT", result.data)
+
 
 
 class ItineraryDatabaseTests(unittest.TestCase):
@@ -86,6 +89,15 @@ class ItineraryDatabaseTests(unittest.TestCase):
         self.assertNotIn('successfully created. Please log in.', result.data)
         self.assertIn('Please try again.', result.data)
 
+    def test_reprs(self):
+        """Test the reprs of models"""
+
+        user_repr = User.query.get('lizlemon').__repr__()
+        assert ('<User username=lizlemon>' == user_repr)
+
+        trip_repr = Trip.query.get(1).__repr__()
+        assert ("<Trip trip_id=1 trip_name=A Weekend in Portland>" == trip_repr)
+
 
 class ItineraryInSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
@@ -129,6 +141,12 @@ class ItineraryInSessionTests(unittest.TestCase):
         """Test if logout works"""
         result = self.client.get("/logout", follow_redirects=True)
         self.assertIn('Logged out of', result.data)
+
+    def test_map_view_page(self):
+        """Test Map View if user in session"""
+        result = self.client.get("/lizlemon/1/mapview", follow_redirects=True)
+        self.assertIn('MAP FILTERS:', result.data)
+
 
 
 class ItineraryNoSessionTests(unittest.TestCase):
