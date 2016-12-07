@@ -98,6 +98,21 @@ class ItineraryDatabaseTests(unittest.TestCase):
         trip_repr = Trip.query.get(1).__repr__()
         assert ("<Trip trip_id=1 trip_name=A Weekend in Portland>" == trip_repr)
 
+        cat_repr = Category.query.get('eat').__repr__()
+        assert ("<Category cat_id=eat>" == cat_repr)
+
+        place_repr = Place.query.get(1).__repr__()
+        assert ("<Place place_id=1 place_name=Saturday Market date=July 05, 2016 cat_id=explore>" == place_repr)
+
+    def test_places_to_map_json(self):
+        """ Test json of places_to_map """
+
+        result = self.client.get('/places_to_map.json',
+                                 query_string={'trip_id': '1'})
+
+        places_json = json.loads(result.data)
+        assert 'Saturday Market' in places_json['1']['title']
+
 
 class ItineraryInSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
@@ -147,6 +162,32 @@ class ItineraryInSessionTests(unittest.TestCase):
         result = self.client.get("/lizlemon/1/mapview", follow_redirects=True)
         self.assertIn('MAP FILTERS:', result.data)
 
+    def test_create_trip_json(self):
+        """ Test create trip json """
+
+        result = self.client.post('/create_trip.json',
+                                  data={'tripname': 'Test Trip',
+                                        'from': '12/06/2016',
+                                        'to': '12/09/2016',
+                                        'latitude': 45.523062,
+                                        'longitude': -122.676482,
+                                        'loc_name': 'Test, Location',
+                                        'viewport': '{"south":45.432393,"west":\
+                                        -122.83699519999999,"north":\
+                                        45.6524799,"east":-122.4718489}'
+                                        })
+
+        trip_json = json.loads(result.data)
+        assert 'success' in trip_json['status']
+
+    def test_trip_loc_info_json(self):
+        """ Test json of trip_loc_info """
+
+        result = self.client.get('/trip_loc_info.json',
+                                 query_string={'trip_id': '1'})
+
+        trip_json = json.loads(result.data)
+        assert '{"south":45.432393,"west":-122.83699519999999,"north":45.6524799,"east":-122.4718489}' in trip_json['viewport']
 
 
 class ItineraryNoSessionTests(unittest.TestCase):
@@ -182,6 +223,11 @@ class ItineraryNoSessionTests(unittest.TestCase):
         self.assertIn('You do not have access to this page.', result.data)
         self.assertNotIn('Saturday Market', result.data)
         self.assertNotIn('Blue Star Donuts', result.data)
+
+    def test_map_view_page(self):
+        """Test Map View if user not in session but published"""
+        result = self.client.get("/lizlemon/1/mapview", follow_redirects=True)
+        self.assertIn('MAP FILTERS:', result.data)
 
 if __name__ == "__main__":
     unittest.main()
