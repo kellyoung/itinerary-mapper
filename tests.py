@@ -189,6 +189,41 @@ class ItineraryInSessionTests(unittest.TestCase):
         trip_json = json.loads(result.data)
         assert '{"south":45.432393,"west":-122.83699519999999,"north":45.6524799,"east":-122.4718489}' in trip_json['viewport']
 
+    def test_edit_place_info_json(self):
+        """ Test json of edit_place_info"""
+
+        result = self.client.get('/edit_place_info.json',
+                                 query_string={'place_id': '1'})
+
+        places_json = json.loads(result.data)
+        assert 'explore' in places_json['cat_id']
+
+    def test_delete_place_json(self):
+        """ Test json of delete_place"""
+
+        result = self.client.post('/delete_place.json',
+                                  data={'place_id': '1'})
+
+        delete_json = json.loads(result.data)
+        assert 'Deleted' in delete_json['status']
+
+    # def test_publish_trip_json(self):
+    #     """ Test json of publish_trip"""
+
+    #     result = self.client.post('/publish_trip.json',
+    #                               data={'trip_id': '1'})
+
+    #     publish_json = json.loads(result.data)
+    #     assert 'False' in publish_json['status']
+
+    def test_delete_trip_json(self):
+        """ Test json of delete_trip"""
+
+        result = self.client.post('/delete_trip.json',
+                                  data={'trip_id': '1'})
+
+        delete_json = json.loads(result.data)
+        assert 'success' in delete_json['status']
 
 class ItineraryNoSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
