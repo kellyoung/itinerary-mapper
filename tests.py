@@ -20,7 +20,6 @@ class ItineraryTests(unittest.TestCase):
         self.assertIn("CREATE ACCOUNT", result.data)
 
 
-
 class ItineraryDatabaseTests(unittest.TestCase):
     """Flask tests that use the database."""
 
@@ -207,14 +206,13 @@ class ItineraryInSessionTests(unittest.TestCase):
         delete_json = json.loads(result.data)
         assert 'Deleted' in delete_json['status']
 
-    # def test_publish_trip_json(self):
-    #     """ Test json of publish_trip"""
+    def test_publish_trip_json(self):
+        """ Test json of publish_trip"""
 
-    #     result = self.client.post('/publish_trip.json',
-    #                               data={'trip_id': '1'})
+        result = self.client.post('/publish_trip.json',
+                                  data={'trip_id': '1'})
 
-    #     publish_json = json.loads(result.data)
-    #     assert 'False' in publish_json['status']
+        self.assertTrue(result.status)
 
     def test_delete_trip_json(self):
         """ Test json of delete_trip"""
@@ -224,6 +222,7 @@ class ItineraryInSessionTests(unittest.TestCase):
 
         delete_json = json.loads(result.data)
         assert 'success' in delete_json['status']
+
 
 class ItineraryNoSessionTests(unittest.TestCase):
     """Flask tests with user logged in to session."""
@@ -261,8 +260,18 @@ class ItineraryNoSessionTests(unittest.TestCase):
 
     def test_map_view_page(self):
         """Test Map View if user not in session but published"""
-        result = self.client.get("/lizlemon/1/mapview", follow_redirects=True)
+        result = self.client.get("/lizlemon/1/mapview")
         self.assertIn('MAP FILTERS:', result.data)
+
+    def test_map_view_page(self):
+        """Test Map View if user not in session and not published"""
+        target_trip = Trip.query.get(1)
+        target_trip.published = False
+        db.session.commit()
+        result = self.client.get("/lizlemon/1/mapview", follow_redirects=True)
+        self.assertNotIn('MAP FILTERS:', result.data)
+        self.assertIn('Sorry!', result.data)
+
 
 if __name__ == "__main__":
     unittest.main()
