@@ -48,6 +48,14 @@
             <h1>journeyteller</h1>
             <h5>STORYTELLING FOR YOUR ADVENTURES.</h5>
             <br>
+            <ul class="nav pull-right">
+                {% if not session.logged_in %}
+                <li><a href="/facebook_login">Login or Signup</a></li>
+                {% else %}
+                <li><a href="/facebook_logout">Logout</a></li>
+                {% endif %}
+            </ul>
+
             <button type="button" class="btn btn-sm no-sess-btn" id="open-login">
               LOG IN 
             </button>&nbsp;or&nbsp;
