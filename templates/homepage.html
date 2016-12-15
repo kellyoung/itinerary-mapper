@@ -5,10 +5,7 @@
 
 {% endblock %}
 
-    <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
-    </fb:login-button>
-    <div id="status">
-    </div> -->
+    
     {% block navbar %}
     <nav class="navbar navbar-default">
     <div id= "homenavbar"class="container-fluid">
@@ -42,19 +39,16 @@
   {% endblock %}
 {% block content %}
   <div class="container">
+    <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
+    </fb:login-button>
+    <div id="fb-status">
+    </div>
     {% if not username %}
         <div class="row" id="no-sess-div">
           <div class="col-lg-offset-3 col-lg-6 col-md-12 col-xs-12 text-center">
             <h1>journeyteller</h1>
             <h5>STORYTELLING FOR YOUR ADVENTURES.</h5>
             <br>
-            <ul class="nav pull-right">
-                {% if not session.logged_in %}
-                <li><a href="/facebook_login">Login or Signup</a></li>
-                {% else %}
-                <li><a href="/facebook_logout">Logout</a></li>
-                {% endif %}
-            </ul>
 
             <button type="button" class="btn btn-sm no-sess-btn" id="open-login">
               LOG IN 
@@ -198,7 +192,7 @@
   });
 </script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<!-- <script src="/static/js/fb_login.js"></script> -->
+<script src="/static/js/fb_login.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
 <script src="/static/js/trip_location_searchbar.js"></script>

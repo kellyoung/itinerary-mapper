@@ -36,45 +36,8 @@ app.jinja_env.auto_reload = True
 FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
 FACEBOOK_APP_SECRET = os.environ['FACEBOOK_APP_SECRET']
 
-facebook = oauth.remote_app('facebook',
-    base_url='https://graph.facebook.com/',
-    request_token_url=None,
-    access_token_url='/oauth/access_token',
-    authorize_url='https://www.facebook.com/dialog/oauth',
-    consumer_key=FACEBOOK_APP_ID,
-    consumer_secret=FACEBOOK_APP_SECRET,
-    request_token_params={'scope': ('age_range, gender, name, picture, id')}
-)
 # --------------------------------------------------------------------------- #
-@facebook.tokengetter
-def get_facebook_token():
-    return session.get('facebook_token')
 
-def pop_login_session():
-    session.pop('logged_in', None)
-    session.pop('facebook_token', None)
-
-@app.route("/facebook_login")
-def facebook_login():
-    return facebook.authorize(callback=url_for('facebook_authorized',
-        next=request.args.get('next'), _external=True))
-
-@app.route("/facebook_authorized")
-@facebook.authorized_handler
-def facebook_authorized(resp):
-    next_url = request.args.get('next') or url_for('index')
-    if resp is None or 'access_token' not in resp:
-        return redirect(next_url)
-
-    session['logged_in'] = True
-    session['facebook_token'] = (resp['access_token'], '')
-
-    return redirect(next_url)
-
-@app.route("/facebook_logout")
-def facebook_logout():
-    pop_login_session()
-    return redirect(url_for('index'))
 
 def allowed_file(filename):
     """check if file is a valid name
@@ -139,30 +102,30 @@ def login():
     return redirect('/')
 
 
-# @app.route('/fb_login.json', methods=['POST'])
-# def fb_login():
-#     """Checks to see if user has logged in before, if not, store info in DB"""
-#     token = request.form.get('token')
-#     user_id = request.form.get('user_id')
+@app.route('/fb_login.json', methods=['POST'])
+def fb_login():
+    """Checks to see if user has logged in before, if not, store info in DB"""
+    token = request.form.get('token')
+    user_id = request.form.get('user_id')
 
-#     graph = facebook.GraphAPI(token)
-#     args = {'fields': 'name'}
-#     profile = graph.get_object('me', **args)
-#     print profile
+    graph = facebook.GraphAPI(token)
+    args = {'fields': 'name'}
+    profile = graph.get_object('me', **args)
+    print profile
 
-#     check_username = db.session.query(User).filter(User.username ==
-#                                                    user_id).first()
-#     session['username'] = profile['id']
-#     print session['username']
-#     if not check_username:
-#         # will need to fix password part, password should be an opt. parameter
-#         # this will prevent people from trying to manually enter into FB accounts
-#         # and won't have to store sensitive data
-#         new_user = User(name=profile['name'], username=user_id, password='fb_user')
-#         db.session.add(new_user)
-#         db.session.commit()
-#     # flash('Welcome, %s!') % profile['name']
-#     return jsonify({'status': 'logged in'})
+    check_username = db.session.query(User).filter(User.username ==
+                                                   user_id).first()
+    session['username'] = profile['id']
+    print session['username']
+    if not check_username:
+        # will need to fix password part, password should be an opt. parameter
+        # this will prevent people from trying to manually enter into FB accounts
+        # and won't have to store sensitive data
+        new_user = User(name=profile['name'], username=user_id, password='fb_user')
+        db.session.add(new_user)
+        db.session.commit()
+    # flash('Welcome, %s!') % profile['name']
+    return jsonify({'status': 'logged in'})
 
 
 @app.route('/logout')
