@@ -3,7 +3,7 @@ import os
 
 import bcrypt
 
-import facebook
+# import facebook
 
 from jinja2 import StrictUndefined
 
@@ -102,30 +102,30 @@ def login():
     return redirect('/')
 
 
-@app.route('/fb_login.json', methods=['POST'])
-def fb_login():
-    """Checks to see if user has logged in before, if not, store info in DB"""
-    token = request.form.get('token')
-    user_id = request.form.get('user_id')
+# @app.route('/fb_login.json', methods=['POST'])
+# def fb_login():
+#     """Checks to see if user has logged in before, if not, store info in DB"""
+#     token = request.form.get('token')
+#     user_id = request.form.get('user_id')
 
-    graph = facebook.GraphAPI(token)
-    args = {'fields': 'name'}
-    profile = graph.get_object('me', **args)
-    print profile
+#     graph = facebook.GraphAPI(token)
+#     args = {'fields': 'name'}
+#     profile = graph.get_object('me', **args)
+#     print profile
 
-    check_username = db.session.query(User).filter(User.username ==
-                                                   user_id).first()
-    session['username'] = profile['id']
-    print session['username']
-    if not check_username:
-        # will need to fix password part, password should be an opt. parameter
-        # this will prevent people from trying to manually enter into FB accounts
-        # and won't have to store sensitive data
-        new_user = User(name=profile['name'], username=user_id, password='fb_user')
-        db.session.add(new_user)
-        db.session.commit()
-    # flash('Welcome, %s!') % profile['name']
-    return jsonify({'status': 'logged in'})
+#     check_username = db.session.query(User).filter(User.username ==
+#                                                    user_id).first()
+#     session['username'] = profile['id']
+#     print session['username']
+#     if not check_username:
+#         # will need to fix password part, password should be an opt. parameter
+#         # this will prevent people from trying to manually enter into FB accounts
+#         # and won't have to store sensitive data
+#         new_user = User(name=profile['name'], username=user_id, password='fb_user')
+#         db.session.add(new_user)
+#         db.session.commit()
+#     # flash('Welcome, %s!') % profile['name']
+#     return jsonify({'status': 'logged in'})
 
 
 @app.route('/logout')
