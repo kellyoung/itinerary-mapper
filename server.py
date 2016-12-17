@@ -77,6 +77,17 @@ def index():
                            username=username)
 
 
+@app.route("/fb_token.json", methods=["POST"])
+def get_fb_token():
+
+    user_token = request.form.get("userToken")
+    print '########'
+    print user_token
+    print '########'
+
+    return redirect("/")
+
+
 @app.route('/login', methods=['POST'])
 def login():
     """Checks login info, adds to session if successful, redirects to home."""
