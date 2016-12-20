@@ -30,6 +30,7 @@ class FavoritedTrips(db.Model):
     """Trips a user favorites"""
     __tablename__ = 'favorites'
 
+    fav_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64),
                          db.ForeignKey('users.username'),
                          nullable=False)
@@ -48,9 +49,9 @@ class Trip(db.Model):
 
     trip_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     trip_name = db.Column(db.String(256), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    pic_file = db.Column(db.String(256), nullable=True)
-    price_range = db.Column(db.Integer, nullable=False)
+    # description = db.Column(db.Text, nullable=True)
+    # pic_file = db.Column(db.String(256), nullable=True)
+    # price_range = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     general_loc = db.Column(db.String(256), nullable=True)
