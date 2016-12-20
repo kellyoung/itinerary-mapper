@@ -26,6 +26,22 @@ class User(db.Model):
         return '<User username=%s>' % (self.username)
 
 
+class FavoritedTrips(db.Model):
+    """Trips a user favorites"""
+    __tablename__ = 'favorites'
+
+    username = db.Column(db.String(64),
+                         db.ForeignKey('users.username'),
+                         nullable=False)
+    trip_id = db.Column(db.Integer,
+                        db.ForeignKey('trips.trip_id'),
+                        nullable=False)
+    user = db.relationship('User',
+                           backref=db.backref('favorites',
+                                              order_by=trip_id))
+    trip = db.relationship('Trip')
+
+
 class Trip(db.Model):
     """Trip of a user"""
     __tablename__ = 'trips'
