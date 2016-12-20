@@ -32,6 +32,9 @@ class Trip(db.Model):
 
     trip_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     trip_name = db.Column(db.String(256), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    pic_file = db.Column(db.String(256), nullable=True)
+    price_range = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     general_loc = db.Column(db.String(256), nullable=True)
@@ -54,7 +57,7 @@ class Trip(db.Model):
                                                    self.trip_name)
 
 
-class Category(db.Model):
+class PlaceCategory(db.Model):
     """Category that days can belong to"""
 
     __tablename__ = 'categories'
@@ -107,10 +110,10 @@ def create_cat_table():
     """create the table for place categories"""
 
     # example categories
-    eat = Category(cat_id='eat')
-    sleep = Category(cat_id='sleep')
-    explore = Category(cat_id='explore')
-    transport = Category(cat_id='transport')
+    eat = PlaceCategory(cat_id='eat')
+    sleep = PlaceCategory(cat_id='sleep')
+    explore = PlaceCategory(cat_id='explore')
+    transport = PlaceCategory(cat_id='transport')
 
     db.session.add_all([eat, sleep, explore, transport])
     db.session.commit()
@@ -130,13 +133,13 @@ def example_data():
                     end_date=datetime.date(2016, 7, 6), general_loc='Portland, Oregon',
                     latitude=45.523062, longitude=-122.676482,
                     viewport='{"south":45.432393,"west":-122.83699519999999,"north":45.6524799,"east":-122.4718489}',
-                    published=True, username='lizlemon')
+                    published=True, username='lizlemon', price_range=2)
 
     # example categories
-    eat = Category(cat_id='eat')
-    sleep = Category(cat_id='sleep')
-    explore = Category(cat_id='explore')
-    transport = Category(cat_id='transport')
+    eat = PlaceCategory(cat_id='eat')
+    sleep = PlaceCategory(cat_id='sleep')
+    explore = PlaceCategory(cat_id='explore')
+    transport = PlaceCategory(cat_id='transport')
 
     # example places
     pdx_place_one = Place(place_name='Saturday Market',
