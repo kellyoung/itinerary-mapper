@@ -9,19 +9,19 @@ from jinja2 import StrictUndefined
 
 from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify, url_for, send_from_directory)
-from flask_oauth import OAuth
+# from flask_oauth import OAuth
 
 from werkzeug import secure_filename
 
 # from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Trip, Place, Category, connect_to_db, db
+from model import User, Trip, Place, PlaceCategory, connect_to_db, db
 
 import datetime
 
 app = Flask(__name__)
 
-oauth = OAuth()
+# oauth = OAuth()
 
 
 
@@ -33,8 +33,8 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
-FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
-FACEBOOK_APP_SECRET = os.environ['FACEBOOK_APP_SECRET']
+# FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
+# FACEBOOK_APP_SECRET = os.environ['FACEBOOK_APP_SECRET']
 
 # --------------------------------------------------------------------------- #
 
@@ -77,15 +77,13 @@ def index():
                            username=username)
 
 
-@app.route("/fb_token.json", methods=["POST"])
-def get_fb_token():
+# @app.route("/fb_token.json", methods=["POST"])
+# def get_fb_token():
 
-    user_token = request.form.get("userToken")
-    print '########'
-    print user_token
-    print '########'
+#     user_token = request.form.get("userToken")
 
-    return redirect("/")
+#     print user_token
+#     return redirect("/")
 
 
 @app.route('/login', methods=['POST'])
