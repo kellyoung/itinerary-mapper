@@ -38,11 +38,11 @@
   </nav>
   {% endblock %}
 {% block content %}
-  <!-- <div class="container">
+  <div class="container">
     <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
     </fb:login-button>
     <div id="fb-status">
-    </div> -->
+    </div>
     
     {% if not username %}
         <div class="row" id="no-sess-div">
@@ -193,7 +193,7 @@
   });
 </script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<!-- <script src="/static/js/posthb_fb_login.js"></script> -->
+<script src="/static/js/posthb_fb_login.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
 <script src="/static/js/trip_location_searchbar.js"></script>

@@ -3,7 +3,7 @@ import os
 
 import bcrypt
 
-# import facebook
+import facebook
 
 from jinja2 import StrictUndefined
 
@@ -77,13 +77,14 @@ def index():
                            username=username)
 
 
-# @app.route("/fb_token.json", methods=["POST"])
-# def get_fb_token():
+@app.route("/fb_token.json", methods=["POST"])
+def get_fb_token():
 
-#     user_token = request.form.get("userToken")
-
-#     print user_token
-#     return redirect("/")
+    user_token = request.form.get("userToken")
+    # if userid not in database, add it to database
+    # then put username in session and then redirect home
+    print user_token
+    return redirect("/")
 
 
 @app.route('/login', methods=['POST'])
@@ -159,8 +160,8 @@ def create_user():
     password = request.form.get('password')
     hashed_pw = bcrypt.hashpw(str(password), bcrypt.gensalt())
 
-    if bcrypt.hashpw(str(password), hashed_pw) == hashed_pw:
-        print "It matches"
+    # if bcrypt.hashpw(str(password), hashed_pw) == hashed_pw:
+    #     print "It matches"
 
     # see if user already exists
     check_users_existance = User.query.filter(User.username == username).first()
