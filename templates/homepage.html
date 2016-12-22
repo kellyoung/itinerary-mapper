@@ -30,7 +30,7 @@
           <li><a href="#" data-toggle="modal" data-target="#loginModal">LOG IN</a></li>
           {% else %}
           <li><a href="#" onclick="document.getElementById('to-all-trips').submit();">ALL TRIPS</a></li>
-          <li><a href="#" onclick="document.getElementById('logout').submit();">LOG OUT</a></li>
+          <li><a href="/logout" onclick="FB.logout();">LOG OUT</a></li>
           {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -114,9 +114,6 @@
 
 
     {% else %}
-        <form action='/logout' id='logout'>
-            <input hidden type='submit' value='Logout'>
-        </form>
         <div class="row" id="in-sess-div">
           <div class="col-lg-offset-3 col-lg-6 col-md-12 col-xs-12 text-center">
             <form id='create-trip'>
