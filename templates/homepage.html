@@ -39,11 +39,8 @@
   {% endblock %}
 {% block content %}
   <div class="container">
-    <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
-    </fb:login-button>
-    <div id="fb-status">
-    </div>
-    
+    <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
+    </fb:login-button> -->
     {% if not username %}
         <div class="row" id="no-sess-div">
           <div class="col-lg-offset-3 col-lg-6 col-md-12 col-xs-12 text-center">
@@ -81,6 +78,9 @@
                     <input type='password' name='password' autocomplete="off" required><br>
                     <input type='submit' value='LOG IN'>
                 </form>
+
+                <fb:login-button scope="public_profile" onlogin="checkLoginState">
+                </fb:login-button>
               </div>
             </div>
           </div>
@@ -107,6 +107,8 @@
                     <input type='password' name='password' autocomplete="off" required><br>
                     <input type='submit' value='CREATE USER'>
                 </form>
+                <fb:login-button scope="public_profile" onlogin="checkLoginState">
+                </fb:login-button>
               </div>
             </div>
           </div>

@@ -18,7 +18,7 @@ class User(db.Model):
 
     name = db.Column(db.String(64), nullable=False)
     username = db.Column(db.String(64), primary_key=True)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(128), nullable=True)
 
     def __repr__(self):
         """Helpful representation when printed"""
