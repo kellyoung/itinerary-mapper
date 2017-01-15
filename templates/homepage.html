@@ -30,7 +30,8 @@
           <li><a href="#" data-toggle="modal" data-target="#loginModal">LOG IN</a></li>
           {% else %}
           <li><a href="#" onclick="document.getElementById('to-all-trips').submit();">ALL TRIPS</a></li>
-          <li><a href="/logout" onclick="FB.logout();">LOG OUT</a></li>
+          <!-- <li><a href="/logout" onclick="FB.logout();">LOG OUT</a></li> -->
+          <li><a href="/logout">LOG OUT</a></li>
           {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -79,8 +80,8 @@
                     <input type='submit' value='LOG IN'>
                 </form>
 
-                <fb:login-button scope="public_profile" onlogin="checkLoginState">
-                </fb:login-button>
+                <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState">
+                </fb:login-button> -->
               </div>
             </div>
           </div>
@@ -107,8 +108,8 @@
                     <input type='password' name='password' autocomplete="off" required><br>
                     <input type='submit' value='CREATE USER'>
                 </form>
-                <fb:login-button scope="public_profile" onlogin="checkLoginState">
-                </fb:login-button>
+                <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState">
+                </fb:login-button> -->
               </div>
             </div>
           </div>
@@ -192,7 +193,7 @@
   });
 </script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<script src="/static/js/posthb_fb_login.js"></script>
+<!-- <script src="/static/js/posthb_fb_login.js"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
 <script src="/static/js/trip_location_searchbar.js"></script>
