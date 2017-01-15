@@ -374,6 +374,10 @@ def add_place():
     cat_id = request.form.get('category')
     notes = request.form.get('notes')
 
+    print '############'
+    print type(place_name)
+    print type(place_loc)
+
     new_place = Place(place_name=place_name, place_loc=place_loc,
                       latitude=latitude, longitude=longitude, day_num=day_num,
                       date=date, trip_id=trip_id, cat_id=cat_id, notes=notes)
