@@ -89,13 +89,45 @@ class PlaceCategory(db.Model):
         return "<Category cat_id=%s>" % self.cat_id
 
 
+# class Place(db.Model):
+#     """Place of a day"""
+#     __tablename__ = 'places'
+
+#     place_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     place_name = db.Column(db.String(256), nullable=False)
+#     place_loc = db.Column(db.String(256), nullable=False)
+#     latitude = db.Column(db.Float, nullable=False)
+#     longitude = db.Column(db.Float, nullable=False)
+#     day_num = db.Column(db.Integer, nullable=False)
+#     date = db.Column(db.Date, nullable=False)
+#     trip_id = db.Column(db.Integer,
+#                         db.ForeignKey('trips.trip_id'),
+#                         nullable=False)
+#     cat_id = db.Column(db.String(16),
+#                        db.ForeignKey('categories.cat_id'),
+#                        nullable=False)
+#     notes = db.Column(db.Text, nullable=True)
+#     pic_file = db.Column(db.String(256), nullable=True)
+#     trip = db.relationship('Trip',
+#                            backref=db.backref('places',
+#                                               order_by=place_id))
+
+#     def __repr__(self):
+#         """Helpful representation when printed."""
+
+#         display = "<Place place_id=%s place_name=%s date=%s cat_id=%s>"
+#         return display % (self.place_id,
+#                           self.place_name,
+#                           self.date.strftime("%B %d, %Y"),
+#                           self.cat_id)
+
 class Place(db.Model):
     """Place of a day"""
     __tablename__ = 'places'
 
     place_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    place_name = db.Column(db.String(256), nullable=False)
-    place_loc = db.Column(db.String(256), nullable=False)
+    place_name = db.Column(db.Unicode(256), nullable=False)
+    place_loc = db.Column(db.Unicode(256), nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
     day_num = db.Column(db.Integer, nullable=False)
@@ -106,7 +138,7 @@ class Place(db.Model):
     cat_id = db.Column(db.String(16),
                        db.ForeignKey('categories.cat_id'),
                        nullable=False)
-    notes = db.Column(db.Text, nullable=True)
+    notes = db.Column(db.UnicodeText, nullable=True)
     pic_file = db.Column(db.String(256), nullable=True)
     trip = db.relationship('Trip',
                            backref=db.backref('places',
@@ -120,6 +152,7 @@ class Place(db.Model):
                           self.place_name,
                           self.date.strftime("%B %d, %Y"),
                           self.cat_id)
+
 
 
 # create the categories
