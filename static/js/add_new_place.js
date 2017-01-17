@@ -10,15 +10,16 @@ function decode_utf8(s) {
 }
 //add a place
 var add_place_params;
+
 function addPlaceToDB(evt) {
     evt.preventDefault();
-
+    console.log('hello1');
     var form_data = new FormData();
     var day_info = $('#tripday').val().split(',');
     var place_picture = $('input[type=file]')[0].files[0];
     
     form_data.append("trip_id", $('#trip_id').val());
-    form_data.append("placename", $('#placename').val());
+    form_data.append("placename", encode_utf8($('#placename').val()));//$('#placename').text());
     form_data.append("placesearch", encode_utf8(addPlace.formatted_address));
     form_data.append("latitude", addPlace.geometry.location.lat());
     form_data.append("longitude", addPlace.geometry.location.lng());
@@ -29,6 +30,8 @@ function addPlaceToDB(evt) {
     if(place_picture){
         form_data.append('pic', place_picture);
     }
+    console.log(form_data);
+    console.log('hello');
     
 
     $( '#add-trip-form' ).each(function(){
@@ -54,6 +57,7 @@ function addPlaceToDB(evt) {
         success: function(results){
             console.log(typeof results.place_loc);
             console.log(typeof decode_utf8(results.place_loc));
+            console.log('HELLO IN SUCCESS FUNCTION');
             console.log(decode_utf8(results.place_loc));
             $(dayDiv).append(decode_utf8(results.new_place_div));
         }
