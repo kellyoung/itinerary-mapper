@@ -1,3 +1,23 @@
+function encode_utf8(s) {
+  return unescape(encodeURIComponent(s));
+}
+
+function decode_utf8(s) {
+  return decodeURIComponent(escape(s));
+}
+
+//function to try decoding/encoding utf-8
+function convertUTF(){
+    // $(".utf-8").each(function(){ placeLocs.push($(this).text());
+                                 
+    //                             });
+
+    $('.utf-8').each(function(){
+        var decoded = decode_utf8($(this).text());
+        $(this).html(decoded);
+    });
+}
+
 var tripLoc;
 function tripLocSearch(){
     var input = document.getElementById('trip-loc-search');
@@ -24,7 +44,7 @@ function addTriptoDB(evt){
         var latitude = tripLoc.geometry.location.lat();
         var longitude = tripLoc.geometry.location.lng();
         var tripAddress = tripLoc.formatted_address;
-        var tripName = $('#tripname').val();
+        var tripName = encode_utf8($('#tripname').val());
         var toDate = $('#to').val();
         var fromDate = $('#from').val();
         var viewPort = JSON.stringify(tripLoc.geometry.viewport.toJSON());
@@ -62,3 +82,5 @@ $('#show-form-btn').on('click', function(){
     $('#create-trip').show();
     $('#show-form-btn').hide();
 });
+
+convertUTF();

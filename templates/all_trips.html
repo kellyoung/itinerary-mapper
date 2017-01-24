@@ -57,7 +57,7 @@
     <div class="row">
       <div class="col-xs-12 text-center">
         {% for trip in user_trips %}
-            <a href='/create_trip/{{ user.username }}/{{ trip.trip_id }}' class="trip-link"><h3>{{ trip.trip_name }}: <em>{{trip.start_date.strftime("%B %d, %Y")}} to {{trip.end_date.strftime("%B %d, %Y")}}</em></h3></a>
+            <a href='/create_trip/{{ user.username }}/{{ trip.trip_id }}' class="trip-link"><h3 class='utf-8'>{{ trip.trip_name }}: <em>{{trip.start_date.strftime("%B %d, %Y")}} to {{trip.end_date.strftime("%B %d, %Y")}}</em></h3></a>
         {% endfor %}
       </div> 
     </div>
