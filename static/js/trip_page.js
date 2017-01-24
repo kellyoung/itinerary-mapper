@@ -25,6 +25,18 @@ function deleteTrip(){
     });
 }
 
+document.onload = function(){
+    console.log(document.title);
+    var decoded = decode_utf8(document.title);
+
+    console.log(decoded);
+    document.title = decoded;
+};
+
+document.onload();
+
+
+
 //function to try decoding/encoding utf-8
 function convertUTF(){
     // $(".utf-8").each(function(){ placeLocs.push($(this).text());
