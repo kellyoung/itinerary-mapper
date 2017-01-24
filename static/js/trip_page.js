@@ -27,7 +27,9 @@ function deleteTrip(){
 
 //function to try decoding/encoding utf-8
 function convertUTF(){
-    $(".utf-8").each(function(){ placeLocs.push($(this).text());});
+    // $(".utf-8").each(function(){ placeLocs.push($(this).text());
+                                 
+    //                             });
 
     $('.utf-8').each(function(){
         var decoded = decode_utf8($(this).text());

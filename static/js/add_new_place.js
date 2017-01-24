@@ -26,7 +26,7 @@ function addPlaceToDB(evt) {
     form_data.append("visitday", day_info[1]);
     form_data.append("daynum", day_info[0]);
     form_data.append("category", $('#tripcat').val());
-    form_data.append("notes", $('#tripnotes').val());
+    form_data.append("notes", encode_utf8($('#tripnotes').val()));
     if(place_picture){
         form_data.append('pic', place_picture);
     }

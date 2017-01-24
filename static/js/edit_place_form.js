@@ -1,4 +1,11 @@
  $("#editModal").on("shown.bs.modal", function () {
+    // var placeLocs = [];
+    // $(".utf-8").each(function(){ placeLocs.push($(this).text());});
+
+    // $('.utf-8').each(function(){
+    //     var decoded = decode_utf8($(this).text());
+    //     $(this).html(decoded);
+    //});
     var currentCenter = editMap.getCenter();
     google.maps.event.trigger(editMap, "resize");
     editMap.setCenter(currentCenter);
@@ -17,9 +24,9 @@ function displayForm(){
 
     $.get('/edit_place_info.json', editFormParams, function(results){
         $("#edit-place_id").val(divPlaceID);
-        $("#edit-placename").val(results.place_name);
+        $("#edit-placename").val(decode_utf8(results.place_name));
         $("#edit-place-search").val(decode_utf8(results.place_loc));
-        $("#edit-tripnotes").val(results.notes);
+        $("#edit-tripnotes").val(decode_utf8(results.notes));
 
         var selectedDate = '#edit-tripday option[value="'+results.day_num+','+results.formatted_date+'"]';
         $(selectedDate).attr("selected", "selected");
