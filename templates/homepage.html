@@ -72,7 +72,7 @@
                 <h4 class="modal-title" id="loginModalLabel">LOG IN</h4>
               </div>
               <div class="modal-body">
-                <form action='/login' method='POST' class='modal-form'>
+                <form action='/login' method='POST' id='login-form' class='modal-form'>
                     <label for='username'>Username: </label><br>
                     <input type='text' name='username' class='char-restrict' required><br>
                     <label for='password'>Password: </label><br>
@@ -99,7 +99,7 @@
                 <h4 class="modal-title" id="createAccountModalLabel">CREATE AN ACCOUNT</h4>
               </div>
               <div class="modal-body">
-                <form action='/create_user' method='POST' class='modal-form'>
+                <form action='/create_user' method='POST' id='create-form' class='modal-form'>
                     <label for='name'>Name: </label><br>
                     <input type='text' name='name' autocomplete="off" required><br>
                     <label for='username'>Username  (alphanumeric only): </label><br>
