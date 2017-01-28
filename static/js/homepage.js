@@ -25,22 +25,17 @@
 // });
 
 $('#login-form').submit(function(event){
-    event.preventDefault();
-    var validChars = /([a-z])([0-9])/;
-    var validEntry = true;
-    $("#login-form input[type=text]").each(function() {
-        // if (! $(this).val().value.match(validChars)){
-        //     validEntry = false;
-        // }
-        // validEntry =  /^[\x00-\x7F]*$/.test($(this.val()));
-        console.log($(this).val());
-    });
-    console.log(validEntry);
-    if (validEntry) {
-        alert('valid!');
+    
+
+    var nameCheck = /([a-z])([0-9])/.test($('#login-name').val());
+    var pwCheck = /([a-z])([0-9])/.test($('#login-pw').val());
+
+    if (nameCheck && pwCheck){
         return;
     }
-
-    alert('NOT VALID!');
+    
+    // give some feedback if it's not right entry
+    console.log('not valid');
+    event.preventDefault();
 
 });
