@@ -101,11 +101,12 @@
               <div class="modal-body">
                 <form action='/create_user' method='POST' id='create-form' class='modal-form'>
                     <label for='name'>Name: </label><br>
-                    <input type='text' name='name' autocomplete="off" required><br>
+                    <input id='create-name' type='text' name='name' autocomplete="off" required><br>
                     <label for='username'>Username  (alphanumeric only): </label><br>
-                    <input type='text' name='username' class='char-restrict' autocomplete="off" required><br>
+                    <input id='create-uname' type='text' name='username' class='char-restrict'
+                    autocomplete="off" required><br>
                     <label for='password'>Password: </label><br>
-                    <input type='password' name='password' autocomplete="off" required><br>
+                    <input id='create-pw' type='password' name='password' autocomplete="off" required><br>
                     <input type='submit' value='CREATE USER'>
                 </form>
                 <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState">
