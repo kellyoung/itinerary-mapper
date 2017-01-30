@@ -148,22 +148,6 @@ function sendEditInfo(evt){
         form_data.append('delete', 'no');
     }
 
-    // var place_id = $('#edit-place_id').val();
-    // console.log(place_id);
-    // var place_name = $('#edit-placename').val();
-    // var place_search = $('#edit-place-search').val();
-    // var visit_day = $('#edit-tripday').val();
-    // var category = $('#edit-tripcat').val();
-    // var notes = $('#edit-tripnotes').val();
-
-    // var editPlaceParams = {
-    //     place_id: place_id,
-    //     place_name: place_name,
-    //     place_search: place_search,
-    //     visit_day: visit_day,
-    //     category: category,
-    //     notes: notes
-    // };
 
     //check to see if there was a new place (editPlace), if there is pass in lat and long
     if (editPlace) {

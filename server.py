@@ -534,7 +534,7 @@ def edit_place():
     if place_name != place_to_edit.place_name:
         place_to_edit.place_name = place_name
 
-    if place_search != place_to_edit.place_loc:
+    if place_search != place_to_edit.place_loc and place_search:
         place_to_edit.place_loc = place_search
 
     if int(day_num) != place_to_edit.day_num:
