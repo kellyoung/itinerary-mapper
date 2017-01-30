@@ -8,10 +8,6 @@ function decode_utf8(s) {
 
 //function to try decoding/encoding utf-8
 function convertUTF(){
-    // $(".utf-8").each(function(){ placeLocs.push($(this).text());
-                                 
-    //                             });
-
     $('.utf-8').each(function(){
         var decoded = decode_utf8($(this).text());
         $(this).html(decoded);
@@ -36,8 +32,8 @@ function tripLocSearch(){
 
 function addTriptoDB(evt){
     evt.preventDefault();
-    if (!tripLoc){
-        alert('Please choose a valid location.');
+    if(!tripLoc.geometry.viewport){
+       console.log('choose a valid location');
         return false;
     }
     else{
@@ -47,6 +43,7 @@ function addTriptoDB(evt){
         var tripName = encode_utf8($('#tripname').val());
         var toDate = $('#to').val();
         var fromDate = $('#from').val();
+        console.log(tripLoc.geometry.viewport);
         var viewPort = JSON.stringify(tripLoc.geometry.viewport.toJSON());
         
         var params = {
@@ -83,4 +80,5 @@ $('#show-form-btn').on('click', function(){
     $('#show-form-btn').hide();
 });
 
+// run on load
 convertUTF();
