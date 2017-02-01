@@ -12,7 +12,7 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify, url_for, send_from_directory)
 
-# from flask_oauth import OAuth
+from flask_oauth import OAuth
 
 from werkzeug import secure_filename
 
@@ -33,48 +33,58 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
-# oauth = OAuth()
+oauth = OAuth()
 
-# FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
-# FACEBOOK_APP_SECRET = os.environ['FACEBOOK_APP_SECRET']
+FACEBOOK_APP_ID = os.environ['FACEBOOK_APP_ID']
+FACEBOOK_APP_SECRET = os.environ['FACEBOOK_APP_SECRET']
+
+facebook = oauth.remote_app('facebook',
+    base_url='https://graph.facebook.com/',
+    request_token_url=None,
+    access_token_url='/oauth/access_token',
+    authorize_url='https://www.facebook.com/dialog/oauth',
+    consumer_key=FACEBOOK_APP_ID,
+    consumer_secret=FACEBOOK_APP_SECRET,
+    request_token_params={'scope': ('email, ')}
+)
 
 
 # --------------------------------------------------------------------------- #
 
 
-# @facebook_oauth.tokengetter
-# def get_facebook_token():
-#     return session.get('facebook_token')
+@facebook.tokengetter
+def get_facebook_token():
+    return session.get('facebook_token')
 
 
-# def pop_login_session():
-#     session.pop('logged_in', None)
-#     session.pop('facebook_token', None)
+def pop_login_session():
+    session.pop('logged_in', None)
+    session.pop('facebook_token', None)
 
 
-# @app.route("/facebook_login")
-# def facebook_login():
-#     return facebook_oauth.authorize(callback=url_for('facebook_authorized',
-#                               next=request.args.get('next'), _external=True))
+@app.route("/facebook_login")
+def facebook_login():
+    return facebook.authorize(callback=url_for('facebook_authorized',
+                              next=request.args.get('next'), _external=True))
 
 
-# @app.route("/facebook_authorized")
-# @facebook_oauth.authorized_handler
-# def facebook_authorized(resp):
-#     next_url = request.args.get('next') or url_for('index')
-#     if resp is None or 'access_token' not in resp:
-#         return redirect(next_url)
+@app.route("/facebook_authorized")
+@facebook.authorized_handler
+def facebook_authorized(resp):
+    next_url = request.args.get('next') or url_for('index')
+    if resp is None or 'access_token' not in resp:
+        return redirect(next_url)
 
-#     session['logged_in'] = True
-#     session['facebook_token'] = (resp['access_token'], '')
+    session['logged_in'] = True
+    session['facebook_token'] = (resp['access_token'], '')
 
-#     return redirect(next_url)
+    return redirect(next_url)
 
 
-# @app.route("/fb_logout")
-# def fb_logout():
-#     pop_login_session()
-#     return redirect(url_for('index'))
+@app.route("/fb_logout")
+def fb_logout():
+    pop_login_session()
+    return redirect(url_for('index'))
 
 
 def allowed_file(filename):
@@ -115,32 +125,6 @@ def index():
                            username=username)
 
 
-@app.route("/fb_token.json", methods=["POST"])
-def get_fb_token():
-
-    user_token = request.form.get("userToken")
-    # if userid not in database, add it to database with other info
-    # then put username in session and then redirect home if already in database
-
-    fb_graph = facebook.GraphAPI(user_token)
-    args = {'fields': 'id,name'}
-    profile = fb_graph.get_object('me', **args)
-    print profile['id'], profile['name']
-    username = profile['id']
-    name = profile['name']
-    check_users_existance = User.query.filter(User.username == username).first()
-
-    if not check_users_existance:
-        new_user = User(name=name, username=username)
-        db.session.add(new_user)
-        db.session.commit()
-
-    session['username'] = username
-    print session['username']
-
-    return redirect('/')
-
-
 @app.route('/login', methods=['POST'])
 def login():
     """Checks login info, adds to session if successful, redirects to home."""
@@ -166,32 +150,6 @@ def login():
     return redirect('/')
 
 
-# @app.route('/fb_login.json', methods=['POST'])
-# def fb_login():
-#     """Checks to see if user has logged in before, if not, store info in DB"""
-#     token = request.form.get('token')
-#     user_id = request.form.get('user_id')
-
-#     graph = facebook.GraphAPI(token)
-#     args = {'fields': 'name'}
-#     profile = graph.get_object('me', **args)
-#     print profile
-
-#     check_username = db.session.query(User).filter(User.username ==
-#                                                    user_id).first()
-#     session['username'] = profile['id']
-#     print session['username']
-#     if not check_username:
-#         # will need to fix password part, password should be an opt. parameter
-#         # this will prevent people from trying to manually enter into FB accounts
-#         # and won't have to store sensitive data
-#         new_user = User(name=profile['name'], username=user_id, password='fb_user')
-#         db.session.add(new_user)
-#         db.session.commit()
-#     # flash('Welcome, %s!') % profile['name']
-#     return jsonify({'status': 'logged in'})
-
-
 @app.route('/logout')
 def logout():
     """Remove username from session and return to homepage"""
@@ -213,9 +171,6 @@ def create_user():
     username = request.form.get('username')
     password = request.form.get('password')
     hashed_pw = bcrypt.hashpw(str(password), bcrypt.gensalt())
-
-    # if bcrypt.hashpw(str(password), hashed_pw) == hashed_pw:
-    #     print "It matches"
 
     # see if user already exists
     check_users_existance = User.query.filter(User.username == username).first()

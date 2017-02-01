@@ -42,6 +42,7 @@
   <div class="container">
     <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
     </fb:login-button> -->
+
     {% if not username %}
         <div class="row" id="no-sess-div">
           <div class="col-lg-offset-3 col-lg-6 col-md-12 col-xs-12 text-center">
@@ -60,7 +61,14 @@
             </div>
           </div>
         </div>
-        
+        <ul class="nav pull-right">
+
+            <li><a href="/facebook_login">Login or Signup</a></li>
+
+            <li><a href="/logout">Logout</a></li>
+
+        </ul>
+
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -80,9 +88,7 @@
                     <input type='submit' value='LOG IN'>
                 </form>
 
-                <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState">
-                </fb:login-button> -->
-              </div>
+                              </div>
             </div>
           </div>
         </div>
