@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Itinerary Mapper{% endblock %}
 {% block style %}
+
 <link rel="stylesheet" href="/static/css/homepage.css">
 
 {% endblock %}
-
     
     {% block navbar %}
     <nav class="navbar navbar-default">
@@ -39,9 +39,7 @@
   </nav>
   {% endblock %}
 {% block content %}
-  <div class="container">
-    <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState" data-auto-logout-link="true">
-    </fb:login-button> -->
+    
 
     {% if not username %}
         <div class="row" id="no-sess-div">
@@ -61,13 +59,6 @@
             </div>
           </div>
         </div>
-        <ul class="nav pull-right">
-
-            <li><a href="/facebook_login">Login or Signup</a></li>
-
-            <li><a href="/logout">Logout</a></li>
-
-        </ul>
 
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -115,8 +106,7 @@
                     <input id='create-pw' type='password' name='password' autocomplete="off" required><br>
                     <input type='submit' value='CREATE USER'>
                 </form>
-                <!-- <fb:login-button scope="public_profile" onlogin="checkLoginState">
-                </fb:login-button> -->
+
               </div>
             </div>
           </div>
@@ -145,7 +135,8 @@
           </div>
         </div>
     {% endif %}
-
+    
+    <!-- <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" onlogin="fbLogin"></div> -->
 {% endblock %}
 </div>
 
@@ -200,7 +191,7 @@
   });
 </script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<!-- <script src="/static/js/posthb_fb_login.js"></script> -->
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripLocSearch" async defer></script>
 <script src="/static/js/trip_location_searchbar.js"></script>
