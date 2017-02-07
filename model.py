@@ -26,22 +26,6 @@ class User(db.Model):
         return '<User username=%s>' % (self.username)
 
 
-class FavoritedTrips(db.Model):
-    """Trips a user favorites"""
-    __tablename__ = 'favorites'
-
-    fav_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    username = db.Column(db.String(64),
-                         db.ForeignKey('users.username'),
-                         nullable=False)
-    trip_id = db.Column(db.Integer,
-                        db.ForeignKey('trips.trip_id'),
-                        nullable=False)
-    user = db.relationship('User',
-                           backref=db.backref('favorites',
-                                              order_by=trip_id))
-    trip = db.relationship('Trip')
-
 
 class Trip(db.Model):
     """Trip of a user"""
@@ -49,9 +33,6 @@ class Trip(db.Model):
 
     trip_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     trip_name = db.Column(db.String(256), nullable=False)
-    # description = db.Column(db.Text, nullable=True)
-    # pic_file = db.Column(db.String(256), nullable=True)
-    # price_range = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     general_loc = db.Column(db.String(256), nullable=True)
@@ -88,38 +69,6 @@ class PlaceCategory(db.Model):
 
         return "<Category cat_id=%s>" % self.cat_id
 
-
-# class Place(db.Model):
-#     """Place of a day"""
-#     __tablename__ = 'places'
-
-#     place_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     place_name = db.Column(db.String(256), nullable=False)
-#     place_loc = db.Column(db.String(256), nullable=False)
-#     latitude = db.Column(db.Float, nullable=False)
-#     longitude = db.Column(db.Float, nullable=False)
-#     day_num = db.Column(db.Integer, nullable=False)
-#     date = db.Column(db.Date, nullable=False)
-#     trip_id = db.Column(db.Integer,
-#                         db.ForeignKey('trips.trip_id'),
-#                         nullable=False)
-#     cat_id = db.Column(db.String(16),
-#                        db.ForeignKey('categories.cat_id'),
-#                        nullable=False)
-#     notes = db.Column(db.Text, nullable=True)
-#     pic_file = db.Column(db.String(256), nullable=True)
-#     trip = db.relationship('Trip',
-#                            backref=db.backref('places',
-#                                               order_by=place_id))
-
-#     def __repr__(self):
-#         """Helpful representation when printed."""
-
-#         display = "<Place place_id=%s place_name=%s date=%s cat_id=%s>"
-#         return display % (self.place_id,
-#                           self.place_name,
-#                           self.date.strftime("%B %d, %Y"),
-#                           self.cat_id)
 
 class Place(db.Model):
     """Place of a day"""
