@@ -1,0 +1,47 @@
+/*html {
+    height: 100%;
+}*/
+
+html {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 100%;
+}
+
+.navbar {
+    background-color: transparent;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    margin-bottom: -10px;
+}
+.navbar-default {
+    font-weight: 550;
+}
+.navbar .navbar-brand{
+    color: #fa8072 !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    color: #f27c6f !important;
+}
+
+#collapse-btn {
+    border-color: transparent;
+}
+
+
+body {
+  /*background-image: url(/static/homebackgrounddarkened.jpg);*/
+  /*background-size: cover;*/
+  /*overflow:auto;
+  background-repeat: no-repeat;
+  background-position: center center;*/
+  color: gray;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
