@@ -1,6 +1,6 @@
-/*html {
+html {
     height: 100%;
-}*/
+}
 
 html {
     font-family: 'Roboto', sans-serif;
@@ -11,8 +11,8 @@ html {
 }
 
 .navbar {
-    background-color: transparent;
-    background: transparent;
+    background-color: white;
+    background: white;
     border-color: transparent;
     box-shadow: none;
     margin-bottom: -10px;
@@ -33,12 +33,21 @@ html {
 #collapse-btn {
     border-color: transparent;
 }
+.row {
+    margin-top: 1em;
+    background-image: url(/static/homebackgrounddarkened.jpg);
+    padding-bottom: 20em;
+    background-position: 50% 78%;
+}
 
+#no-sess-div {
+    color: white;
+}
 
 body {
-  /*background-image: url(/static/homebackgrounddarkened.jpg);*/
-  /*background-size: cover;*/
-  /*overflow:auto;
+  /*background-image: url(/static/homebackgrounddarkened.jpg);
+  background-size: cover;
+  overflow:auto;
   background-repeat: no-repeat;
   background-position: center center;*/
   color: gray;
