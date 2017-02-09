@@ -51,7 +51,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     """a route to where files are stored to access pictures"""
@@ -72,7 +71,6 @@ def index():
 
     return render_template('homepage.html',
                            username=username)
-
 
 @app.route('/login', methods=['POST'])
 def login():
