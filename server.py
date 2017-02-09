@@ -71,6 +71,7 @@ def index():
 
     return render_template('homepage.html',
                            username=username)
+    # return render_template('portfolio_20160719.html')
 
 @app.route('/login', methods=['POST'])
 def login():
