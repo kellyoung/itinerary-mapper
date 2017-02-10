@@ -36,8 +36,9 @@ html {
 .row {
     margin-top: 1em;
     background-image: url(/static/homebackgrounddarkened.jpg);
+    /*padding-top:5em;
     padding-bottom: 20em;
-    background-position: 50% 78%;
+    background-position: 50% 78%;*/
 }
 
 #no-sess-div {
@@ -55,8 +56,74 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-#no-sess-div h1 {
-        font-size: 400%;
+/*.no-sess-btn {
+    padding-top: 0px;
+    background: transparent;
+    font-size: 14px;
+    color: white;
+    font-weight: 600;
+}
+
+.no-sess-btn:hover {
+  color: #f27c6f !important;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.no-sess-btn:active {
+  color: #f27c6f !important;
+  font-size: 16px;
+  font-style: italic;
+}*/
+
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+    #no-sess-div h1 {
+        /*font-size: 400%;*/
+        font-size: 340%;
+    }
+    .row {
+    
+    padding-top:2em;
+    padding-bottom: 18em;
+    background-position: 50% 78%;
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  #no-sess-div h1 {
+        font-size: 450%;
         letter-spacing: 2px;
     }
 
+  .row {
+    
+    padding-top:4em;
+    padding-bottom: 20em;
+    background-position: 50% 78%;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  #no-sess-div h1 {
+        font-size: 650%;
+        letter-spacing: 6px;
+    }
+  #no-sess-div h5 {
+      padding-top: 2%;
+      font-size: 180%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+ 
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}

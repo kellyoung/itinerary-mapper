@@ -1,22 +1,10 @@
-{% extends 'base-test.html' %}
+{% extends 'base.html' %}
 {% block title %}Itinerary Mapper{% endblock %}
 {% block style %}
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity=
-  "sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
-<!-- <link rel="stylesheet" href="/static/css/homepage-v2.css"> -->
-  <style type="text/css">
-    .flashed-message {
-      padding: 6px;
-      padding-left: 12px;
-    }
-  </style>
+
+<link rel="stylesheet" href="/static/css/homepage-v2.css">
+  
+
 
 
 {% endblock %}
@@ -65,16 +53,22 @@
             <h1>journeyteller</h1>
             <h5>STORYTELLING FOR YOUR ADVENTURES.</h5>
             <br>
-
-            <button type="button" class="btn btn-sm no-sess-btn" id="open-login" data-toggle="modal" data-target="#loginModal">
+            <p>
+            <a class="modal-open" id="open-login" data-toggle="modal" data-target="#loginModal">
               LOG IN 
-            </button>&nbsp;or&nbsp;
-            <button type="button" class="btn btn-sm no-sess-btn" id="open-create-acct" data-toggle="modal" data-target="#createAccountModal">
+            </a>
+            <!-- <button type="button" class="btn btn-sm no-sess-btn" id="open-login" data-toggle="modal" data-target="#loginModal"> -->
+              <!-- LOG IN </button> -->
+              &nbsp;OR&nbsp;
+            <!-- <button type="button" class="btn btn-sm no-sess-btn" id="open-create-acct" data-toggle="modal" data-target="#createAccountModal">
                CREATE ACCOUNT
-            </button>
-            <div id="no-sess-forms">
+            </button> -->
+            <a class="model-open" id="open-create-acct" data-toggle="modal" data-target="#createAccountModal">
+               CREATE ACCOUNT
+            </a>
+
               TO GET STARTED.
-            </div>
+            </p>
           </div>
         </div>
 
@@ -89,6 +83,7 @@
                 <h4 class="modal-title" id="loginModalLabel">LOG IN</h4>
               </div>
               <div class="modal-body">
+                <p class="invalid-output" id="invalid-login"></p>
                 <form action='/login' method='POST' id='login-form' class='modal-form'>
                     <label for='username'>Username: </label><br>
                     <input id='login-name' type='text' name='username' class='char-restrict' required><br>
@@ -114,6 +109,7 @@
                 <h4 class="modal-title" id="createAccountModalLabel">CREATE AN ACCOUNT</h4>
               </div>
               <div class="modal-body">
+                <p class="invalid-output" id="invalid-create"></p>
                 <form action='/create_user' method='POST' id='create-form' class='modal-form'>
                     <label for='name'>Name: </label><br>
                     <input id='create-name' type='text' name='name' autocomplete="off" required><br>
