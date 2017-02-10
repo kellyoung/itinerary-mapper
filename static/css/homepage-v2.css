@@ -45,6 +45,18 @@ html {
     color: white;
 }
 
+a.modal-open { 
+    cursor: pointer;
+    color: white;
+}
+
+a.modal-open:hover {
+    text-decoration: none;
+    color: #fa8072;
+    font-weight: 500;
+}
+
+
 body {
   /*background-image: url(/static/homebackgrounddarkened.jpg);
   background-size: cover;
@@ -76,6 +88,25 @@ body {
   font-style: italic;
 }*/
 
+.modal-dialog {
+    text-align: center;
+    color: gray;
+}
+
+button .btn .btn:focus .btn:active a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+:focus{
+  outline: none !important;;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #333;
+    background-color: transparent;
+    color: gray;
+}
 
 /* Custom, iPhone Retina */ 
 @media only screen and (min-width : 320px) {
@@ -89,6 +120,11 @@ body {
     padding-bottom: 18em;
     background-position: 50% 78%;
     }
+
+    .modal-dialog {
+      width: auto;
+    }
+
 }
 
 /* Extra Small Devices, Phones */ 
@@ -101,9 +137,13 @@ body {
   .row {
     
     padding-top:4em;
-    padding-bottom: 20em;
+    padding-bottom: 18em;
     background-position: 50% 78%;
   }
+
+  .modal-dialog {
+    width: auto;
+    }
 }
 
 /* Small Devices, Tablets */
@@ -116,11 +156,18 @@ body {
       padding-top: 2%;
       font-size: 180%;
   }
+
+  .modal-dialog {
+    width: 40%;
+    }
+
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
- 
+  .modal-dialog {
+    width: 30%;
+    }
 }
 
 /* Large Devices, Wide Screens */

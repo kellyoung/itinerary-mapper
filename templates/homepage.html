@@ -33,9 +33,9 @@
           <li><a href="#" data-toggle="modal" data-target="#createAccountModal">create account</a></li>
           <li><a href="#" data-toggle="modal" data-target="#loginModal">log in</a></li>
           {% else %}
-          <li><a href="#" onclick="document.getElementById('to-all-trips').submit();">ALL TRIPS</a></li>
+          <li><a href="#" onclick="document.getElementById('to-all-trips').submit();">all trips</a></li>
           <!-- <li><a href="/logout" onclick="FB.logout();">LOG OUT</a></li> -->
-          <li><a href="/logout">LOG OUT</a></li>
+          <li><a href="/logout">logout</a></li>
           {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -63,7 +63,7 @@
             <!-- <button type="button" class="btn btn-sm no-sess-btn" id="open-create-acct" data-toggle="modal" data-target="#createAccountModal">
                CREATE ACCOUNT
             </button> -->
-            <a class="model-open" id="open-create-acct" data-toggle="modal" data-target="#createAccountModal">
+            <a class="modal-open" id="open-create-acct" data-toggle="modal" data-target="#createAccountModal">
                CREATE ACCOUNT
             </a>
 
