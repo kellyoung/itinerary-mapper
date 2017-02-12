@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{ user.name|title }}'s Trips{% endblock %}
 {% block style %}
-<link rel="stylesheet" href="/static/css/all_trips.css">
+<link rel="stylesheet" href="/static/css/all_trips-v2.css">
 {% endblock %}
 {% block navbar %}
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -21,43 +21,56 @@
       <div class="collapse navbar-collapse" id="homenavbarcollapse">
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">ABOUT</a></li>
-            <li><a href="/logout">LOG OUT</a></li>
+            <li><a href="/">about</a></li>
+            <li><a href="/logout">log out</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
   {% endblock %}
 {% block content %}
+<div class="modal fade" id="createTripModal" tabindex="-1" role="dialog" aria-labelledby="createTripModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="createTripModalLabel">ADD NEW TRIP</h4>
+              </div>
+              <div class="modal-body">
+                <form id='create-trip'>
+                  <label for='tripname'>Name your trip: </label>
+                  <input type='text' name='tripname' id='tripname' required><br>
+                  <label for='trip-loc-search'>Where did you go?</label>
+                  <input id="trip-loc-search" name="trip-loc-search" type="text" placeholder="Search Box" required><br>
+                  <label for="from">Traveled From</label>
+                  <input type="text" id="from" name="from" required>
+                  <label for="to">to</label>
+                  <input type="text" id="to" name="to" required><br>
+                  <input type='submit' value='CREATE NEW TRIP' id='submit-trip'><br>
+                  <button id="hide-form-btn">Hide Form</button>
+                </form>
+
+                </div>
+            </div>
+          </div>
+        </div>
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 text-center">
-        <h2 id="title">All Trips</h2>
-        <h5 id="author">by {{ user.name|title }}</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 text-center" id="form-row">
-        <button id="show-form-btn">Show Create Trip Form</button>
-        <form id='create-trip'>
-          <label for='tripname'>Name your trip: </label>
-          <input type='text' name='tripname' id='tripname' required><br>
-          <label for='trip-loc-search'>Where did you go?</label>
-          <input id="trip-loc-search" name="trip-loc-search" type="text" placeholder="Search Box" required><br>
-          <label for="from">Traveled From</label>
-          <input type="text" id="from" name="from" required>
-          <label for="to">to</label>
-          <input type="text" id="to" name="to" required><br>
-          <input type='submit' value='CREATE NEW TRIP' id='submit-trip'><br>
-          <button id="hide-form-btn">Hide Form</button>
-        </form>
+      <div class="col-xs-12  text-left">
+        <h2 id="title">{{ user.name|title }}'s Trips</h2>
+        <!-- <h5 id="author"></h5> -->
+        <a class="modal-open" id="open-create-trip" data-toggle="modal" data-target="#createTripModal">
+               + ADD NEW TRIP
+            </a>
       </div>
     </div>
      
     <div class="row">
       <div class="col-xs-12 text-center">
         {% for trip in user_trips %}
-            <a href='/create_trip/{{ user.username }}/{{ trip.trip_id }}' class="trip-link"><h3 class='utf-8'>{{ trip.trip_name }}: <em>{{trip.start_date.strftime("%B %d, %Y")}} to {{trip.end_date.strftime("%B %d, %Y")}}</em></h3></a>
+            <a href='/create_trip/{{ user.username }}/{{ trip.trip_id }}' class="trip-link"><h3 class='utf-8'>{{ trip.trip_name }}: <em>{{trip.start_date.strftime("%B %d, %Y")}} to {{trip.end_date.strftime("%B %d, %Y")}}</em></h3><h4>{{ trip.general_loc}}</h4></a>
         {% endfor %}
       </div> 
     </div>

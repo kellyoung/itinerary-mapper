@@ -1,0 +1,94 @@
+ .modal{
+    z-index: 20;   
+}
+.modal-backdrop{
+    z-index: 10;        
+}​
+
+.container {
+    width: 100%;
+}
+
+.navbar {
+    background-color: white;
+    background: white;
+    border-color: transparent;
+    box-shadow: none;
+    margin-bottom: -10px;
+    z-index: 5;
+}
+.navbar-default {
+    font-weight: 550;
+}
+.navbar .navbar-brand{
+    color: #fa8072 !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    color: #f27c6f !important;
+}
+
+#collapse-btn {
+    border-color: transparent;
+}
+
+a.modal-open { 
+    cursor: pointer;
+    color: #fa8072;
+    text-decoration: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  color: gray;
+}
+
+#title {
+  margin-bottom: 5px;
+  margin-top: 70px;
+  font-weight: normal;
+}
+
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+    #title {
+      letter-spacing: 2px;
+      font-size: 24px;
+    }
+}
+
+}
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+  #title {
+      letter-spacing: 4px;
+      font-size: 36px;
+    }
+}
+
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    #title {
+      letter-spacing: 4px;
+      font-size: 36px;
+    }
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+
