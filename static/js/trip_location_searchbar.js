@@ -34,6 +34,7 @@ function addTriptoDB(evt){
     evt.preventDefault();
     if(!tripLoc || !tripLoc.geometry.viewport){
        console.log('choose a valid location');
+       $('#trip-submit-feedback').html('Invalid entry. Please choose another place.');
         return false;
     }
     else{

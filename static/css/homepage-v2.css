@@ -137,7 +137,7 @@ input[type=submit] {
 } 
 
 #create-trip {
-  margin-top: 20px;
+  margin-top: 80px;
 }
 #create-trip label {
     font-weight: bold;
@@ -148,6 +148,22 @@ input[type=submit] {
   font-weight: bold;
 }
 
+#trip-submit-feedback {
+  color: white;
+  font-style: italic;
+  margin: 4px;
+}
+
+#to-all-trips {
+    background: transparent;
+    border: transparent;
+    color: white;
+    font-style: italic;
+    font-size: 14px;
+    text-decoration: underline;
+    box-shadow: none !important;
+    outline: none !important;
+}
 /* Custom, iPhone Retina */ 
 @media only screen and (min-width : 320px) {
     #no-sess-div h1 {
@@ -206,3 +222,4 @@ input[type=submit] {
 @media only screen and (min-width : 1200px) {
 
 }
+
