@@ -33,13 +33,7 @@ html {
 #collapse-btn {
     border-color: transparent;
 }
-.row {
-    margin-top: 1em;
-    background-image: url(/static/homebackgrounddarkened.jpg);
-    /*padding-top:5em;
-    padding-bottom: 20em;
-    background-position: 50% 78%;*/
-}
+
 
 #no-sess-div {
     color: white;
@@ -58,35 +52,16 @@ a.modal-open:hover {
 
 
 body {
-  /*background-image: url(/static/homebackgrounddarkened.jpg);
+  background-image: url(/static/homebackgrounddarkened.jpg);
   background-size: cover;
   overflow:auto;
   background-repeat: no-repeat;
-  background-position: center center;*/
+  background-position: center center;
   color: gray;
   line-height: 1.3;
   -webkit-font-smoothing: antialiased;
 }
 
-/*.no-sess-btn {
-    padding-top: 0px;
-    background: transparent;
-    font-size: 14px;
-    color: white;
-    font-weight: 600;
-}
-
-.no-sess-btn:hover {
-  color: #f27c6f !important;
-  font-size: 16px;
-  font-style: italic;
-}
-
-.no-sess-btn:active {
-  color: #f27c6f !important;
-  font-size: 16px;
-  font-style: italic;
-}*/
 
 .modal-dialog {
     text-align: center;
@@ -108,22 +83,83 @@ button .btn .btn:focus .btn:active a:focus {
     color: gray;
 }
 
+.modal-title {
+    margin: 0;
+    line-height: 1.5;
+    font-size: 24px;
+    color: #fa8072;
+}
+
+input[type=text], input[type=password]{
+    padding: 2px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: solid 1px;
+    border-color: gray;
+    color: gray;
+    border-radius: 5px;
+    /*width: 60%;*/
+    text-align: center;
+}
+
+#create-trip input[type=text], #create-trip input[type=password] {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+  width: 280px;
+}
+
+.ui-datepicker {
+  width: 280px;
+}
+input[type=submit] {
+  margin-top: 8px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #fa8072;
+}
+
+.doc-form label , #create-trip label {
+    font-weight: normal;
+    line-height: 20px;
+    color: white;
+
+}
+
+::-webkit-input-placeholder {
+    color: white;
+    font-style: italic;
+} 
+
+#create-trip {
+  margin-top: 20px;
+}
+#create-trip label {
+    font-weight: bold;
+}
+
+#create-feedback {
+  color: white;
+  font-weight: bold;
+}
+
 /* Custom, iPhone Retina */ 
 @media only screen and (min-width : 320px) {
     #no-sess-div h1 {
         /*font-size: 400%;*/
+        margin-top: 15%;
         font-size: 340%;
-    }
-    .row {
-    
-    padding-top:2em;
-    padding-bottom: 18em;
-    background-position: 50% 78%;
     }
 
     .modal-dialog {
       width: auto;
     }
+
 
 }
 
@@ -134,21 +170,17 @@ button .btn .btn:focus .btn:active a:focus {
         letter-spacing: 2px;
     }
 
-  .row {
-    
-    padding-top:4em;
-    padding-bottom: 18em;
-    background-position: 50% 78%;
-  }
 
   .modal-dialog {
     width: auto;
     }
 }
 
+
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
   #no-sess-div h1 {
+        margin-top: 15%;
         font-size: 650%;
         letter-spacing: 6px;
     }

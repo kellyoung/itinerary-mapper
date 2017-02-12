@@ -14,7 +14,7 @@
   "sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
   <style type="text/css">
     .flashed-message {
-      margin-top: 0px;
+      margin-top: 10px;
       margin-bottom: 0px;
       padding: 6px;
       padding-left: 12px;
@@ -25,6 +25,9 @@
 </head>
 
 <body>
+        {% block navbar %}
+    NAVBAR HERE
+    {% endblock %}
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div class="flash-div">
@@ -34,9 +37,6 @@
         </div>
       {% endif %}
     {% endwith %}
-    {% block navbar %}
-    NAVBAR HERE
-    {% endblock %}
     
 
 

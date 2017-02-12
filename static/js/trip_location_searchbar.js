@@ -32,7 +32,7 @@ function tripLocSearch(){
 
 function addTriptoDB(evt){
     evt.preventDefault();
-    if(!tripLoc.geometry.viewport){
+    if(!tripLoc || !tripLoc.geometry.viewport){
        console.log('choose a valid location');
         return false;
     }
