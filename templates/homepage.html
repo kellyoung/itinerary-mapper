@@ -134,13 +134,13 @@
                 <!-- <div id='create-trip-loc'></div>
                 <div id='create-trip-loc-name'></div> -->
                 <label for='tripname'>NAME YOUR TRIP: </label><br>
-                <input type='text' name='tripname' id='tripname' required><br>
+                <input type='text' name='tripname' id='tripname' maxlength='60' required><br>
                 <label for='trip-loc-search'>WHERE DID YOU GO?</label><br>
                 <input id="trip-loc-search" name="trip-loc-search" type="text" placeholder="Search Places" required><br>
                 <label for="from">FROM:</label><br>
-                <input type="text" id="from" name="from" required><br>
+                <input type="text" id="from" name="from" required readonly><br>
                 <label for="to">TO:</label><br>
-                <input type="text" id="to" name="to" required><br>
+                <input type="text" id="to" name="to" required readonly><br>
                 <input type='submit' value='CREATE TRIP' id='submit-trip'>
             </form>
             <div id="trip-submit-feedback"></div>
