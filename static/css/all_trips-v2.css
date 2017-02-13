@@ -69,6 +69,7 @@ html, body {
 .trip-square:hover .trip-name{
   /*background-color: #fa8072;*/
   color: white;
+  font-style: italic;
 }
 
 .square-text {
