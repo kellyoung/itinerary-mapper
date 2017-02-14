@@ -1,3 +1,32 @@
+//function to try decoding/encoding utf-8
+function encode_utf8(s) {
+  return unescape(encodeURIComponent(s));
+}
+
+function decode_utf8(s) {
+  return decodeURIComponent(escape(s));
+}
+
+function convertUTF(){
+
+    $('.utf-8').each(function(){
+        var decoded = decode_utf8($(this).text());
+        $(this).html(decoded);
+    });
+}
+
+
+
+document.onload = function(){
+    console.log(document.title);
+    var decoded = decode_utf8(document.title);
+
+    console.log(decoded);
+    document.title = decoded;
+};
+
+
+
 var finalMap;
 var placesLatLng=[];
 
@@ -153,7 +182,12 @@ function createFinalMapPlaces(){
 }
 
 // on document load, create the final map.
-$(document).ready(createFinalMapPlaces);
+$(document).ready(function(){
+    createFinalMapPlaces();
+    document.onload();
+    convertUTF();
+
+});
 
 
 document.getElementById("copyButton").addEventListener("click", function() {
