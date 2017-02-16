@@ -94,7 +94,7 @@ window.createAllPlacesMap = function(results){
         var latLng = new google.maps.LatLng(results[place].latitude, results[place].longitude);
         placesLatLng.push(latLng);
 
-        var content = results[place].content;
+        var content = decode_utf8(results[place].content);
         var dayNum = String(results[place].day_num);
 
         var category = results[place].category;

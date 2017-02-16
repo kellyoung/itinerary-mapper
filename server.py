@@ -556,7 +556,7 @@ def return_all_places():
             content = """
                     <div id='place-div-%s' class='place-div'>
 
-                    <h5 class='title-%s'>%s</h5>
+                    <h5 class='title-%s utf-8'>%s</h5>
 
                     <div style="width:275px;height:212.5px;
                     overflow:hidden;margin: auto" class='place-pic'>
@@ -564,8 +564,8 @@ def return_all_places():
                     </div>
                     <p><b>Day %s:</b> %s</p>
                     <p><b>Category:</b> %s</p>
-                    <p><b>Place Address:</b> %s</p>
-                    <p><b>Notes:</b> %s</p>            
+                    <p class="utf-8"><b>Place Address:</b> %s</p>
+                    <p class="utf-8"><b>Notes:</b> %s</p>            
                     </div>
                     """ % (place.place_id, category, title, img_url, day_num, place.date, category,
                            place.place_loc, place.notes)
