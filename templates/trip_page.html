@@ -34,20 +34,6 @@
   {% endblock %}
 {% block content %}
  <div class="container">
-    <div class="row" id="trip-btn-row">
-        <div class="col-xs-12 text-right" id="trip-btn-col">
-            <button type="button" class="btn btn-primary" id='publish-btn'>
-            {% if trip.published %}
-                Make Trip Private
-            {% else %}
-                Make Trip Public
-            {% endif %}
-            </button>
-            <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
-                    Delete Trip
-            </button>
-        </div>
-    </div>
     
     <div class="row" id="trip-titles-row">
         <div class="col-xs-12 text-left" id="trip-titles-col">
@@ -56,9 +42,24 @@
             <br>
         </div>
     </div>
-    <button type="button" id="add-btn" data-toggle="modal" data-target="#addModal">
-      ADD PLACE
-    </button>
+    <div class="row" id="trip-btn-row">
+        <div class="col-xs-12 text-left" id="trip-btn-col">
+            <button type="button" class="btn btn-primary" id="add-btn" data-toggle="modal" data-target="#addModal">
+              ADD PLACE
+            </button>
+            <button type="button" class="btn btn-primary" id='publish-btn'>
+            {% if trip.published %}
+            Make Trip Private
+            {% else %}
+            Make Trip Public
+            {% endif %}
+            </button>
+            <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
+                Delete Trip
+            </button>
+            <br><br>
+        </div>
+    </div>
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -72,10 +73,14 @@
                 <form id='add-trip-form' enctype="multipart/form-data">
     
                     <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'>
+                    <div id="add-form-map"></div>
+
+                    <label for='placesearch'>Location of Place: </label><br>
+                    <input id="add-form-search" name="placesearch" type="text" placeholder="Search Box" required><br>
+
                     <label for='placename'>Name of Place: </label><br>
                     <input id="placename" type='text' name='placename' required><br>
 
-                    
                     <label for='tripday'>Day of Visit: </label>
                     <select id="tripday" name="tripday" required>
                         <option disabled selected value> -- Select -- </option>
@@ -92,18 +97,13 @@
                         <option value="transport">Voyage</option>
                     </select><br>
 
-                    <label for='tripcat'>Upload Picture: </label>
-                    <input type="file" name="file" id="place-pic-file"><br>
-
                     <label for='tripnotes'>Notes: </label><br>
                     <div>
                         <textarea id="tripnotes" name="tripnotes"></textarea>
                     </div>
-                    
-                    <label for='placesearch'>Location of Place: </label><br>
-                    <input id="add-form-search" name="placesearch" type="text" placeholder="Search Box" required><br>
 
-                    <div id="add-form-map"></div>
+                    <label for='tripcat'>Upload Picture: </label>
+                    <input type="file" name="file" id="place-pic-file"><br>
 
                     <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
                 </form>

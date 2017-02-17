@@ -14,6 +14,8 @@ var add_place_params;
 function addPlaceToDB(evt) {
     evt.preventDefault();
 
+    $('#addModal').modal('hide');
+
     var form_data = new FormData();
     var day_info = $('#tripday').val().split(',');
     var place_picture = $('input[type=file]')[0].files[0];
@@ -28,9 +30,12 @@ function addPlaceToDB(evt) {
         form_data.append("category", $('#tripcat').val());
         form_data.append("notes", encode_utf8($('#tripnotes').val()));
 
+        // this is for if I use picture upload
         if(place_picture){
             form_data.append('pic', place_picture);
         }
+
+        // for deployment switch it to a url link
         
 
         $( '#add-trip-form' ).each(function(){
