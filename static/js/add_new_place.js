@@ -17,12 +17,12 @@ function addPlaceToDB(evt) {
     var form_data = new FormData();
     var day_info = $('#tripday').val().split(',');
     var place_picture = $('input[type=file]')[0].files[0];
-    if (addPlace){
+    if (addFormPlace){
         form_data.append("trip_id", $('#trip_id').val());
         form_data.append("placename", encode_utf8($('#placename').val()));
-        form_data.append("placesearch", encode_utf8(addPlace.formatted_address));
-        form_data.append("latitude", addPlace.geometry.location.lat());
-        form_data.append("longitude", addPlace.geometry.location.lng());
+        form_data.append("placesearch", encode_utf8(addFormPlace.formatted_address));
+        form_data.append("latitude", addFormPlace.geometry.location.lat());
+        form_data.append("longitude", addFormPlace.geometry.location.lng());
         form_data.append("visitday", day_info[1]);
         form_data.append("daynum", day_info[0]);
         form_data.append("category", $('#tripcat').val());

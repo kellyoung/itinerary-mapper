@@ -6,7 +6,9 @@ var editPlace;
 var editMap;
 var addMap;
 var tripViewPort;
-
+var addMapBounds;
+var tripLat;
+var tripLong;
 window.tripPageMaps = function(){
   convertUTF();
   //requests trip map info and uses it to display Google Maps
@@ -17,6 +19,9 @@ window.tripPageMaps = function(){
   
   //open edit form modal, displayForm in edit_form.js
   $(document).on('click', '.edit-btn', displayForm);
+
+  // open add place modal and show map
+  $(document).on('click', '#add-btn', displayAddForm);
 
   //delete place that is clicked, sendDeleteInfo from edit_form.js
   $('#delete-place-btn').on('click', sendDeleteInfo);
@@ -32,22 +37,19 @@ window.tripPageMaps = function(){
 };
 
 function addPlaceMapInfo(){
-  var tripLat;
-  var tripLong;
+
   //AJAX request to get map bounds and latitude and longitude from database
   var params = {
                   'trip_id': $('#trip_id').val()
                };
 
   $.get('/trip_loc_info.json', params, function(results){
-    console.log(results);
+
     tripLat = results.latitude;
     tripLong = results.longitude;
     tripViewPort = JSON.parse(results.viewport);
 
-    console.log(tripViewPort);
-    console.log(tripLat);
-    console.log(tripLong);
+
     //call addPlaceFormMap with the parameters
     addPlaceFormMap(tripLat, tripLong, tripViewPort);
 
@@ -56,7 +58,8 @@ function addPlaceMapInfo(){
 }
 
 function addPlaceFormMap(latitude, longitude, viewport){
-  var addMapBounds;
+
+  
   if (viewport){
     addMapBounds = new google.maps.LatLngBounds(
                         new google.maps.LatLng(viewport.south, viewport.west),
@@ -125,3 +128,5 @@ function addPlaceFormMap(latitude, longitude, viewport){
     
   console.log(addPlace);
 }
+
+

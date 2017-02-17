@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
 {% block style %}
-<link rel="stylesheet" href="/static/css/add_trip_map.css">
+<!-- <link rel="stylesheet" href="/static/css/add_trip_map.css"> -->
+<link rel="stylesheet" href="/static/css/trip_page.css">
+
 {% endblock %}
 {% block navbar %}
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -48,12 +50,73 @@
     </div>
     
     <div class="row" id="trip-titles-row">
-        <div class="col-lg-offset-3 col-lg-6 col-xs-12 text-center" id="trip-titles-col">
+        <div class="col-xs-12 text-left" id="trip-titles-col">
             <h2 id="trip-title" class='utf-8'> {{ trip.trip_name }}</h2>
             <h5 id="trip-author">By: {{ user.name }}</h5>
             <br>
         </div>
     </div>
+    <button type="button" id="add-btn" data-toggle="modal" data-target="#addModal">
+      ADD PLACE
+    </button>
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addModalLabel">Add Place</h4>
+              </div>
+              <div id='modal-form' class="modal-body">
+                <form id='add-trip-form' enctype="multipart/form-data">
+    
+                    <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'>
+                    <label for='placename'>Name of Place: </label><br>
+                    <input id="placename" type='text' name='placename' required><br>
+
+                    
+                    <label for='tripday'>Day of Visit: </label>
+                    <select id="tripday" name="tripday" required>
+                        <option disabled selected value> -- Select -- </option>
+                        {% for day in trip_dates %}
+                            <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
+                        {% endfor %}
+                    </select><br>
+                    <label for='tripcat'>Category of Place: </label>
+                    <select id="tripcat" name="tripcat" required>
+                        <option disabled selected value> -- Select -- </option>
+                        <option value="eat">Eat</option>
+                        <option value="sleep">Sleep</option>
+                        <option value="explore">Explore</option>
+                        <option value="transport">Voyage</option>
+                    </select><br>
+
+                    <label for='tripcat'>Upload Picture: </label>
+                    <input type="file" name="file" id="place-pic-file"><br>
+
+                    <label for='tripnotes'>Notes: </label><br>
+                    <div>
+                        <textarea id="tripnotes" name="tripnotes"></textarea>
+                    </div>
+                    
+                    <label for='placesearch'>Location of Place: </label><br>
+                    <input id="add-form-search" name="placesearch" type="text" placeholder="Search Box" required><br>
+
+                    <div id="add-form-map"></div>
+
+                    <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
+                </form>
+                
+              </div>
+              <div class="modal-footer">
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+
     <div class="row" id="add-place-row">
                 <div id="add-trip-div">
                 <form id='add-trip-form' enctype="multipart/form-data">
@@ -109,8 +172,6 @@
                     </div>
                 </form>
                 </div>
-            
-            
         
         
 
@@ -223,6 +284,7 @@ libraries=places&callback=tripPageMaps" async defer></script>
 <script src="/static/js/add_place_map.js"></script>
 <script src="/static/js/add_new_place.js"></script>
 <script src="/static/js/edit_place_form.js"></script>
+<script src="/static/js/add_place_form.js"></script>
 <script src="/static/js/trip_page.js"></script>
 {% endblock %}
 

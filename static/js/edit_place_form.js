@@ -1,11 +1,4 @@
  $("#editModal").on("shown.bs.modal", function () {
-    // var placeLocs = [];
-    // $(".utf-8").each(function(){ placeLocs.push($(this).text());});
-
-    // $('.utf-8').each(function(){
-    //     var decoded = decode_utf8($(this).text());
-    //     $(this).html(decoded);
-    //});
     var currentCenter = editMap.getCenter();
     google.maps.event.trigger(editMap, "resize");
     editMap.setCenter(currentCenter);
