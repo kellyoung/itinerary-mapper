@@ -117,71 +117,7 @@
         </div>
 
 
-    <div class="row" id="add-place-row">
-                <div id="add-trip-div">
-                <form id='add-trip-form' enctype="multipart/form-data">
 
-                    <div class='col-lg-offset-3 col-lg-3  col-md-offset-2 col-md-4 col-xs-12' id="add-form-left">  
-                        
-                        <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'>
-                        <label for='placename'>Name of Place: </label><br>
-                        <input id="placename" type='text' name='placename' required><br>
-
-                        
-                        <label for='tripday'>Day of Visit: </label>
-                        <select id="tripday" name="tripday" required>
-                            <option disabled selected value> -- Select -- </option>
-                            {% for day in trip_dates %}
-                                <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
-                            {% endfor %}
-                        </select><br>
-                        <label for='tripcat'>Category of Place: </label>
-                        <select id="tripcat" name="tripcat" required>
-                            <option disabled selected value> -- Select -- </option>
-                            <option value="eat">Eat</option>
-                            <option value="sleep">Sleep</option>
-                            <option value="explore">Explore</option>
-                            <option value="transport">Voyage</option>
-                        </select><br>
-
-                        <label for='tripcat'>Upload Picture: </label>
-                        <input type="file" name="file" id="place-pic-file"><br>
-
-                        <label for='tripnotes'>Notes: </label><br>
-                        <div>
-                            <textarea id="tripnotes" name="tripnotes"></textarea>
-                        </div>
-
-                        
-                    </div>
-                    <div class='col-lg-3  col-md-4 col-xs-12' id='add-form-right'>
-                        <label for='placesearch'>Location of Place: </label><br>
-                        <input id="place-search" name="placesearch" type="text" placeholder="Search Box" required><br>
-
-                        <div id="placemap"></div>
-                        
-                    </div>
-                    </div>
-                    <div class="row" id="add-place-row-btns">
-                         <div class="col-xs-12 text-center" id="add-place-col-title">
-                            <div id="add-form-btns">
-                                <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
-                                <button id="hide-add-form-btn">Hide Form</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                </div>
-        
-        
-
-        <div class="row">
-            <div class='col-lg-offset-3 col-lg-6  col-md-offset-2 col-md-8 col-xs-12 text-center'>
-                <button type="button" class="btn" id="show-add-form-btn">
-                  SHOW ADD NEW PLACE FORM
-                </button>
-            </div>  
-        </div>
     
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
