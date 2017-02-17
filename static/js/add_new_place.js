@@ -55,7 +55,7 @@ function addPlaceToDB(evt) {
             // ... Other options like success and etc
             success: function(results){
 
-                $(dayDiv).append(decode_utf8(results.new_place_div));
+                location.reload();
             }
         });
     }
