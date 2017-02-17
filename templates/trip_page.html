@@ -75,20 +75,20 @@
                     <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'>
                     <div id="add-form-map"></div>
 
-                    <label for='placesearch'>Location of Place: </label><br>
+                    <label for='placesearch'>Place Location: </label>
                     <input id="add-form-search" name="placesearch" type="text" placeholder="Search Box" required><br>
 
-                    <label for='placename'>Name of Place: </label><br>
+                    <label for='placename'>Place Name: </label>
                     <input id="placename" type='text' name='placename' required><br>
 
-                    <label for='tripday'>Day of Visit: </label>
+                    <label for='tripday'>Day Visited: </label>
                     <select id="tripday" name="tripday" required>
                         <option disabled selected value> -- Select -- </option>
                         {% for day in trip_dates %}
                             <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
                         {% endfor %}
                     </select><br>
-                    <label for='tripcat'>Category of Place: </label>
+                    <label for='tripcat'>Category: </label>
                     <select id="tripcat" name="tripcat" required>
                         <option disabled selected value> -- Select -- </option>
                         <option value="eat">Eat</option>
