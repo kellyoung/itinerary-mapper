@@ -121,19 +121,27 @@ function sendEditInfo(evt){
     var form_data = new FormData();
 
     form_data.append("place_id", $('#edit-place_id').val());
-    form_data.append("place_name", $('#edit-placename').val());
-    form_data.append("place_search", $('#edit-place-search').val());
+    form_data.append("place_name", encode_utf8($('#edit-placename').val()));
+    form_data.append("place_search", encode_utf8($('#edit-place-search').val()));
     form_data.append("visit_day", $('#edit-tripday').val());
     form_data.append("category", $('#edit-tripcat').val());
-    form_data.append("notes", $('#edit-tripnotes').val());
+    form_data.append("notes", encode_utf8($('#edit-tripnotes').val()));
 
-    var edit_place_picture = $('#edit-place-pic-file')[0].files[0];
-    console.log(edit_place_picture);
-    if(edit_place_picture){
-        form_data.append('pic', edit_place_picture);
+    // if there is a file upload
+    // var edit_place_picture = $('#edit-place-pic-file')[0].files[0];
+    // console.log(edit_place_picture);
+
+    // if(edit_place_picture){
+    //     form_data.append('pic', edit_place_picture);
+    // }
+
+    // if there is an image url
+    if ($('#edit-place-pic-link').val()){
+        form_data.append("img_url", encode_utf8($('#edit-place-pic-link').val()));
     }
+
     var delete_pic = $('#delete-file').is(":checked");
-    console.log(delete_pic);
+
     if(delete_pic){
         form_data.append('delete', 'yes');
     }
@@ -149,12 +157,16 @@ function sendEditInfo(evt){
     }
 
     editPlace = '';
-    // $.post('/edit_place.json', form_data, function(results){
-    //     console.log(results.status);
-    //     location.reload();
-    // });
+
+    // if using file upload
+    // var editURL = '/edit_place.json';
+
+    // if using image url
+    var editURL = '/edit_place_no_file.json';
+
+
     $.ajax({
-        url: '/edit_place.json',
+        url: editURL,
         data: form_data,
         type: 'POST',
         // THIS MUST BE DONE FOR FILE UPLOADING

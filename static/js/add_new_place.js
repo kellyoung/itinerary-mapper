@@ -14,12 +14,13 @@ var add_place_params;
 function addPlaceToDB(evt) {
     evt.preventDefault();
 
-    $('#addModal').modal('hide');
+    
 
     var form_data = new FormData();
     var day_info = $('#tripday').val().split(',');
     var place_picture = $('input[type=file]')[0].files[0];
     if (addFormPlace){
+        $('#addModal').modal('hide');
         form_data.append("trip_id", $('#trip_id').val());
         form_data.append("placename", encode_utf8($('#placename').val()));
         form_data.append("placesearch", encode_utf8(addFormPlace.formatted_address));
@@ -31,14 +32,14 @@ function addPlaceToDB(evt) {
         form_data.append("notes", encode_utf8($('#tripnotes').val()));
 
         // this is for if I use picture upload
-        if(place_picture){
-            form_data.append('pic', place_picture);
-        }
+        // if(place_picture){
+        //     form_data.append('pic', place_picture);
+        // }
 
         // for deployment switch it to a url link
-        // if ($('#place-pic-link').val()){
-        //     form_data.append("img_link", encode_utf8($('#place-pic-link').val()));
-        // }
+        if ($('#place-pic-link').val()){
+            form_data.append("img_link", encode_utf8($('#place-pic-link').val()));
+        }
         
         
 
@@ -50,10 +51,10 @@ function addPlaceToDB(evt) {
         var place_id;
 
         // url for file upload
-        var ajax_url = '/add_place.json';
+        // var ajax_url = '/add_place.json';
 
         // url for image link
-        // var ajax_url = '/add_place_no_upload.json';
+        var ajax_url = '/add_place_no_upload.json';
         $.ajax({
             url: ajax_url,
             data: form_data,
