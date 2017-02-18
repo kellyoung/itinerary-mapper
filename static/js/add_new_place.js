@@ -18,7 +18,7 @@ function addPlaceToDB(evt) {
 
     var form_data = new FormData();
     var day_info = $('#tripday').val().split(',');
-    var place_picture = $('input[type=file]')[0].files[0];
+    // var place_picture = $('input[type=file]')[0].files[0];
     if (addFormPlace){
         $('#addModal').modal('hide');
         form_data.append("trip_id", $('#trip_id').val());

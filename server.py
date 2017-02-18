@@ -651,7 +651,7 @@ def return_all_places():
         # only have an img_url if picture is not default, changes html to be passed
         default_pics = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
         if place.pic_file not in default_pics:
-            img_url = url_for('uploaded_file', filename=place.pic_file)
+            img_url = place.pic_file
 
             content = """
                     <div id='place-div-%s' class='place-div'>
