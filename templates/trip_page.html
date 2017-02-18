@@ -50,13 +50,13 @@
             </button>
             <button type="button" class="btn btn-primary" id='publish-btn'>
             {% if trip.published %}
-            Make Trip Private
+            MAKE TRIP PRIVATE
             {% else %}
-            Make Trip Public
+            MAKE TRIP PUBLIC
             {% endif %}
             </button>
             <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
-                Delete Trip
+                DELETE TRIP
             </button>
             <br><br>
         </div>
@@ -68,7 +68,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="addModalLabel">Add Place</h4>
+                <h4 class="modal-title" id="addModalLabel">ADD PLACE</h4>
               </div>
               <div id='modal-form' class="modal-body">
                 <form id='add-trip-form' enctype="multipart/form-data">
@@ -78,9 +78,9 @@
 
                     <label for='placesearch'>Place Location: </label>
                     <input id="add-form-search" name="placesearch" type="text" placeholder="Search Box" required><br>
-
+                    <p id="invalid-place"></p>
                     <label for='placename'>Place Name: </label>
-                    <input id="placename" type='text' name='placename' required><br>
+                    <input id="placename" type='text' name='placename' max-length="60" required><br>
 
                     <label for='tripday'>Day Visited: </label>
                     <select id="tripday" name="tripday" required>
@@ -88,7 +88,8 @@
                         {% for day in trip_dates %}
                             <option value="{{ day[0]}},{{ day[1] }}">Day {{ day[0]}}: {{ day[1] }}</option>
                         {% endfor %}
-                    </select><br>
+                    </select>
+                    <br>
                     <label for='tripcat'>Category: </label>
                     <select id="tripcat" name="tripcat" required>
                         <option disabled selected value> -- Select -- </option>
@@ -96,12 +97,11 @@
                         <option value="sleep">Sleep</option>
                         <option value="explore">Explore</option>
                         <option value="transport">Voyage</option>
-                    </select><br>
+                    </select>
+                    <br>
 
-                    <label for='tripnotes'>Notes: </label><br>
-                    <div>
-                        <textarea id="tripnotes" name="tripnotes"></textarea>
-                    </div>
+                    <label for='tripnotes'>Notes: </label>
+                        <textarea id="tripnotes" name="tripnotes"></textarea><br>
 
                     <!-- if using upload picture -->
                     <!-- <label for='file'>Upload Picture: </label>
@@ -113,8 +113,6 @@
                     <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
                 </form>
                 
-              </div>
-              <div class="modal-footer">
               </div>
               
             </div>
@@ -132,17 +130,19 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="editModalLabel">Edit Place</h4>
+            <h4 class="modal-title" id="editModalLabel">EDIT PLACE</h4>
           </div>
           <div id='modal-form' class="modal-body">
             <form id='edit-place-form' enctype="multipart/form-data">
                 <input type='hidden' id='edit-place_id' name='edit-place_id'>
                 <input type='hidden' id='edit-trip_id' name='edit-trip_id' value='{{ trip.trip_id}}'>
-                <label for='edit-placename'>Place Name: </label>
-                <input id="edit-placename" class='utf-8' type='text' name='edit-placename' required><br>
+                
+                <div id="edit-placemap"></div>
                 <label for='edit-placesearch'>Search for Place: </label>
                 <input id="edit-place-search" class='utf-8' name="edit-placesearch" type="text" placeholder="Search Box" required>
-                <div id="edit-placemap"></div>
+                <label for='edit-placename'>Place Name: </label>
+                <input id="edit-placename" class='utf-8' type='text' name='edit-placename' max-length="60"required><br>
+                
                 <label for='edit-tripday'>Day of Visit: </label>
                 <select id="edit-tripday" name="edit-tripday" required>
                     <option disabled selected value> -- Select -- </option>
@@ -158,12 +158,11 @@
                     <option value="explore">Explore</option>
                     <option value="transport">Voyage</option>
                 </select><br>
-                <label for='edit-tripnotes'>Notes: </label><br>
-                <div>
+                <label for='edit-tripnotes'>Notes: </label>
                     <textarea id="edit-tripnotes" name="edit-tripnotes"></textarea>
-                </div>
                 <!-- this is for file upload -->
                 <!-- <input type="file" name="file" id="edit-place-pic-file"> -->
+                <br>
                 <label for='img-link'>Image URL: </label>
                 <input type="text" name="img-link" id="edit-place-pic-link"><br>
                 <input type="checkbox" id='delete-file' name="delete-file"> Delete Picture
@@ -175,7 +174,7 @@
                 Delete Place
             </button>
             <button type="submit" class="btn btn-primary" form="edit-place-form" value="Edit Place" id='edit-place-btn'>
-                Edit Place
+                EDIT PLACE
             </button>
           </div>
           
@@ -190,29 +189,34 @@
                         <div id='place-div-{{ place[0].place_id }}' class='col-xs-12 col-sm-12 col-md-4 col-lg-3 place-div' >
                             <div class='place-content'>
                                 <div class='place-img-div'>
-                                    <img src='{{ place[0].pic_file }}' class='place-img' style="width:100%;">
+                                    <img src='{{ place[0].pic_file }}' class='place-img'>
                                 </div>
-                                <!-- <div class='place-text'>
-                                    <span>
-                                    {% if place[0].cat_id == 'eat' %}
-                                        <i class="fa fa-cutlery"></i>
-                                        {% elif place[0].cat_id == 'sleep' %}
-                                        <i class="fa fa-bed"></i>
-                                        {% elif place[0].cat_id == 'explore' %}
-                                        <i class="fa fa-globe"></i>
-                                        {% elif place[0].cat_id == 'transport' %}
-                                        <i class="fa fa-paper-plane"></i>
-                                    {% endif %} &nbsp;
-                                    </span>
-                                    <span class='utf-8 place-text-name text-{{ place[0].cat_id }}'>
-                                        {{ place[0].place_name }}
-                                    </span>
-                                    <p class='utf-8 place-address'>{{ place[1].decode('utf-8') }}</p>
-
-                                </div> -->
-                                <!-- <button type="button" class="edit-btn" data-toggle="modal" data-target="#editModal">
-                                  Edit Place
-                                </button> -->
+                                <div class='place-text-div'>
+                                    <div class='place-title'>
+                                        <span>
+                                        {% if place[0].cat_id == 'eat' %}
+                                            <i class="fa fa-cutlery"></i>
+                                            {% elif place[0].cat_id == 'sleep' %}
+                                            <i class="fa fa-bed"></i>
+                                            {% elif place[0].cat_id == 'explore' %}
+                                            <i class="fa fa-globe"></i>
+                                            {% elif place[0].cat_id == 'transport' %}
+                                            <i class="fa fa-paper-plane"></i>
+                                        {% endif %} &nbsp;
+                                        </span>
+                                        <span class='utf-8 place-text-name text-{{ place[0].cat_id }}'>
+                                            {{ place[0].place_name }}
+                                        </span>
+                                    </div>
+                                    <div class='place-add-box'>
+                                        <span class='utf-8 place-address'>{{ place[1].decode('utf-8') }}</span>
+                                    </div>
+                                    <div class='place-edit-box'>
+                                        <button type="button" class="edit-btn" data-toggle="modal" data-target="#editModal">
+                                        Edit Place
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     {% endif %}
@@ -227,11 +231,11 @@
 {% block scripts %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&callback=tripPageMaps" async defer></script>
-<script src="/static/js/add_place_map.js"></script>
+<script src="/static/js/trip_page.js"></script>
 <script src="/static/js/add_new_place.js"></script>
 <script src="/static/js/edit_place_form.js"></script>
 <script src="/static/js/add_place_form.js"></script>
-<script src="/static/js/trip_page.js"></script>
+<script src="/static/js/add_place_map.js"></script>
 {% endblock %}
 
 

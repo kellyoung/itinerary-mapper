@@ -1,13 +1,6 @@
 //need place from add_place_map.js
 
-//if I want to work on encoding to utf8 and sending to database
-function encode_utf8(s) {
-  return unescape(encodeURIComponent(s));
-}
 
-function decode_utf8(s) {
-  return decodeURIComponent(escape(s));
-}
 //add a place
 var add_place_params;
 
@@ -71,6 +64,7 @@ function addPlaceToDB(evt) {
     }
     else {
         console.log('needs a valid place');
+        $('#invalid-place').html('Invalid Place. Please try again.');
         return false;
     }
     

@@ -1,14 +1,14 @@
- $("#editModal").on("shown.bs.modal", function () {
-    var currentCenter = editMap.getCenter();
-    google.maps.event.trigger(editMap, "resize");
-    editMap.setCenter(currentCenter);
-});
 
+ 
 
+var editPlace;
+var editMap;
 var editFormParams;
 function displayForm(){
     var parentDiv = $(this).parent();
-    parentDiv = parentDiv.parent();
+    
+    parentDiv = parentDiv.parent().parent().parent();
+
     var divPlaceID = parentDiv.attr('id').split('-')[2];
     
     editFormParams = {

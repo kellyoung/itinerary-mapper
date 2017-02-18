@@ -1,3 +1,12 @@
+//if I want to work on encoding to utf8 and sending to database
+function encode_utf8(s) {
+  return unescape(encodeURIComponent(s));
+}
+
+function decode_utf8(s) {
+  return decodeURIComponent(escape(s));
+}
+
 var placeLocs = [];
 function publishTrip(evt){
     evt.preventDefault();
@@ -6,10 +15,10 @@ function publishTrip(evt){
     $.post('/publish_trip.json', params, function(results){
         console.log(results.status);
         if (results.status){
-            $('#publish-btn').text('Make Trip Private');
+            $('#publish-btn').text('MAKE TRIP PRIVATE');
         }
         else{
-            $('#publish-btn').text('Make Trip Public');
+            $('#publish-btn').text('MAKE TRIP PUBLIC');
         }
     });
 }
