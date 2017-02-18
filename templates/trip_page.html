@@ -103,8 +103,12 @@
                         <textarea id="tripnotes" name="tripnotes"></textarea>
                     </div>
 
-                    <label for='tripcat'>Upload Picture: </label>
+                    <!-- if using upload picture -->
+                    <label for='file'>Upload Picture: </label>
                     <input type="file" name="file" id="place-pic-file"><br>
+
+                    <!-- <label for='img-link'>Image URL: </label>
+                    <input type="text" name="img-link" id="place-pic-link"><br> -->
 
                     <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
                 </form>
@@ -183,7 +187,7 @@
                         <div id='place-div-{{ place[0].place_id }}' class='col-lg-3 col-md-4 col-xs-6 place-div' >
                             <div class='place-content'>
                                 <div class='place-img-div'>
-                                    <img src='/uploads/{{ place[0].pic_file }}' class='place-img' style="width:100%;margin:auto 0">
+                                    <img src='{{ place[0].pic_file }}' class='place-img' style="width:100%;margin:auto 0">
                                 </div>
                                 <div class='place-text'>
                                     <span>

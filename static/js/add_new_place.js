@@ -36,6 +36,10 @@ function addPlaceToDB(evt) {
         }
 
         // for deployment switch it to a url link
+        // if ($('#place-pic-link').val()){
+        //     form_data.append("img_link", encode_utf8($('#place-pic-link').val()));
+        // }
+        
         
 
         $( '#add-trip-form' ).each(function(){
@@ -45,8 +49,13 @@ function addPlaceToDB(evt) {
         var dayDiv = '#day-'+day_info[0];
         var place_id;
 
+        // url for file upload
+        var ajax_url = '/add_place.json';
+
+        // url for image link
+        // var ajax_url = '/add_place_no_upload.json';
         $.ajax({
-            url: '/add_place.json',
+            url: ajax_url,
             data: form_data,
             type: 'POST',
             // THIS MUST BE DONE FOR FILE UPLOADING
