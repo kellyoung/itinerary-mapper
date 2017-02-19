@@ -8,7 +8,27 @@ html, body {
   color: gray;
 }
 
+.sidenav {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, .5);
+    overflow-x: hidden;
+    transition: 0.2s;
+    padding-top: 60px;
+}
 
+#sidebar-open {
+  margin-top: 10px;
+  margin-left: 268px;
+  margin-top: 15px;
+  transition: 0.2s;
+  color: #fa8072;
+
+}
 
 div#final-map {
   margin-top: 50px;
