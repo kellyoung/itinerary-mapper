@@ -29,7 +29,7 @@ window.tripPageMaps = function(){
 
    $("#addModal").on("shown.bs.modal", function () {
       currentCenter = addFormMap.getCenter();
-      console.log(currentCenter);
+      // console.log(currentCenter);
       google.maps.event.trigger(addFormMap, "resize");
       addFormMap.setCenter(currentCenter);
       addFormMap.fitBounds(formMapBounds);

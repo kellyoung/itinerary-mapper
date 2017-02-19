@@ -15,10 +15,10 @@ function publishTrip(evt){
     $.post('/publish_trip.json', params, function(results){
         console.log(results.status);
         if (results.status){
-            $('#publish-btn').text('MAKE TRIP PRIVATE');
+            $('#publish-btn').html('<i class="fa fa-user"></i> &nbsp; MAKE TRIP PRIVATE');
         }
         else{
-            $('#publish-btn').text('MAKE TRIP PUBLIC');
+            $('#publish-btn').html('<i class="fa fa-users"></i> &nbsp; MAKE TRIP PUBLIC');
         }
     });
 }
@@ -35,10 +35,10 @@ function deleteTrip(){
 }
 
 document.onload = function(){
-    console.log(document.title);
+    // console.log(document.title);
     var decoded = decode_utf8(document.title);
 
-    console.log(decoded);
+    // console.log(decoded);
     document.title = decoded;
 };
 

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
 {% block style %}
+
 <!-- <link rel="stylesheet" href="/static/css/add_trip_map.css"> -->
 <meta name="pinterest" content="nopin" />
 <link rel="stylesheet" href="/static/css/trip_page.css">
@@ -46,17 +47,17 @@
     <div class="row" id="trip-btn-row">
         <div class="col-xs-12 text-left" id="trip-btn-col">
             <button type="button" class="btn btn-primary" id="add-btn" data-toggle="modal" data-target="#addModal">
-              ADD PLACE
+              <i class="fa fa-plus"></i> &nbsp; ADD PLACE
             </button>
             <button type="button" class="btn btn-primary" id='publish-btn'>
             {% if trip.published %}
-            MAKE TRIP PRIVATE
+            <i class="fa fa-user"></i> MAKE TRIP PRIVATE
             {% else %}
-            MAKE TRIP PUBLIC
+            <i class="fa fa-users"></i> &nbsp; MAKE TRIP PUBLIC
             {% endif %}
             </button>
             <button type="button" class="btn btn-danger"  id='delete-trip-btn'>
-                DELETE TRIP
+                <i class="fa fa-ban"></i> &nbsp;DELETE TRIP
             </button>
             <br><br>
         </div>
@@ -76,10 +77,11 @@
                     <input type='hidden' id='trip_id' name='trip_id' value='{{ trip.trip_id}}'>
                     <div id="add-form-map"></div>
 
-                    <label for='placesearch'>Place Location: </label>
+                    <div id="add-text-fields">
+                    <label for='placesearch'>Place Location: </label><br>
                     <input id="add-form-search" name="placesearch" type="text" placeholder="Search Box" required><br>
                     <p id="invalid-place"></p>
-                    <label for='placename'>Place Name: </label>
+                    <label for='placename'>Place Name: </label><br>
                     <input id="placename" type='text' name='placename' max-length="60" required><br>
 
                     <label for='tripday'>Day Visited: </label>
@@ -100,17 +102,18 @@
                     </select>
                     <br>
 
-                    <label for='tripnotes'>Notes: </label>
+                    <label for='tripnotes'>Notes: </label><br>
                         <textarea id="tripnotes" name="tripnotes"></textarea><br>
 
                     <!-- if using upload picture -->
                     <!-- <label for='file'>Upload Picture: </label>
                     <input type="file" name="file" id="place-pic-file"><br> -->
 
-                    <label for='img-link'>Image URL: </label>
+                    <label for='img-link'>Image URL: </label><br>
                     <input type="text" name="img-link" id="place-pic-link"><br>
 
                     <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
+                </div>
                 </form>
                 
               </div>
@@ -138,9 +141,9 @@
                 <input type='hidden' id='edit-trip_id' name='edit-trip_id' value='{{ trip.trip_id}}'>
                 
                 <div id="edit-placemap"></div>
-                <label for='edit-placesearch'>Search for Place: </label>
-                <input id="edit-place-search" class='utf-8' name="edit-placesearch" type="text" placeholder="Search Box" required>
-                <label for='edit-placename'>Place Name: </label>
+                <label for='edit-placesearch'>Search for Place: </label><br>
+                <input id="edit-place-search" class='utf-8' name="edit-placesearch" type="text" placeholder="Search Box" required><br>
+                <label for='edit-placename'>Place Name: </label><br>
                 <input id="edit-placename" class='utf-8' type='text' name='edit-placename' max-length="60"required><br>
                 
                 <label for='edit-tripday'>Day of Visit: </label>
@@ -158,12 +161,12 @@
                     <option value="explore">Explore</option>
                     <option value="transport">Voyage</option>
                 </select><br>
-                <label for='edit-tripnotes'>Notes: </label>
+                <label for='edit-tripnotes'>Notes: </label><br>
                     <textarea id="edit-tripnotes" name="edit-tripnotes"></textarea>
                 <!-- this is for file upload -->
                 <!-- <input type="file" name="file" id="edit-place-pic-file"> -->
                 <br>
-                <label for='img-link'>Image URL: </label>
+                <label for='img-link'>Image URL: </label><br>
                 <input type="text" name="img-link" id="edit-place-pic-link"><br>
                 <input type="checkbox" id='delete-file' name="delete-file"> Delete Picture
             </form>
@@ -229,13 +232,15 @@
 </div>
     {% endblock %}
 {% block scripts %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
-libraries=places&callback=tripPageMaps" async defer></script>
+
 <script src="/static/js/trip_page.js"></script>
 <script src="/static/js/add_new_place.js"></script>
 <script src="/static/js/edit_place_form.js"></script>
 <script src="/static/js/add_place_form.js"></script>
 <script src="/static/js/add_place_map.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
+libraries=places&callback=tripPageMaps" async defer></script>
 {% endblock %}
 
 

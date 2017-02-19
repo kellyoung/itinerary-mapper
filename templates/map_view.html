@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
 {% block style %}
+<script src="/static/js/map_view.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
+libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></script>
+
 <link rel="stylesheet" href="/static/css/map_view.css">
 {% endblock %}
 {% block navbar %}
@@ -33,47 +37,17 @@
   {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row" id="copy-link-row">
-            <div id="copy-link" class="col-lg-12 col-xs-12 text-right">
-                    <input type="text" id="copyTarget"  value="http://localhost:5000/{{user.username}}/{{trip.trip_id}}/mapview">
-                    <button id="copyButton" >COPY LINK</button>
-            </div>
-        </div>
 
-        <div class="row" id="map-view-row">
-            <div class="col-lg-offset-1 col-lg-10 col-xs-12 text-center" id="map-view-col">
-                <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
-                
-                <h2 id="trip-title" class="utf-8"> {{ trip.trip_name }}</h2>
-                <h5 id="trip-author" class="utf-8">By: {{ user.username }}</h5>
-                <div class="map-filters">
-                    MAP FILTERS: &nbsp; &nbsp;
-                        
-                        <label class="filter" for="eat-filter" id="eat-filter-label" > <input type="checkbox" name="filter"  id="eat-filter" checked>&nbsp; &nbsp; EAT &nbsp;<i class="fa fa-cutlery"></i></label>
-                         
-                        <label class="filter" for="explore-filter" id="explore-filter-label" ><input type="checkbox" name="filter"  id="explore-filter" checked>&nbsp; &nbsp; EXPLORE &nbsp;<i class="fa fa-globe"></i></label>
-                        
-                        <label class="filter" for="sleep-filter" id="sleep-filter-label" > <input type="checkbox" name="filter" id="sleep-filter" checked>&nbsp; &nbsp; SLEEP &nbsp;<i class="fa fa-bed"></i></label>
-                        
-                        <label class="filter" for="transport-filter" id="transport-filter-label" > <input type="checkbox" name="filter" id="transport-filter" checked>&nbsp; &nbsp;VOYAGE &nbsp;<i class="fa fa-paper-plane"></i> </label>  
-                        
-                 </div>
-                
+    <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
+    
+    <div id='final-map' ></div>
 
-                
-                <!-- <div class="embed-responsive embed-responsive-16by9"> -->
-                    <div id='final-map' ></div>
-                <!-- </div> -->
-            </div>
-        </div>
-    </div>
 
 {% endblock %}
 
 {% block scripts %}
+
 <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
-libraries=places&signed_in=true&callback=createAllPlacesMap" async defer></script>
-<script src="/static/js/map_view.js"></script>
+
+
 {% endblock %}

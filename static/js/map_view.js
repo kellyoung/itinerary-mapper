@@ -71,19 +71,52 @@ window.allPlacesControl = function(controlDiv, map, bounds) {
 };
 
 // create the final map with all of the markers in it
-window.createAllPlacesMap = function(results){
+function createAllPlacesMap(results){
     console.log(results);
+
+    var MY_MAPTYPE_ID = 'lighter_base';
+
+    var options = [{
+        stylers: [{lightness:35}]
+     }];
 
     finalMap = new google.maps.Map(document.getElementById("final-map"), {
                 center: new google.maps.LatLng(0, 0),
                 zoom: 0,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                // mapTypeControlOptions: {
+                //     mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+                // },
+                zoomControl: true,
+                zoomControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_CENTER
+          },
+                mapTypeId: MY_MAPTYPE_ID,
                 mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.VERTICAL_BAR,
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
                 fullscreenControl: true,
                 fullscreenControlOptions: {
-                    position: google.maps.ControlPosition.BOTTOM_LEFT
-                }
+                    position: google.maps.ControlPosition.RIGHT_CENTER
+                },
+                streetViewControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_CENTER
+          },
             });
+
+    google.maps.event.addDomListener(window, "resize", function() {
+       var center = finalMap.getCenter();
+       google.maps.event.trigger(finalMap, "resize");
+       finalMap.setCenter(center); 
+    });
+    var styledMapOptions = {
+       name: 'Lighten Map'
+     };
+
+   var customMapType = new google.maps.StyledMapType(options, styledMapOptions); 
+
+   finalMap.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 
     // object with the categories and a list for each marker to be added to
     categoryFilterMarkers = {'eat': [],
@@ -101,18 +134,30 @@ window.createAllPlacesMap = function(results){
         var markerColor;
         switch(category){
             case 'transport':
-                markerColor = '00db88';
+                markerColor = '#EAC435';
                 break;
             case 'eat':
-                markerColor = '00dfff';
+                markerColor = '#D36135';
                 break;
             case 'explore':
-                markerColor = '379434';
+                markerColor = '#2DB547';
                 break;
             case 'sleep':
-                markerColor = '1096e7';
+                markerColor = '#3E8989';
                 break;
         }
+
+        var icon = {
+        path: "M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z",
+        fillColor: markerColor,
+        fillOpacity: 1,
+        strokeWeight: 0,
+        scale: 0.6,
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 0),
+        scaledSize: new google.maps.Size(20, 20),
+        labelOrigin: new google.maps.Point(0, -28)
+      };
         categoryFilterMarkers[category].push(new google.maps.Marker({
             map: finalMap,
             place: {
@@ -123,8 +168,13 @@ window.createAllPlacesMap = function(results){
             
             // position: latLng,
             content: content,
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
-                  dayNum + '|' + markerColor + '|000000'
+            // icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' +
+            //       dayNum + '|' + markerColor + '|000000'
+            icon: icon,
+            label: {
+                text: dayNum,
+                color: 'white'
+            }
         }));
 
         test = categoryFilterMarkers[category][categoryFilterMarkers[category].length-1].getVisible();
@@ -154,9 +204,12 @@ window.createAllPlacesMap = function(results){
     allPlacesControlDiv.index = 5;
     finalMap.controls[google.maps.ControlPosition.TOP_CENTER].push(allPlacesControlDiv);
 
-};
+    // createFinalMapPlaces();
+    
 
-function createFinalMapPlaces(){
+}
+
+window.createFinalMapPlaces = function(){
     var params = {'trip_id': $('#map-trip_id').val()};
     // send to server which trip you are on and then createAllPlacesMap
     // with information from server.
@@ -178,16 +231,18 @@ function createFinalMapPlaces(){
             }
         }
     });
-
-}
-
-// on document load, create the final map.
-$(document).ready(function(){
-    createFinalMapPlaces();
     document.onload();
     convertUTF();
 
-});
+};
+
+
+// on document load, create the final map.
+// $(document).ready(function(){
+//     createFinalMapPlaces();
+    
+
+// });
 
 
 document.getElementById("copyButton").addEventListener("click", function() {
