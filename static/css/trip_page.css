@@ -1,0 +1,387 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  color: gray;
+}
+
+button .btn .btn:focus .btn:active a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.modal{
+    z-index: 20;   
+}
+.modal-backdrop {
+    z-index: 10;        
+}
+
+.modal-dialog {
+    text-align: center;
+    color: gray;
+}
+
+.modal-header {
+  padding: 2%;
+}
+.modal-title {
+    margin: 0;
+    font-size: 24px;
+    color: #fa8072;
+    text-align: center;
+}
+
+#trip-author {
+  margin-bottom: 0;
+  color: #fa8072;
+}
+
+#add-btn {
+  color: #fa8072;
+  border: solid 1.5px;
+  border-color: #fa8072;
+
+}
+
+#publish-btn {
+  color: gray;
+  border: solid 1.5px;
+  border-color: gray;
+
+}
+
+#delete-trip-btn {
+  color: red;
+  border: solid 1.5px;
+  border-color: red;
+
+}
+
+.day-row h4{
+  color: #fa8072;
+  font-size: 24px;
+}
+
+input[type=text], #tripnotes, #edit-tripnotes{
+    padding: 2px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    border: solid 1px;
+    border-color: gray;
+    color: gray;
+    border-radius: 5px;
+    text-align: center;
+    outline: none;
+    box-shadow: none;
+}
+
+input[type=submit] {
+  margin-top: 8px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #fa8072;
+}
+
+#edit-place-btn {
+  background-color: gray;
+  border: #63a39d;
+}
+
+
+#tripnotes, #edit-tripnotes{
+  vertical-align: top;
+
+}
+#add-form-map {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /*height: 200px;*/
+    padding-bottom: 60%;
+    margin-bottom: 10px;
+}
+
+#edit-placemap {
+  width: 100%;
+  padding-bottom: 60%;
+  margin-bottom: 10px;
+}
+
+.container {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.navbar {
+    background-color: white;
+    background: white;
+    border-color: transparent;
+    box-shadow: none;
+    margin-bottom: -10px;
+    z-index: 5;
+}
+
+
+.navbar-default .navbar-nav>li>a {
+
+    font-weight: normal;
+}
+.navbar .navbar-brand{
+    color: #fa8072 !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    color: #f27c6f !important;
+}
+
+#collapse-btn {
+    border-color: transparent;
+}
+
+#trip-title {
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-weight: normal;
+    /*display: inline-block;*/
+    word-wrap: break-word;
+}
+
+
+.place-img-div {
+  /*position: relative;*/
+  width: 100%;
+  padding-bottom: 70%;
+  overflow:hidden;
+  text-align: center;
+  height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+   position:  absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   border-radius: 5px;
+   /*text-align: center;*/
+}
+
+.place-text-div {
+  /*position: relative;*/
+  width: 100%;
+  padding-bottom: 33%;
+  overflow:hidden;
+  text-align: center;
+  height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+   position:  absolute;
+   top: 68%;
+   left: 0;
+   bottom: 0;
+   right: 0;
+
+}
+
+.place-title {
+  width: 96%;
+  padding-bottom: 7%;
+  overflow:hidden;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 0;
+  position:  absolute;
+  top: 0;
+  left: 2%;
+  bottom: 0;
+  right: 0;
+  font-size: 14px;
+  line-height: 20px;
+
+}
+
+.place-add-box {
+  width: 96%;
+  padding-bottom: 12%;
+  overflow:hidden;
+  text-align: left;
+  height: 0;
+  position:  absolute;
+  top: 34%;
+  left: 2%;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+  line-height: 16px;
+
+}
+
+.place-edit-box {
+  width: 96%;
+  padding-bottom: 12%;
+  overflow:hidden;
+  text-align: left;
+  height: 0;
+  position:  absolute;
+  top: 75%;
+  left: 2%;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+  line-height: 16px;
+
+}
+
+.place-img {
+  position: relative;
+  /*top: 50%;*/
+  width:100%;
+  margin-top: 75%;
+  /*vertical-align: middle;*/
+  /*display: inline-block;*/
+
+}
+
+.place-div {
+
+    margin: 1%;
+    padding: 0 0;
+    border-radius: 5px;
+}
+
+.edit-btn {
+  border: transparent;
+  background: transparent;
+  color: #fa8072;
+  margin-right: 4%;
+  margin-bottom: 2%;
+  font-style: italic;
+  text-decoration: underline;
+  display: inline-block;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0;
+}
+
+.place-text-name {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 14px;
+  padding-bottom: 0;
+  margin-bottom: 2px;
+  line-height: 16px;
+}
+
+.fa-cutlery {
+  color: #D36135;
+}
+
+.fa-bed {
+  color: #3E8989;
+}
+
+.fa-globe {
+  color: #2DB547;
+}
+
+.fa-paper-plane {
+  color: #EAC435;
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 300px) {
+  #trip-title {
+      letter-spacing: 4px;
+      font-size: 36px;
+    }
+
+    .modal-dialog {
+      width: auto;
+    }
+
+    .place-div {
+        /*margin-left: 7%;*/
+        width: 85%;
+        padding-top: 88%;
+        position: relative;
+    }
+
+    #trip-btn-col button{
+      font-weight: bold;
+      background: none;
+      display: block;
+      margin-bottom: 5px;
+      margin-right: 4px;
+    }
+
+    input[type=text], #tripnotes, #edit-tripnotes{
+      width: 250px;
+    }
+}
+
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    #trip-title {
+      letter-spacing: 4px;
+      font-size: 36px;
+    }
+    .modal-dialog {
+      width: auto;
+    }
+    .place-div {
+        width: 31%;
+        padding-top: 33%;
+        position: relative;
+    }
+
+    #trip-btn-col button{
+      font-weight: bold;
+      display: inline-block;
+      background: none;
+      margin-bottom: 5px;
+
+    }
+
+    input[type=text], #tripnotes, #edit-tripnotes{
+      width: 300px;
+    }
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .place-div {
+        width: 31%;
+        padding-top: 33%;
+        position: relative;
+    }
+    
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+  .modal-dialog {
+      width: 40%;
+    }
+
+    .place-div {
+        width: 23%;
+        padding-top: 25%;
+        position: relative;
+    }
+
+}

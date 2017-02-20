@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}{{ trip.trip_name }}{% endblock %}
+{% block style %}
+
+<link rel="stylesheet" href="/static/css/masonry_view.css">
+<style type="text/css">
+    #imagelist a {position: relative;display: inline-block;}
+    #imagelist a p{display: none;}
+    #imagelist a:hover p{position: absolute;width: 100%;height: 100%;background: #000;opacity: 0.8;top: 0;left: 0;margin: 0;display: block;}
+    #imagelist a p span{display: inline-table;width: 100%;height: 100%;text-align: center;color:#fff;}
+    #imagelist a p span span{display: table-cell;vertical-align: middle;}
+</style>
+<!--[if lte IE 9]>
+<script src="masonry.pkgd.min.js"></script>
+<![endif]-->
+{% endblock %}
+{% block navbar %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+    <div id= "homenavbar"class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" id="collapse-btn" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#homenavbarcollapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">journeyteller <i class="fa fa-compass"></i></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="homenavbarcollapse">
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">about</a></li>
+            <li><a href="/{{user.username}}/{{ trip.trip_id}}/mapview">map view</a></li>
+        {% if username %}
+          <li><a href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>back to trip page</a></li>
+          <li><a href="/logout">log out</a></li>
+        {% endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  {% endblock %}
+
+{% block content %}
+<div class="masonry">
+{% for day in trip_dates %}
+  {% for place in trip.places %}
+      {% if place.day_num == day[0] %}
+
+
+      <div id='place-{{place.place_id}}' class='item'>
+        <img src='{{ place.pic_file }}' class='place-img'>
+
+      <h5 class='place-title'  id='title-{{ place.cat_id }}'>
+        
+        {% if place.cat_id == 'eat' %}
+            <i class="fa fa-cutlery"></i>
+            {% elif place.cat_id == 'sleep' %}
+            <i class="fa fa-bed"></i>
+            {% elif place.cat_id == 'explore' %}
+            <i class="fa fa-globe"></i>
+            {% elif place.cat_id == 'transport' %}
+            <i class="fa fa-paper-plane"></i> 
+        {% endif %}
+        {{place.place_name}}
+      </h5>
+      <p class='place-date'><em>Day {{place.day_num}}: {{day[2]}}</em></p>
+      <p>{{ place.notes }}</p>
+      </div>
+      {% endif %}
+
+
+{% endfor %}
+{% endfor %}
+
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}
