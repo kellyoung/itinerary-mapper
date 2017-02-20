@@ -27,7 +27,7 @@ html, body {
   margin-top: 15px;*/
   transition: 0.2s;
   color: #fa8072;
-  margin-top: 20%;
+  margin-top: 50px;
   text-align: right;
   margin-right: 5px;
   font-size: 24px;
@@ -46,8 +46,13 @@ div#final-map {
     margin-bottom: -10px;
     z-index: 6;
 }
+
 .navbar-default {
-    font-weight: 550;
+    font-weight: 500;
+}
+
+.navbar-default {
+    font-weight: normal;
 }
 .navbar .navbar-brand{
     color: #fa8072 !important;

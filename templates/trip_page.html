@@ -25,10 +25,11 @@
       <div class="collapse navbar-collapse" id="homenavbarcollapse">
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">ABOUT</a></li>
-            <li><a href='/{{user.username}}/{{ trip.trip_id}}/mapview'>GO TO MAP</a></li>
-            <li><a href='/{{user.username}}/trips'>ALL TRIPS</a></li>
-            <li><a href="/logout">LOG OUT</a></li>
+            <li><a href="/">about</a></li>
+            <li><a href='/{{user.username}}/{{ trip.trip_id}}/mapview'>map view</a></li>
+            <li><a href='/{{user.username}}/{{ trip.trip_id}}/collageview'>collage view</a></li>
+            <li><a href='/{{user.username}}/trips'>all trips</a></li>
+            <li><a href="/logout">log out</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

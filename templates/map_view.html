@@ -25,11 +25,11 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
       <div class="collapse navbar-collapse" id="homenavbarcollapse">
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">ABOUT</a></li>
-            <li><a href="/{{user.username}}/{{ trip.trip_id}}/collageview">COLLAGE VIEW</a></li>
+            <li><a href="/">about</a></li>
+            <li><a href="/{{user.username}}/{{ trip.trip_id}}/collageview">collage view</a></li>
         {% if username %}
-          <li><a href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>BACK TO TRIP PAGE</a></li>
-          <li><a href="/logout">LOG OUT</a></li>
+          <li><a href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>back to trip page</a></li>
+          <li><a href="/logout">log out</a></li>
         {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -78,7 +78,6 @@ var sideNavState = 'open';
 
 $("#sidebar-open").click(function(){
   
-  console.log(sideNavState);
   if (sideNavState === "open") {
       $('#sidebar-content').hide();
       document.getElementById("mySidenav").style.width = "30px";
