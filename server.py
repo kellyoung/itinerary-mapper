@@ -626,6 +626,31 @@ def display_map(username, trip_id):
         return redirect('/')
 
 
+@app.route('/<username>/<trip_id>/collageview')
+def display_collage(username, trip_id):
+    """
+    Show a page of the trip as a map view. Has logic in
+    render template to render differently based on whether
+    if user is logged in, trip is published, and if trip is
+    private.
+    """
+    user = User.query.get(username)
+    trip = Trip.query.get(trip_id)
+    trip_dates = create_date_range(trip.start_date, trip.end_date)
+    username = session.get('username')
+
+    if username or trip.published:
+        return render_template('masonry.html',
+                               user=user,
+                               trip=trip,
+                               username=username,
+                               trip_dates=trip_dates)
+    else:
+        # if trip is not public yet or it isn't the user visiting.
+        flash('Sorry! You don\'t have access to this page.')
+        return redirect('/')
+
+
 @app.route('/places_to_map.json')
 def return_all_places():
     """

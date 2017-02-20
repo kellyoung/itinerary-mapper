@@ -26,6 +26,7 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
 
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/">ABOUT</a></li>
+            <li><a href="/{{user.username}}/{{ trip.trip_id}}/collageview">COLLAGE VIEW</a></li>
         {% if username %}
           <li><a href='/create_trip/{{user.username}}/{{ trip.trip_id}}'>BACK TO TRIP PAGE</a></li>
           <li><a href="/logout">LOG OUT</a></li>
