@@ -39,23 +39,29 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
 {% block content %}
 
     <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
-    <div id="mySidenav" class="sidenav">
-      <span style="font-size:20px;cursor:pointer;float:right" id="sidebar-open"><i class="fa fa-arrow-left"></i></span>
-      <h2 id="trip-title" class="utf-8"> {{ trip.trip_name }}</h2>
-      <h5 id="trip-author" class="utf-8">By: {{ user.username }}</h5>
-      <div class="map-filters">
-          MAP FILTERS: &nbsp; &nbsp;
-              
-              <label class="filter" for="eat-filter" id="eat-filter-label" > <input type="checkbox" name="filter"  id="eat-filter" checked>&nbsp; &nbsp; EAT &nbsp;<i class="fa fa-cutlery"></i></label>
-               
-              <label class="filter" for="explore-filter" id="explore-filter-label" ><input type="checkbox" name="filter"  id="explore-filter" checked>&nbsp; &nbsp; EXPLORE &nbsp;<i class="fa fa-globe"></i></label>
-              
-              <label class="filter" for="sleep-filter" id="sleep-filter-label" > <input type="checkbox" name="filter" id="sleep-filter" checked>&nbsp; &nbsp; SLEEP &nbsp;<i class="fa fa-bed"></i></label>
-              
-              <label class="filter" for="transport-filter" id="transport-filter-label" > <input type="checkbox" name="filter" id="transport-filter" checked>&nbsp; &nbsp;VOYAGE &nbsp;<i class="fa fa-paper-plane"></i> </label>  
-              
-       </div>
+    <div id="mySidenav" class="sidenav text-center">
+      <div id="sidebar-open">
+      <span><i class="fa fa-arrow-left"></i></span>
+    </div>
 
+      <div id="sidebar-content">
+          <h2 id="trip-title" class="utf-8"> {{ trip.trip_name }}</h2>
+          <h5 id="trip-author" class="utf-8">By: {{ user.username }}</h5>
+          <div class="map-filters text-left">
+             <p> MAP FILTERS: &nbsp; &nbsp;</p>
+                
+
+                  
+                  <label class="filter" for="eat-filter" id="eat-filter-label" > <input type="checkbox" name="filter"  id="eat-filter" checked>&nbsp; &nbsp; EAT &nbsp;<i class="fa fa-cutlery"></i></label><br>
+                   
+                  <label class="filter" for="explore-filter" id="explore-filter-label" ><input type="checkbox" name="filter"  id="explore-filter" checked>&nbsp; &nbsp; EXPLORE &nbsp;<i class="fa fa-globe"></i></label><br>
+                  
+                  <label class="filter" for="sleep-filter" id="sleep-filter-label" > <input type="checkbox" name="filter" id="sleep-filter" checked>&nbsp; &nbsp; SLEEP &nbsp;<i class="fa fa-bed"></i></label><br>
+                  
+                  <label class="filter" for="transport-filter" id="transport-filter-label" > <input type="checkbox" name="filter" id="transport-filter" checked>&nbsp; &nbsp;VOYAGE &nbsp;<i class="fa fa-paper-plane"></i> </label>  <br>
+                  
+           </div>
+        </div>
     </div>
     
     <div id='final-map' ></div>
@@ -73,12 +79,14 @@ $("#sidebar-open").click(function(){
   
   console.log(sideNavState);
   if (sideNavState === "open") {
-      document.getElementById("mySidenav").style.width = "20px";
+      $('#sidebar-content').hide();
+      document.getElementById("mySidenav").style.width = "30px";
       $('#sidebar-open').css("margin-left", '2px')
       $('#sidebar-open').html('<i class="fa fa-arrow-right"></i>');
       sideNavState = "close";
   }
   else{
+    $('#sidebar-content').show();
     document.getElementById("mySidenav").style.width = "300px";
     $('#sidebar-open').css('margin-left', '270px');
     $('#sidebar-open').html('<i class="fa fa-arrow-left"></i>');

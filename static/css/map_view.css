@@ -15,23 +15,25 @@ html, body {
     z-index: 2;
     top: 0;
     left: 0;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .7);
     overflow-x: hidden;
     transition: 0.2s;
     padding-top: 60px;
 }
 
 #sidebar-open {
-  margin-top: 10px;
+  /*margin-top: 10px;
   margin-left: 268px;
-  margin-top: 15px;
+  margin-top: 15px;*/
   transition: 0.2s;
   color: #fa8072;
-
+  margin-top: 20%;
+  text-align: right;
+  margin-right: 5px;
+  font-size: 24px;
 }
 
 div#final-map {
-  margin-top: 50px;
   width: 100%;
   height: 100%;
 }
@@ -65,6 +67,15 @@ div#final-map {
     margin-top: 60px;
 }
 
+.map-filters {
+  margin-left: 25%;
+}
+
+#sidebar-content {
+  padding: 5%;
+  display: inline-block;
+}
+
 /*#final-map {
   width: 100%;
   height: 68vh;
@@ -77,28 +88,28 @@ div#final-map {
 }
 
 .title-eat {
-  color: #00dfff;
+  color: #D36135;
 }
 
 .title-sleep {
-  color: #1096e7;
+  color: #3E8989;
 }
 
 .title-explore {
-  color: #379434;
+  color: #2DB547;
 }
 
 .title-transport {
-  color: #00db88;
+  color: #EAC435;
 }
 
-@media screen and (max-width: 767px) {
+/*@media screen and (max-width: 767px) {
      #final-map {
       width: 100%;
       height: 65vh;;
     }
 }
-}
+}*/
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
@@ -107,7 +118,7 @@ div#final-map {
   -moz-box-sizing: border-box;
   height: 32px;
   outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
 }
 
 .filter {
@@ -133,10 +144,11 @@ div#final-map {
 }
 
 #trip-title {
-  letter-spacing: 2px;
-  font-size: 36px;
-  margin-bottom: 0px;
+  letter-spacing: 1px;
+  font-size: 20px;
+  margin-bottom: 2px;
   margin-top: 2px;
+  word-wrap: break-word;
 }
 
 #trip-author {
@@ -147,19 +159,19 @@ div#final-map {
 }
 
 #eat-filter-label {
-    color: #00dfff;
+    color: #D36135;
 }
 
 #explore-filter-label {
-    color: #379434;
+    color: #2DB547;
 }
 
 #sleep-filter-label {
-    color: #1096e7;
+    color: #3E8989;
 }
 
 #transport-filter-label {
-    color: #00db88;
+    color: #EAC435;
 }
 
 

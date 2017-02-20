@@ -649,23 +649,25 @@ def return_all_places():
         longitude = place.longitude
 
         # only have an img_url if picture is not default, changes html to be passed
-        default_pics = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
+        default_pics = ['/uploads/explore.png', '/uploads/eat.png', '/uploads/sleep.png', '/uploads/transport.png']
         if place.pic_file not in default_pics:
             img_url = place.pic_file
 
             content = """
                     <div id='place-div-%s' class='place-div'>
 
-                    <h5 class='title-%s utf-8'>%s</h5>
+                    <h5 class='title-%s utf-8 text-center'>%s</h5>
 
                     <div style="width:275px;height:212.5px;
-                    overflow:hidden;margin: auto" class='place-pic'>
-                    <img src='%s' style="width:275px;margin:auto">
+                    overflow:hidden;margin:auto;padding-left:15px" class='place-pic'>
+                    <img src='%s' style="width:275px;margin:auto;">
                     </div>
+                    <div style="width:275px;margin:auto;padding-left:15px">
                     <p><b>Day %s:</b> %s</p>
                     <p><b>Category:</b> %s</p>
                     <p class="utf-8"><b>Place Address:</b> %s</p>
                     <p class="utf-8"><b>Notes:</b> %s</p>            
+                    </div>
                     </div>
                     """ % (place.place_id, category, title, img_url, day_num, place.date, category,
                            place.place_loc, place.notes)
@@ -673,7 +675,7 @@ def return_all_places():
             content = """
                     <div id='place-div-%s' class='place-div'>
 
-                    <h5 class='title-%s'>%s</h5>
+                    <h5 class='title-%s utf-8 text-center'>%s</h5>
 
                     <p><b>Day %s:</b> %s</p>
                     <p><b>Category:</b> %s</p>
