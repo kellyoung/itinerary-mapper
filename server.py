@@ -361,7 +361,7 @@ def add_place_no_upload():
     cat_id = request.form.get('category')
     notes = request.form.get('notes')
 
-    img_link = request.form.get('img_link')
+    img_link = request.form.get('pic')
 
     new_place = Place(place_name=place_name, place_loc=place_loc,
                       latitude=latitude, longitude=longitude, day_num=day_num,

@@ -4,6 +4,28 @@
 //add a place
 var add_place_params;
 
+function postToImgur() {
+  var formData = new FormData();
+  formData.append("image", $("[name='uploads[]']")[0].files[0]);
+  $.ajax({
+    url: "https://api.imgur.com/3/image",
+    type: "POST",
+    datatype: "json",
+    headers: {
+      "Authorization": "Client-ID a8350698449bb9a"
+    },
+    data: formData,
+    success: function(response) {
+      //console.log(response);
+      var photo = response.data.link;
+      var photo_hash = response.data.deletehash;
+    },
+    cache: false,
+    contentType: false,
+    processData: false
+  });
+}
+
 function addPlaceToDB(evt) {
     evt.preventDefault();
 
@@ -11,9 +33,9 @@ function addPlaceToDB(evt) {
 
     var form_data = new FormData();
     var day_info = $('#tripday').val().split(',');
-    // var place_picture = $('input[type=file]')[0].files[0];
+    var place_picture = $('input[type=file]')[0].files[0];
     if (addFormPlace){
-        $('#addModal').modal('hide');
+        // $('#addModal').modal('hide');
         form_data.append("trip_id", $('#trip_id').val());
         form_data.append("placename", encode_utf8($('#placename').val()));
         form_data.append("placesearch", encode_utf8(addFormPlace.formatted_address));
@@ -25,14 +47,53 @@ function addPlaceToDB(evt) {
         form_data.append("notes", encode_utf8($('#tripnotes').val()));
 
         // this is for if I use picture upload
-        // if(place_picture){
-        //     form_data.append('pic', place_picture);
-        // }
+        if(place_picture){
+            
+            var imgurData = new FormData();
+          imgurData.append("image", place_picture);
+          $.ajax({
+            url: "https://api.imgur.com/3/image",
+            type: "POST",
+            datatype: "json",
+            headers: {
+              "Authorization": "Client-ID a8350698449bb9a"
+            },
+            data: imgurData,
+            success: function(response) {
+              //console.log(response);
+              var photo = response.data.link;
+              var photo_hash = response.data.deletehash;
+              console.log(photo);
+              console.log(typeof(photo));
+
+              form_data.append('pic', photo);
+
+              var ajax_url = '/add_place_no_upload.json';
+                $.ajax({
+                    url: ajax_url,
+                    data: form_data,
+                    type: 'POST',
+                    // THIS MUST BE DONE FOR FILE UPLOADING
+                    contentType: false,
+                    processData: false,
+                    // ... Other options like success and etc
+                    success: function(results){
+
+                        location.reload();
+                    }
+                });
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+          });
+        }
 
         // for deployment switch it to a url link
-        if ($('#place-pic-link').val()){
-            form_data.append("img_link", encode_utf8($('#place-pic-link').val()));
-        }
+        // if ($('#place-pic-link').val()){
+        //     form_data.append("img_link", encode_utf8($('#place-pic-link').val()));
+        // }
         
         
 
@@ -40,27 +101,14 @@ function addPlaceToDB(evt) {
             this.reset();
         });
 
-        var dayDiv = '#day-'+day_info[0];
-        var place_id;
+        // var dayDiv = '#day-'+day_info[0];
+        // var place_id;
 
         // url for file upload
         // var ajax_url = '/add_place.json';
 
         // url for image link
-        var ajax_url = '/add_place_no_upload.json';
-        $.ajax({
-            url: ajax_url,
-            data: form_data,
-            type: 'POST',
-            // THIS MUST BE DONE FOR FILE UPLOADING
-            contentType: false,
-            processData: false,
-            // ... Other options like success and etc
-            success: function(results){
-
-                location.reload();
-            }
-        });
+        
     }
     else {
         console.log('needs a valid place');
