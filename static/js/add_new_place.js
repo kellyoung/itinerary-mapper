@@ -89,6 +89,22 @@ function addPlaceToDB(evt) {
             processData: false
           });
         }
+        else{
+            var ajax_url = '/add_place_no_upload.json';
+                $.ajax({
+                    url: ajax_url,
+                    data: form_data,
+                    type: 'POST',
+                    // THIS MUST BE DONE FOR FILE UPLOADING
+                    contentType: false,
+                    processData: false,
+                    // ... Other options like success and etc
+                    success: function(results){
+
+                        location.reload();
+                    }
+                });
+        }
 
         // for deployment switch it to a url link
         // if ($('#place-pic-link').val()){
@@ -101,13 +117,9 @@ function addPlaceToDB(evt) {
             this.reset();
         });
 
-        // var dayDiv = '#day-'+day_info[0];
-        // var place_id;
-
         // url for file upload
         // var ajax_url = '/add_place.json';
 
-        // url for image link
         
     }
     else {
