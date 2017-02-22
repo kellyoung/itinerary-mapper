@@ -132,7 +132,7 @@ def example_data():
                     end_date=datetime.date(2016, 7, 6), general_loc='Portland, Oregon',
                     latitude=45.523062, longitude=-122.676482,
                     viewport='{"south":45.432393,"west":-122.83699519999999,"north":45.6524799,"east":-122.4718489}',
-                    published=True, username='lizlemon', price_range=2)
+                    published=True, username='lizlemon')
 
     # example categories
     eat = PlaceCategory(cat_id='eat')
@@ -145,21 +145,21 @@ def example_data():
                           place_loc="Portland Saturday Market, Southwest Naito Parkway, Portland, OR",
                           latitude=45.522630, longitude=-122.670025, day_num=1,
                           date=datetime.date(2016, 7, 5), trip_id=1, cat_id='explore',
-                          notes='nice place to have lunch.', pic_file='explore.png')
+                          notes='nice place to have lunch.', pic_file='/uploads/explore.png')
     pdx_place_two = Place(place_name='Blue Star Donuts',
                           place_loc="Blue Star Donuts, Southwest Washington Street, Portland, OR",
                           latitude=45.520690, longitude=-122.678911, day_num=1,
-                          date=datetime.date(2016, 7, 5), trip_id=1, cat_id='eat', pic_file='eat.png')
+                          date=datetime.date(2016, 7, 5), trip_id=1, cat_id='eat', pic_file='/uploads/eat.png')
     pdx_place_three = Place(place_name='Ace Hotel',
                             place_loc="Ace Hotel Portland, Southwest Stark Street, Portland, OR",
                             latitude=45.521089, longitude=-122.677568, day_num=1,
                             date=datetime.date(2016, 7, 5), trip_id=1, cat_id='sleep',
-                            notes='nice hotel', pic_file='sleep.png')
+                            notes='nice hotel', pic_file='/uploads/sleep.png')
     pdx_place_four = Place(place_name='Oregon Historical Society',
                            place_loc="Oregon Historical Society, Southwest Park Avenue, Portland, OR",
                            latitude=45.515738, longitude=-122.683275, day_num=2,
                            date=datetime.date(2016, 7, 6), trip_id=1,
-                           cat_id='explore', pic_file='explore.png')
+                           cat_id='explore', pic_file='/uploads/explore.png')
 
     db.session.add_all([liz, portland, eat, sleep, explore, transport,
                         pdx_place_one, pdx_place_two, pdx_place_three,

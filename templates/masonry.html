@@ -46,6 +46,7 @@
 
 {% block content %}
 <div class="masonry">
+
 {% for day in trip_dates %}
   {% for place in trip.places %}
       {% if place.day_num == day[0] %}

@@ -1,13 +1,28 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
 {% block style %}
+ <meta property="og:url"           content="http://localhost:5000/{{user.username}}/{{trip.trip_id}}/mapview" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="JourneyTeller" />
+<meta property="og:description"   content="{{trip.trip_name}} by {{user.name}}" />
+<meta property="og:image"         content="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Grosser_Panda.JPG/500px-Grosser_Panda.JPG" />
 <script src="/static/js/map_view.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></script>
+<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 
 <link rel="stylesheet" href="/static/css/map_view.css">
 {% endblock %}
 {% block navbar %}
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1200587173334573";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <nav class="navbar navbar-default navbar-fixed-top">
     <div id= "homenavbar"class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -25,6 +40,12 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
       <div class="collapse navbar-collapse" id="homenavbarcollapse">
 
         <ul class="nav navbar-nav navbar-right">
+            <!-- <li>
+              <a data-pin-do="buttonPin" data-pin-round="true" data-pin-save="false" href="https://www.pinterest.com/pin/create/button/?url=http://localhost:5000/kelly/7/mapview"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png" /></a>
+            </li> -->
+            <!-- <li>
+              <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+            </li> -->
             <li><a href="/">about</a></li>
             <li><a href="/{{user.username}}/{{ trip.trip_id}}/collageview">collage view</a></li>
         {% if username %}
@@ -38,6 +59,7 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
   {% endblock %}
 
 {% block content %}
+
 
     <input type='hidden' id='map-trip_id' value='{{ trip.trip_id }}'>
     <div id="mySidenav" class="sidenav text-center">

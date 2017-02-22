@@ -3,7 +3,7 @@ import unittest
 import datetime
 
 from server import app
-from model import db, example_data, connect_to_db, User, Trip, Place, Category
+from model import db, example_data, connect_to_db, User, Trip, Place, PlaceCategory
 
 import json
 
@@ -97,7 +97,7 @@ class ItineraryDatabaseTests(unittest.TestCase):
         trip_repr = Trip.query.get(1).__repr__()
         assert ("<Trip trip_id=1 trip_name=A Weekend in Portland>" == trip_repr)
 
-        cat_repr = Category.query.get('eat').__repr__()
+        cat_repr = PlaceCategory.query.get('eat').__repr__()
         assert ("<Category cat_id=eat>" == cat_repr)
 
         place_repr = Place.query.get(1).__repr__()
@@ -154,7 +154,7 @@ class ItineraryInSessionTests(unittest.TestCase):
     def test_logout(self):
         """Test if logout works"""
         result = self.client.get("/logout", follow_redirects=True)
-        self.assertIn('Logged out of', result.data)
+        self.assertIn('log in', result.data)
 
     def test_map_view_page(self):
         """Test Map View if user in session"""
