@@ -89,6 +89,18 @@ input[type=submit] {
   background-color: #fa8072;
 }
 
+input#edit-place-pic-file {
+  margin: auto;
+  /*text-align: center;*/
+  width: 185px;
+}
+
+input#place-pic-file {
+  margin: auto;
+  /*text-align: center;*/
+  width: 185px;
+}
+
 #edit-place-btn {
   background-color: gray;
   border: #63a39d;
