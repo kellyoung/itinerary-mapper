@@ -128,56 +128,124 @@ function sendEditInfo(evt){
     form_data.append("notes", encode_utf8($('#edit-tripnotes').val()));
 
     // if there is a file upload
-    // var edit_place_picture = $('#edit-place-pic-file')[0].files[0];
+    var edit_place_picture = $('#edit-place-pic-file')[0].files[0];
     // console.log(edit_place_picture);
 
-    // if(edit_place_picture){
-    //     form_data.append('pic', edit_place_picture);
-    // }
+    if(edit_place_picture){
+        // form_data.append('pic', edit_place_picture);
+        var imgurData = new FormData();
+          imgurData.append("image", edit_place_picture);
+          $.ajax({
+            url: "https://api.imgur.com/3/image",
+            type: "POST",
+            datatype: "json",
+            headers: {
+              "Authorization": "Client-ID a8350698449bb9a"
+            },
+            data: imgurData,
+            success: function(response) {
+              //console.log(response);
+              var photo = response.data.link;
+              var photo_hash = response.data.deletehash;
+              console.log(photo);
+              console.log(typeof(photo));
 
-    // if there is an image url
-    if ($('#edit-place-pic-link').val()){
-        form_data.append("img_url", encode_utf8($('#edit-place-pic-link').val()));
-    }
+              form_data.append('pic', photo);
 
-    var delete_pic = $('#delete-file').is(":checked");
+              var delete_pic = $('#delete-file').is(":checked");
 
-    if(delete_pic){
-        form_data.append('delete', 'yes');
+                if(delete_pic){
+                    form_data.append('delete', 'yes');
+                }
+                else{
+                    form_data.append('delete', 'no');
+                }
+
+
+                //check to see if there was a new place (editPlace), if there is pass in lat and long
+                if (editPlace) {
+                    form_data.append("latitude", editPlace.geometry.location.lat());
+                    form_data.append("longitude", editPlace.geometry.location.lng());
+                }
+
+                editPlace = '';
+
+                // if using file upload
+                // var editURL = '/edit_place.json';
+
+                // if using image url
+                var editURL = '/edit_place_no_file.json';
+
+
+                $.ajax({
+                    url: editURL,
+                    data: form_data,
+                    type: 'POST',
+                    // THIS MUST BE DONE FOR FILE UPLOADING
+                    contentType: false,
+                    processData: false,
+                    // ... Other options like success and etc
+                    success: function(results){
+                        console.log(results.status);
+                        location.reload();
+                    }
+                });
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+          });
+          
+                    
     }
     else{
-        form_data.append('delete', 'no');
-    }
+        var delete_pic = $('#delete-file').is(":checked");
 
-
-    //check to see if there was a new place (editPlace), if there is pass in lat and long
-    if (editPlace) {
-        form_data.append("latitude", editPlace.geometry.location.lat());
-        form_data.append("longitude", editPlace.geometry.location.lng());
-    }
-
-    editPlace = '';
-
-    // if using file upload
-    // var editURL = '/edit_place.json';
-
-    // if using image url
-    var editURL = '/edit_place_no_file.json';
-
-
-    $.ajax({
-        url: editURL,
-        data: form_data,
-        type: 'POST',
-        // THIS MUST BE DONE FOR FILE UPLOADING
-        contentType: false,
-        processData: false,
-        // ... Other options like success and etc
-        success: function(results){
-            console.log(results.status);
-            location.reload();
+        if(delete_pic){
+            form_data.append('delete', 'yes');
         }
-    });
+        else{
+            form_data.append('delete', 'no');
+        }
+
+
+        //check to see if there was a new place (editPlace), if there is pass in lat and long
+        if (editPlace) {
+            form_data.append("latitude", editPlace.geometry.location.lat());
+            form_data.append("longitude", editPlace.geometry.location.lng());
+        }
+
+        editPlace = '';
+
+        // if using file upload
+        // var editURL = '/edit_place.json';
+
+        // if using image url
+        var editURL = '/edit_place_no_file.json';
+
+
+        $.ajax({
+            url: editURL,
+            data: form_data,
+            type: 'POST',
+            // THIS MUST BE DONE FOR FILE UPLOADING
+            contentType: false,
+            processData: false,
+            // ... Other options like success and etc
+            success: function(results){
+                console.log(results.status);
+                location.reload();
+            }
+        });
+        }
+
+        // if there is an image url
+        // if ($('#edit-place-pic-link').val()){
+        //     form_data.append("img_url", encode_utf8($('#edit-place-pic-link').val()));
+        // }
+
+        
 }
 
 

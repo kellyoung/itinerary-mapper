@@ -4,28 +4,6 @@
 //add a place
 var add_place_params;
 
-function postToImgur() {
-  var formData = new FormData();
-  formData.append("image", $("[name='uploads[]']")[0].files[0]);
-  $.ajax({
-    url: "https://api.imgur.com/3/image",
-    type: "POST",
-    datatype: "json",
-    headers: {
-      "Authorization": "Client-ID a8350698449bb9a"
-    },
-    data: formData,
-    success: function(response) {
-      //console.log(response);
-      var photo = response.data.link;
-      var photo_hash = response.data.deletehash;
-    },
-    cache: false,
-    contentType: false,
-    processData: false
-  });
-}
-
 function addPlaceToDB(evt) {
     evt.preventDefault();
 

@@ -513,7 +513,7 @@ def edit_place_no_file():
     longitude = request.form.get('longitude')
     delete_pic = request.form.get('delete')
 
-    img_url = request.form.get('img_url')
+    img_url = request.form.get('pic')
 
     place_to_edit = Place.query.get(int(place_id))
 
