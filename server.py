@@ -10,7 +10,7 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify, url_for, send_from_directory)
 
-from werkzeug import secure_filename
+# from werkzeug import secure_filename
 
 from model import User, Trip, Place, PlaceCategory, connect_to_db, db
 
@@ -21,13 +21,11 @@ app = Flask(__name__)
 
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
-app.config['UPLOAD_FOLDER'] = 'uploads/'
-app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
+# app.config['UPLOAD_FOLDER'] = 'uploads/'
+# app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
-
-
 
 
 def allowed_file(filename):
@@ -65,7 +63,12 @@ def index():
 
     return render_template('homepage.html',
                            username=username)
-    # return render_template('portfolio_20160719.html')
+
+
+@app.route('/about')
+def show_about():
+    return render_template('about.html')
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -422,80 +425,80 @@ def delete_place():
     return jsonify({'status': 'Deleted'})
 
 
-@app.route('/edit_place.json', methods=['POST'])
-def edit_place():
-    """Takes input from the edit form and decides how to update database"""
+# @app.route('/edit_place.json', methods=['POST'])
+# def edit_place():
+#     """Takes input from the edit form and decides how to update database"""
 
-    place_id = request.form.get('place_id')
-    place_name = request.form.get('place_name')
-    place_search = request.form.get('place_search')
-    visit_day = request.form.get('visit_day')
-    day_num, date = visit_day.split(',')
-    category = request.form.get('category')
-    notes = request.form.get('notes')
-    latitude = request.form.get('latitude')
-    longitude = request.form.get('longitude')
-    delete_pic = request.form.get('delete')
+#     place_id = request.form.get('place_id')
+#     place_name = request.form.get('place_name')
+#     place_search = request.form.get('place_search')
+#     visit_day = request.form.get('visit_day')
+#     day_num, date = visit_day.split(',')
+#     category = request.form.get('category')
+#     notes = request.form.get('notes')
+#     latitude = request.form.get('latitude')
+#     longitude = request.form.get('longitude')
+#     delete_pic = request.form.get('delete')
 
-    place_to_edit = Place.query.get(int(place_id))
+#     place_to_edit = Place.query.get(int(place_id))
 
-    keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
+#     keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
 
-    # handles what to do in terms of picture updates
-    if 'pic' in request.files:
-        # if someone uploads a new picture
-        pic_file = request.files['pic']
+#     # handles what to do in terms of picture updates
+#     if 'pic' in request.files:
+#         # if someone uploads a new picture
+#         pic_file = request.files['pic']
 
-        # if its an allowed file
-        if allowed_file(pic_file.filename):
-            # replace the picture for that file if its not a default pic
-            if place_to_edit.pic_file not in keep_files:
-                # first remove old picture
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
-                                       place_to_edit.pic_file))
+#         # if its an allowed file
+#         if allowed_file(pic_file.filename):
+#             # replace the picture for that file if its not a default pic
+#             if place_to_edit.pic_file not in keep_files:
+#                 # first remove old picture
+#                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
+#                                        place_to_edit.pic_file))
 
-            extension = pic_file.filename.rsplit('.', 1)[1]
-            filename = secure_filename('%s.%s' % (place_to_edit.place_id,
-                                       extension))
-            pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # update in database
-            place_to_edit.pic_file = filename
+#             extension = pic_file.filename.rsplit('.', 1)[1]
+#             filename = secure_filename('%s.%s' % (place_to_edit.place_id,
+#                                        extension))
+#             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#             # update in database
+#             place_to_edit.pic_file = filename
 
-    elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
-        # make sure to only delete a picture if it isn't a default one.
-        os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
-                               place_to_edit.pic_file))
-        place_to_edit.pic_file = '%s.png' % category
+#     elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
+#         # make sure to only delete a picture if it isn't a default one.
+#         os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
+#                                place_to_edit.pic_file))
+#         place_to_edit.pic_file = '%s.png' % category
 
-    # below is checking what information was changed and needs to be updated.
-    if place_name != place_to_edit.place_name:
-        place_to_edit.place_name = place_name
+#     # below is checking what information was changed and needs to be updated.
+#     if place_name != place_to_edit.place_name:
+#         place_to_edit.place_name = place_name
 
-    if place_search != place_to_edit.place_loc and place_search:
-        place_to_edit.place_loc = place_search
+#     if place_search != place_to_edit.place_loc and place_search:
+#         place_to_edit.place_loc = place_search
 
-    if int(day_num) != place_to_edit.day_num:
-        place_to_edit.day_num = int(day_num)
+#     if int(day_num) != place_to_edit.day_num:
+#         place_to_edit.day_num = int(day_num)
 
-    if date != place_to_edit.date.strftime("%Y-%m-%d"):
-        place_to_edit.date = date
+#     if date != place_to_edit.date.strftime("%Y-%m-%d"):
+#         place_to_edit.date = date
 
-    if category != place_to_edit.cat_id:
-        place_to_edit.cat_id = category
-        # updating the category also updates pic if using a default pic
-        if place_to_edit.pic_file in keep_files:
-            place_to_edit.pic_file = '%s.png' % category
+#     if category != place_to_edit.cat_id:
+#         place_to_edit.cat_id = category
+#         # updating the category also updates pic if using a default pic
+#         if place_to_edit.pic_file in keep_files:
+#             place_to_edit.pic_file = '%s.png' % category
 
-    if notes != place_to_edit.notes:
-        place_to_edit.notes = notes
+    # if notes != place_to_edit.notes:
+    #     place_to_edit.notes = notes
 
-    if latitude or longitude:
-        place_to_edit.latitude = latitude
-        place_to_edit.longitude = longitude
+    # if latitude or longitude:
+    #     place_to_edit.latitude = latitude
+    #     place_to_edit.longitude = longitude
 
-    db.session.commit()
+    # db.session.commit()
 
-    return jsonify({'status': 'Edited'})
+    # return jsonify({'status': 'Edited'})
 
 
 @app.route('/edit_place_no_file.json', methods=['POST'])
