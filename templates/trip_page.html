@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}{{ trip.trip_name }}{% endblock %}
 {% block style %}
-
-<!-- <link rel="stylesheet" href="/static/css/add_trip_map.css"> -->
 <meta name="pinterest" content="nopin" />
 <link rel="stylesheet" href="/static/css/trip_page.css">
-
 {% endblock %}
 {% block navbar %}
     <nav class="navbar navbar-default navbar-fixed-top">
     <div id= "homenavbar"class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" id="collapse-btn" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#homenavbarcollapse" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
@@ -20,7 +16,6 @@
         </button>
         <a class="navbar-brand" href="/">journeyteller <i class="fa fa-compass"></i></a>
       </div>
-
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="homenavbarcollapse">
 
@@ -34,7 +29,8 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  {% endblock %}
+{% endblock %}
+
 {% block content %}
  <div class="container">
     
@@ -48,7 +44,7 @@
     <div class="row" id="trip-btn-row">
         <div class="col-xs-12 text-left" id="trip-btn-col">
             <button type="button" class="btn btn-primary" id="add-btn" data-toggle="modal" data-target="#addModal">
-              <i class="fa fa-plus"></i> &nbsp; ADD PLACE
+                <i class="fa fa-plus"></i> &nbsp; ADD PLACE
             </button>
             <button type="button" class="btn btn-primary" id='publish-btn'>
             {% if trip.published %}
@@ -63,6 +59,7 @@
             <br><br>
         </div>
     </div>
+
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -110,9 +107,6 @@
                     <label for='file'>Upload Picture (jpeg, jpg, JPG, png, PNG): </label>
                     <input type="file" name="file" id="place-pic-file"><br>
 
-                    <!-- <label for='img-link'>Image URL: </label><br> -->
-                    <!-- <input type="text" name="img-link" id="place-pic-link"><br> -->
-
                     <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
                 </div>
                 </form>
@@ -122,9 +116,6 @@
             </div>
           </div>
         </div>
-
-
-
     
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">

@@ -3,13 +3,6 @@
 {% block style %}
 
 <link rel="stylesheet" href="/static/css/masonry_view.css">
-<style type="text/css">
-    #imagelist a {position: relative;display: inline-block;}
-    #imagelist a p{display: none;}
-    #imagelist a:hover p{position: absolute;width: 100%;height: 100%;background: #000;opacity: 0.8;top: 0;left: 0;margin: 0;display: block;}
-    #imagelist a p span{display: inline-table;width: 100%;height: 100%;text-align: center;color:#fff;}
-    #imagelist a p span span{display: table-cell;vertical-align: middle;}
-</style>
 <!--[if lte IE 9]>
 <script src="masonry.pkgd.min.js"></script>
 <![endif]-->
@@ -74,15 +67,10 @@
       {% endif %}
 
 
-{% endfor %}
+  {% endfor %}
 {% endfor %}
 
 
 </div>
-
-{% endblock %}
-
-{% block scripts %}
-
 
 {% endblock %}

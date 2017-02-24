@@ -6,7 +6,6 @@
 {% block navbar %}
     <nav class="navbar navbar-default navbar-fixed-top">
     <div id= "homenavbar"class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" id="collapse-btn" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#homenavbarcollapse" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
@@ -28,6 +27,7 @@
     </div><!-- /.container-fluid -->
   </nav>
   {% endblock %}
+
 {% block content %}
 <div class="modal fade" id="createTripModal" tabindex="-1" role="dialog" aria-labelledby="createTripModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -59,7 +59,6 @@
     <div class="row">
       <div class="col-xs-12  text-left">
         <h2 id="title">{{ user.name|title }}'s Trips</h2>
-        <!-- <h5 id="author"></h5> -->
         <a class="modal-open" id="open-create-trip" data-toggle="modal" data-target="#createTripModal">
                + ADD NEW TRIP
             </a>
@@ -73,8 +72,11 @@
               <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 trip-square">
                 <div class="square-text">
                   <h4 class='utf-8 trip-name'>{{ trip.trip_name }}</h4>
-                  <p class='trip-date'>{{trip.start_date.strftime("%B %d, %Y")}} to <br>{{trip.end_date.strftime("%B %d, %Y")}}</p>
-                   <h4 class="trip-loc">{{ trip.general_loc}}</h4>
+                  <p class='trip-date'>
+                    {{trip.start_date.strftime("%B %d, %Y")}} to <br>
+                    {{trip.end_date.strftime("%B %d, %Y")}}
+                  </p>
+                  <h4 class="trip-loc">{{ trip.general_loc}}</h4>
                 </div>
               </div>
             </a>
@@ -87,6 +89,7 @@
 
 {% block scripts %}
 <script>
+  // date picker script
   $( function() {
     var dateFormat = "mm/dd/yy",
       from = $( "#from" )
