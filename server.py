@@ -22,25 +22,23 @@ app = Flask(__name__)
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
-# app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
 
-# def allowed_file(filename):
-#     """check if file is a valid name
-#     >>> allowed_file('dog.png')
-#     True
+def allowed_file(filename):
+    """check if file is a valid name
+    >>> allowed_file('dog.png')
+    True
 
-#     >>> allowed_file('dog.gif')
-#     False
-#     """
-#     print '.' in filename and \
-#            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    >>> allowed_file('dog.gif')
+    False
+    """
 
-#     return '.' in filename and \
-#            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route('/uploads/<filename>')
@@ -258,97 +256,8 @@ def trip_loc_info():
                     'viewport': viewport})
 
 
-# @app.route('/add_place.json', methods=['POST'])
-# def add_place():
-#     """
-#     Takes info from front end and adds to trips database, returns a json
-#     with information to be added to the front end.
-#     """
-
-#     place_name = request.form.get('placename')
-#     place_loc = request.form.get('placesearch')
-#     latitude = request.form.get('latitude')
-#     longitude = request.form.get('longitude')
-#     day_num = int(request.form.get('daynum'))
-#     date = request.form.get('visitday')
-#     trip_id = int(request.form.get('trip_id'))
-#     cat_id = request.form.get('category')
-#     notes = request.form.get('notes')
-
-#     print '############'
-#     print type(place_name)
-#     print type(place_loc)
-
-#     new_place = Place(place_name=place_name, place_loc=place_loc,
-#                       latitude=latitude, longitude=longitude, day_num=day_num,
-#                       date=date, trip_id=trip_id, cat_id=cat_id, notes=notes)
-
-#     db.session.add(new_place)
-#     db.session.commit()
-
-#     # handle pictures
-#     if 'pic' in request.files:
-#         print 'GET PICTURE HERE'
-#         pic_file = request.files['pic']
-#         if allowed_file(pic_file.filename):
-#             # convert the filename to the place_id its associated with
-#             extension = pic_file.filename.rsplit('.', 1)[1]
-#             filename = secure_filename('%s.%s' % (new_place.place_id,
-#                                                   extension))
-#             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-#             #  add filename to database
-#             new_place.pic_file = url_for('uploaded_file', filename=filename)
-#     else:
-#         # go to the else and add a default pic into the database if nothing
-#         # need to find out what category it's in
-#         filename = cat_id + '.png'
-#         new_place.pic_file = url_for('uploaded_file', filename=filename)
-
-#     db.session.commit()
-#     # img_url = new_place.pic_file
-#     # div that will be added dynamically to page for new place added
-#     # if cat_id == 'eat':
-#     #     icon = 'cutlery'
-#     # elif cat_id == 'sleep':
-#     #     icon = 'bed'
-#     # elif cat_id == 'explore':
-#     #     icon = 'globe'
-#     # elif cat_id == 'transport':
-#     #     icon = 'paper-plane'
-
-#     # new_place_div_test = """
-#     #                 <div id='place-div-%s'class='col-lg-3 col-md-4 col-xs-6 place-div'>
-#     #                     <div class='place-content'>
-
-#     #                     <div class='place-img-div'>
-#     #                         <img src='%s' alt='%s picture' class='place-img'>
-#     #                     </div>
-
-#     #                     <div class='place-text'>
-#     #                         <p class='place-text-name text-%s'>
-#     #                             %s
-#     #                             <i class="fa fa-%s"></i>
-#     #                         <p class='utf-8 place-address'>%s</p>
-#     #                     </div>
-#     #                     <button type="button" id="newly-added" class="edit-btn"
-#     #                     data-toggle="modal" data-target="#editModal">
-#     #                       Edit Place
-#     #                     </button>
-#     #                     </div>
-#     #                 </div>
-#     #                 """ % (new_place.place_id, img_url, place_name,
-#     #                        cat_id, place_name, icon, place_loc)
-
-#     # return jsonify({'place_id': new_place.place_id,
-#     #                 'new_place_div': new_place_div_test,
-#     #                 'place_loc': new_place.place_loc})
- 
-#     return jsonify({'success': 'success'})
-
-
-@app.route('/add_place_no_upload.json', methods=['POST'])
-def add_place_no_upload():
+@app.route('/add_place.json', methods=['POST'])
+def add_place():
     """
     Takes info from front end and adds to trips database, returns a json
     with information to be added to the front end.
@@ -374,7 +283,7 @@ def add_place_no_upload():
     db.session.commit()
 
     # handle pictures
-    if img_link:
+    if img_link and allowed_file(img_link):
         print 'GET PICTURE HERE'
         filename = img_link
     else:
@@ -425,84 +334,9 @@ def delete_place():
     return jsonify({'status': 'Deleted'})
 
 
-# @app.route('/edit_place.json', methods=['POST'])
-# def edit_place():
-#     """Takes input from the edit form and decides how to update database"""
 
-#     place_id = request.form.get('place_id')
-#     place_name = request.form.get('place_name')
-#     place_search = request.form.get('place_search')
-#     visit_day = request.form.get('visit_day')
-#     day_num, date = visit_day.split(',')
-#     category = request.form.get('category')
-#     notes = request.form.get('notes')
-#     latitude = request.form.get('latitude')
-#     longitude = request.form.get('longitude')
-#     delete_pic = request.form.get('delete')
-
-#     place_to_edit = Place.query.get(int(place_id))
-
-#     keep_files = ['explore.png', 'eat.png', 'sleep.png', 'transport.png']
-
-#     # handles what to do in terms of picture updates
-#     if 'pic' in request.files:
-#         # if someone uploads a new picture
-#         pic_file = request.files['pic']
-
-#         # if its an allowed file
-#         if allowed_file(pic_file.filename):
-#             # replace the picture for that file if its not a default pic
-#             if place_to_edit.pic_file not in keep_files:
-#                 # first remove old picture
-#                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
-#                                        place_to_edit.pic_file))
-
-#             extension = pic_file.filename.rsplit('.', 1)[1]
-#             filename = secure_filename('%s.%s' % (place_to_edit.place_id,
-#                                        extension))
-#             pic_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#             # update in database
-#             place_to_edit.pic_file = filename
-
-#     elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
-#         # make sure to only delete a picture if it isn't a default one.
-#         os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
-#                                place_to_edit.pic_file))
-#         place_to_edit.pic_file = '%s.png' % category
-
-#     # below is checking what information was changed and needs to be updated.
-#     if place_name != place_to_edit.place_name:
-#         place_to_edit.place_name = place_name
-
-#     if place_search != place_to_edit.place_loc and place_search:
-#         place_to_edit.place_loc = place_search
-
-#     if int(day_num) != place_to_edit.day_num:
-#         place_to_edit.day_num = int(day_num)
-
-#     if date != place_to_edit.date.strftime("%Y-%m-%d"):
-#         place_to_edit.date = date
-
-#     if category != place_to_edit.cat_id:
-#         place_to_edit.cat_id = category
-#         # updating the category also updates pic if using a default pic
-#         if place_to_edit.pic_file in keep_files:
-#             place_to_edit.pic_file = '%s.png' % category
-
-    # if notes != place_to_edit.notes:
-    #     place_to_edit.notes = notes
-
-    # if latitude or longitude:
-    #     place_to_edit.latitude = latitude
-    #     place_to_edit.longitude = longitude
-
-    # db.session.commit()
-
-    # return jsonify({'status': 'Edited'})
-
-
-@app.route('/edit_place_no_file.json', methods=['POST'])
-def edit_place_no_file():
+@app.route('/edit_place.json', methods=['POST'])
+def edit_place():
     """Takes input from the edit form and decides how to update database"""
 
     place_id = request.form.get('place_id')
@@ -523,8 +357,7 @@ def edit_place_no_file():
     keep_files = ['/uploads/explore.png', '/uploads/eat.png',
                   '/uploads/sleep.png', '/uploads/transport.png']
 
-    if img_url:
-        print 'GET PICTURE HERE'
+    if img_url and allowed_file(img_url):
         filename = img_url
         place_to_edit.pic_file = filename
     elif delete_pic == 'yes' and place_to_edit.pic_file not in keep_files:
@@ -559,6 +392,7 @@ def edit_place_no_file():
     db.session.commit()
 
     return jsonify({'status': 'Edited'})
+
 
 @app.route('/publish_trip.json', methods=['POST'])
 def publish_trip():

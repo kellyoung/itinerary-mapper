@@ -174,7 +174,7 @@ function sendEditInfo(evt){
                 // var editURL = '/edit_place.json';
 
                 // if using image url
-                var editURL = '/edit_place_no_file.json';
+                var editURL = '/edit_place.json';
 
 
                 $.ajax({
@@ -222,7 +222,7 @@ function sendEditInfo(evt){
         // var editURL = '/edit_place.json';
 
         // if using image url
-        var editURL = '/edit_place_no_file.json';
+        var editURL = '/edit_place.json';
 
 
         $.ajax({

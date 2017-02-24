@@ -46,7 +46,7 @@ function addPlaceToDB(evt) {
 
               form_data.append('pic', photo);
 
-              var ajax_url = '/add_place_no_upload.json';
+              var ajax_url = '/add_place.json';
                 $.ajax({
                     url: ajax_url,
                     data: form_data,
@@ -68,7 +68,7 @@ function addPlaceToDB(evt) {
           });
         }
         else{
-            var ajax_url = '/add_place_no_upload.json';
+            var ajax_url = '/add_place.json';
                 $.ajax({
                     url: ajax_url,
                     data: form_data,
