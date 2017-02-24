@@ -108,6 +108,7 @@
                     <input type="file" name="file" id="place-pic-file"><br>
 
                     <input id="add-place" type='submit' value='+ ADD NEW PLACE'><br>
+                    <div id="loadingAdd"><img src="/uploads/ajax-loader.gif"/></div>
                 </div>
                 </form>
                 
@@ -165,11 +166,12 @@
             
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id='delete-place-btn' value="Delete Place">
-                Delete Place
-            </button>
+            <span id="loadingEdit"><img src="/uploads/ajax-loader.gif"/></span>
             <button type="submit" class="btn btn-primary" form="edit-place-form" value="Edit Place" id='edit-place-btn'>
                 EDIT PLACE
+            </button>
+            <button type="button" class="btn btn-danger" id='delete-place-btn' value="Delete Place">
+                Delete Place
             </button>
           </div>
           

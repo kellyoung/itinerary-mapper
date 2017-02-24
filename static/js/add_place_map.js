@@ -33,12 +33,29 @@ window.tripPageMaps = function(){
       google.maps.event.trigger(addFormMap, "resize");
       addFormMap.setCenter(currentCenter);
       addFormMap.fitBounds(formMapBounds);
+      var $loading = $('#loadingAdd').hide();
+      $(document)
+        .ajaxStart(function () {
+          $loading.show();
+        })
+        .ajaxStop(function () {
+          $loading.hide();
+        });
   });
 
   $("#editModal").on("shown.bs.modal", function () {
       var currentCenter = editMap.getCenter();
       google.maps.event.trigger(editMap, "resize");
       editMap.setCenter(currentCenter);
+      var $loading = $('#loadingEdit').hide();
+      $(document)
+        .ajaxStart(function () {
+          $loading.show();
+        })
+        .ajaxStop(function () {
+          $loading.hide();
+        });
+
   });
 };
 

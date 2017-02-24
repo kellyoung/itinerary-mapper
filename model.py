@@ -88,7 +88,7 @@ class Place(db.Model):
                        db.ForeignKey('categories.cat_id'),
                        nullable=False)
     notes = db.Column(db.UnicodeText, nullable=True)
-    pic_file = db.Column(db.String(256), nullable=True)
+    pic_file = db.Column(db.Text, nullable=True)
     trip = db.relationship('Trip',
                            backref=db.backref('places',
                                               order_by=place_id))
@@ -101,7 +101,6 @@ class Place(db.Model):
                           self.place_name,
                           self.date.strftime("%B %d, %Y"),
                           self.cat_id)
-
 
 
 # create the categories

@@ -21,26 +21,26 @@ app = Flask(__name__)
 
 app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
 
-# app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['UPLOAD_FOLDER'] = 'uploads/'
 # app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
 
-def allowed_file(filename):
-    """check if file is a valid name
-    >>> allowed_file('dog.png')
-    True
+# def allowed_file(filename):
+#     """check if file is a valid name
+#     >>> allowed_file('dog.png')
+#     True
 
-    >>> allowed_file('dog.gif')
-    False
-    """
-    print '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+#     >>> allowed_file('dog.gif')
+#     False
+#     """
+#     print '.' in filename and \
+#            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route('/uploads/<filename>')
