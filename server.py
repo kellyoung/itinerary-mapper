@@ -41,6 +41,30 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
+def create_date_range(start, end):
+    """
+    takes a start date object and an end date object
+    and generates the dates between and returns all
+    of the dates as a list. It's a list of tuple that
+    gives day number, trip_date object, and trip_date
+    as a string.
+
+    >>> create_date_range(datetime.date(2010, 5, 24), datetime.date(2010, 5, 25)) # doctest: +NORMALIZE_WHITESPACE
+    [(1, datetime.date(2010, 5, 24), 'May 24, 2010'),
+    (2, datetime.date(2010, 5, 25), 'May 25, 2010')]
+    """
+    trip_dates = []
+
+    delta = end - start
+
+    for index, i in enumerate(range(delta.days + 1)):
+            trip_date = start + datetime.timedelta(days=i)
+            trip_date_str = trip_date.strftime("%B %d, %Y")
+            trip_dates.append((index+1, trip_date, trip_date_str))
+
+    return trip_dates
+
+
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     """a route to where files are stored to access pictures"""
@@ -148,30 +172,6 @@ def all_trips_page(username):
     else:
         flash('You do not have access to this page.')
         return redirect('/')
-
-
-def create_date_range(start, end):
-    """
-    takes a start date object and an end date object
-    and generates the dates between and returns all
-    of the dates as a list. It's a list of tuple that
-    gives day number, trip_date object, and trip_date
-    as a string.
-
-    >>> create_date_range(datetime.date(2010, 5, 24), datetime.date(2010, 5, 25)) # doctest: +NORMALIZE_WHITESPACE
-    [(1, datetime.date(2010, 5, 24), 'May 24, 2010'),
-    (2, datetime.date(2010, 5, 25), 'May 25, 2010')]
-    """
-    trip_dates = []
-
-    delta = end - start
-
-    for index, i in enumerate(range(delta.days + 1)):
-            trip_date = start + datetime.timedelta(days=i)
-            trip_date_str = trip_date.strftime("%B %d, %Y")
-            trip_dates.append((index+1, trip_date, trip_date_str))
-
-    return trip_dates
 
 
 @app.route('/create_trip/<username>/<trip_id>')
