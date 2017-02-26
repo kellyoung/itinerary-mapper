@@ -3,17 +3,8 @@
 {{ trip.trip_name }}
 
 {% endblock %}
-{% block meta %}
-  <meta property="og:url"           content="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" />
-  <meta property="og:type"          content="website" />
-  <meta property="og:title"         content="JourneyTeller" />
-  <meta property="og:description"   content="{{trip.trip_name}} by {{user.name}}" />
-  <meta property="og:image"         content="{{trip.places[0].pic_file}}" />
-{% endblock %}
+
 {% block style %}
-
-
-<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 <link rel="stylesheet" href="/static/css/map_view.css">
 {% endblock %}
 {% block navbar %}
@@ -45,6 +36,9 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
               <div class="fb-share-button" data-href="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" data-layout="icon" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+            </li>
+            <li>
+              <a data-pin-do="buttonPin" href="https://www.pinterest.com/pin/create/button/?url=http://www.foodiecrush.com/2014/03/filet-mignon-with-porcini-mushroom-compound-butter/&media=https://s-media-cache-ak0.pinimg.com/736x/17/34/8e/17348e163a3212c06e61c41c4b22b87a.jpg&description=So%20delicious!" data-pin-shape="round"></a>
             </li>
             <li><a href="/about">about</a></li>
             <li><a href="/{{user.username}}/{{ trip.trip_id}}/collageview">collage view</a></li>
@@ -99,8 +93,11 @@
 
 {% block scripts %}
 
-<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
-<script>
+<script
+    type="text/javascript"
+    async defer
+    src="//assets.pinterest.com/js/pinit.js"
+></script>
 // sidebar script
 var sideNavState = 'open';
 
