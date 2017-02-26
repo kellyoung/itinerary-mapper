@@ -7,14 +7,7 @@ function decode_utf8(s) {
   return decodeURIComponent(escape(s));
 }
 
-var $loading = $('#loadingDiv').hide();
-$(document)
-  .ajaxStart(function () {
-    $loading.show();
-  })
-  .ajaxStop(function () {
-    $loading.hide();
-  });
+
 
 var placeLocs = [];
 function publishTrip(evt){
