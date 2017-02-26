@@ -3,12 +3,15 @@
 {{ trip.trip_name }}
 
 {% endblock %}
+{% block meta %}
+  <meta property="og:url"           content="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="JourneyTeller" />
+  <meta property="og:description"   content="{{trip.trip_name}} by {{user.name}}" />
+  <meta property="og:image"         content="{{trip.places[0].pic_file}}" />
+{% endblock %}
 {% block style %}
-<meta property="og:url"           content="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" />
-<meta property="og:type"          content="website" />
-<meta property="og:title"         content="JourneyTeller" />
-<meta property="og:description"   content="{{trip.trip_name}} by {{user.name}}" />
-<meta property="og:image"         content="{{trip.places[0].pic_file}}" />
+
 
 <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 <link rel="stylesheet" href="/static/css/map_view.css">
