@@ -6,6 +6,7 @@ from server import app
 from model import db, example_data, connect_to_db, User, Trip, Place, PlaceCategory
 
 import json
+import bcrypt
 
 
 class ItineraryTests(unittest.TestCase):
@@ -18,6 +19,12 @@ class ItineraryTests(unittest.TestCase):
     def test_homepage_no_login(self):
         result = self.client.get("/")
         self.assertIn("CREATE ACCOUNT", result.data)
+        self.assertNotIn("LOGOUT", result.data)
+
+    def test_about_page(self):
+        result = self.client.get("/about")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("About JourneyTeller", result.data)
 
 
 class ItineraryDatabaseTests(unittest.TestCase):
@@ -45,17 +52,24 @@ class ItineraryDatabaseTests(unittest.TestCase):
                                   data={"username": "lizlemon",
                                         "password": "pizza"},
                                   follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
         self.assertIn('Welcome,', result.data)
         self.assertIn('NAME YOUR TRIP:', result.data)
         self.assertIn('All Trips', result.data)
         self.assertNotIn('The username and password do not exist. Try again.', result.data)
+        self.assertNotIn('CREATE AN ACCOUNT', result.data)
 
     def test_failed_login(self):
         result = self.client.post("/login",
                                   data={"username": "leslieknope",
                                         "password": 'pawneepride'},
                                   follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertNotIn('All Trips', result.data)
         self.assertNotIn('Welcome,', result.data)
+        self.assertIn('CREATE AN ACCOUNT', result.data)
         self.assertIn('The username and password do not exist. Try again.', result.data)
 
     def test_no_input_login(self):
@@ -68,6 +82,8 @@ class ItineraryDatabaseTests(unittest.TestCase):
                                   data={"username": "lizlemon",
                                         "password": 'pawneepride'},
                                   follow_redirects=True)
+
+        self.assertEqual(result.status_code, 200)
         self.assertIn('Incorrect Password.', result.data)
 
     def test_success_create_user(self):
@@ -88,6 +104,13 @@ class ItineraryDatabaseTests(unittest.TestCase):
         self.assertNotIn('successfully created. Please log in.', result.data)
         self.assertIn('Please try again.', result.data)
 
+    def test_user(self):
+        """Test a user"""
+        user = User.query.get('lizlemon')
+        self.assertEqual(user.name, 'Elizabeth Lemon')
+        self.assertIsInstance(user.trips, list)
+        self.assertIsInstance(user.trips[0], Trip)
+
     def test_reprs(self):
         """Test the reprs of models"""
 
@@ -102,15 +125,6 @@ class ItineraryDatabaseTests(unittest.TestCase):
 
         place_repr = Place.query.get(1).__repr__()
         assert ("<Place place_id=1 place_name=Saturday Market date=July 05, 2016 cat_id=explore>" == place_repr)
-
-    def test_places_to_map_json(self):
-        """ Test json of places_to_map """
-
-        result = self.client.get('/places_to_map.json',
-                                 query_string={'trip_id': '1'})
-
-        places_json = json.loads(result.data)
-        assert 'Saturday Market' in places_json['1']['title']
 
 
 class ItineraryInSessionTests(unittest.TestCase):
@@ -138,6 +152,13 @@ class ItineraryInSessionTests(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
+    def test_homepage(self):
+        """test what homepage looks like in session"""
+
+        result = self.client.get("/", follow_redirects=True)
+        self.assertNotIn('CREATE AN ACCOUNT', result.data)
+        self.assertIn('All Trips', result.data)
+
     def test_all_trips_page(self):
         """Test All Trips page."""
         result = self.client.get("/lizlemon/trips", follow_redirects=True)
@@ -159,7 +180,18 @@ class ItineraryInSessionTests(unittest.TestCase):
     def test_map_view_page(self):
         """Test Map View if user in session"""
         result = self.client.get("/lizlemon/1/mapview", follow_redirects=True)
+        self.assertEqual(result.status_code, 200)
         self.assertIn('MAP FILTERS:', result.data)
+        self.assertIn('final-map', result.data)
+
+    def test_places_to_map_json(self):
+        """ Test json of places_to_map """
+
+        result = self.client.get('/places_to_map.json',
+                                 query_string={'trip_id': '1'})
+
+        places_json = json.loads(result.data)
+        assert 'Saturday Market' in places_json['1']['title']
 
     def test_create_trip_json(self):
         """ Test create trip json """
@@ -178,6 +210,7 @@ class ItineraryInSessionTests(unittest.TestCase):
 
         trip_json = json.loads(result.data)
         assert 'success' in trip_json['status']
+        assert 'lizlemon' in trip_json['username']
 
     def test_trip_loc_info_json(self):
         """ Test json of trip_loc_info """
@@ -223,9 +256,43 @@ class ItineraryInSessionTests(unittest.TestCase):
         delete_json = json.loads(result.data)
         assert 'success' in delete_json['status']
 
+    def test_add_place_json(self):
+        """Test adding a place"""
+
+        result = self.client.post('/add_place.json',
+                                  data={'placename': 'New Place',
+                                        'placesearch': 'South America',
+                                        'latitude': '22.77777',
+                                        'longitude': '-122.777777',
+                                        'daynum': '3',
+                                        'visitday': datetime.date(2016, 7, 6),
+                                        'trip_id': '1',
+                                        'category': 'eat'})
+
+        add_place_json = json.loads(result.data)
+        assert 'success' in add_place_json['success']
+
+    def test_edit_place_json(self):
+        """Test editing a place"""
+
+        result = self.client.post('/edit_place.json',
+                                  data={'place_id': '1',
+                                        'place_name': 'Edited Place',
+                                        'place_search': 'South America',
+                                        'latitude': '22.77777',
+                                        'longitude': '-122.777777',
+                                        'visit_day': '3,2016-09-08',
+                                        'trip_id': '1',
+                                        'category': 'eat'})
+
+        edit_place_json = json.loads(result.data)
+        assert 'Edited' in edit_place_json['status']
+
+
+
 
 class ItineraryNoSessionTests(unittest.TestCase):
-    """Flask tests with user logged in to session."""
+    """Flask tests with no user logged in to session."""
 
     def setUp(self):
         """Stuff to do before every test."""
@@ -262,8 +329,9 @@ class ItineraryNoSessionTests(unittest.TestCase):
         """Test Map View if user not in session but published"""
         result = self.client.get("/lizlemon/1/mapview")
         self.assertIn('MAP FILTERS:', result.data)
+        self.assertNotIn('CREATE AN ACCOUNT', result.data)
 
-    def test_map_view_page(self):
+    def test_map_view_not_published(self):
         """Test Map View if user not in session and not published"""
         target_trip = Trip.query.get(1)
         target_trip.published = False
