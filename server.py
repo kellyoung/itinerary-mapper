@@ -65,6 +65,11 @@ def create_date_range(start, end):
     return trip_dates
 
 
+@app.route("/error")
+def error():
+    raise Exception("Error!")
+
+
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     """a route to where files are stored to access pictures"""
@@ -556,9 +561,9 @@ def return_all_places():
 
 if __name__ == '__main__':
 
-    app.debug = True
+    DEBUG = "NO_DEBUG" not in os.environ
 
     connect_to_db(app)
     PORT = int(os.environ.get("PORT", 5000))
 
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host="0.0.0.0", port=PORT, debug=DEBUG)
