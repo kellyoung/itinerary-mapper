@@ -168,16 +168,17 @@ def example_data():
     db.session.commit()
 
 
-# Helper functions
-def connect_to_db(app, db_uri='postgresql:///itineraries'):
-    """Connect the database to Flask app"""
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+def connect_to_db(app, db_uri=None):
+    """Connect our application to our database."""
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgres:///itineraries'
     db.app = app
     db.init_app(app)
+    print "Connected to DB."
 
 
 if __name__ == '__main__':
     #can run module interactiviely and work with database directly
+
     from server import app
     connect_to_db(app)
-    print 'Connected to DB.'

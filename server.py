@@ -19,7 +19,7 @@ import datetime
 app = Flask(__name__)
 
 
-app.secret_key = "PX78D1EBTcu3o4v8CK6i1EvtO7N6p3Ow"
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "abcdef")
 
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'JPG', 'PNG'])
@@ -560,10 +560,10 @@ def return_all_places():
 # --------------------------------------------------------------------------- #
 
 if __name__ == '__main__':
+    connect_to_db(app, os.environ.get("DATABASE_URL"))
 
     DEBUG = "NO_DEBUG" not in os.environ
 
-    connect_to_db(app)
     PORT = int(os.environ.get("PORT", 5000))
 
     app.run(host="0.0.0.0", port=PORT, debug=DEBUG)
