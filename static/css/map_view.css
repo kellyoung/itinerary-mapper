@@ -126,9 +126,9 @@ div#final-map {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
 }
 
-.filter {
-    margin-right: 35px;
-}
+/*.filter {
+    margin-right: 0;
+}*/
 
 #copyButton {
     font-weight: bold;
@@ -154,6 +154,7 @@ div#final-map {
   margin-bottom: 2px;
   margin-top: 2px;
   word-wrap: break-word;
+  text-align: left;
 }
 
 #trip-author {
@@ -161,6 +162,7 @@ div#final-map {
     margin-top: 2px;
     margin-bottom: 15px;
     color: #fa8072;
+    text-align: left;
 }
 
 #eat-filter-label {
