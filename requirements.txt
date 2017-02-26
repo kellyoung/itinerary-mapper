@@ -1,12 +1,9 @@
 bcrypt==3.1.1
-beautifulsoup4==4.5.1
 blinker==1.4
 bs4==0.0.1
 cffi==1.9.1
 click==6.6
 coverage==4.2
-Facebook==0.0
-facebook-sdk==2.0.0
 Flask==0.11
 Flask-Bcrypt==0.7.1
 Flask-DebugToolbar==0.10.0
