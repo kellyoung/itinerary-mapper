@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
 {{ trip.trip_name }}
+
+{% endblock %}
+{% block style %}
 <meta property="og:url"           content="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" />
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="JourneyTeller" />
 <meta property="og:description"   content="{{trip.trip_name}} by {{user.name}}" />
 <meta property="og:image"         content="{{trip.places[0].pic_file}}" />
-
-{% endblock %}
-{% block style %}
 <script src="/static/js/map_view.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
 libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></script>
