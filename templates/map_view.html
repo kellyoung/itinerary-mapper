@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}{{ trip.trip_name }}{% endblock %}
+{% block title %}
+{{ trip.trip_name }}
+<meta property="og:url"           content="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="JourneyTeller" />
+<meta property="og:description"   content="{{trip.trip_name by user.name}}" />
+<meta property="og:image"         content="{{trip.places[0].pic_file}}" />
+
+{% endblock %}
 {% block style %}
 <script src="/static/js/map_view.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv88WJq0QSZ8YNl9SUyZRn4zPc0pk9RE0&
@@ -8,6 +16,14 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
 <link rel="stylesheet" href="/static/css/map_view.css">
 {% endblock %}
 {% block navbar %}
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
     <nav class="navbar navbar-default navbar-fixed-top">
     <div id= "homenavbar"class="container-fluid">
@@ -26,6 +42,9 @@ libraries=places&signed_in=true&callback=createFinalMapPlaces" async defer></scr
       <div class="collapse navbar-collapse" id="homenavbarcollapse">
 
         <ul class="nav navbar-nav navbar-right">
+            <li>
+              <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="icon" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+            </li>
             <li><a href="/about">about</a></li>
             <li><a href="/{{user.username}}/{{ trip.trip_id}}/collageview">collage view</a></li>
         {% if username %}
