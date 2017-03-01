@@ -28,7 +28,7 @@ app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
 
 
-def allowed_file(filename):
+def allowed_file(filename): # pragma: no cover
     """check if file is a valid name
     >>> allowed_file('dog.png')
     True
@@ -41,7 +41,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-def create_date_range(start, end):
+def create_date_range(start, end): # pragma: no cover
     """
     takes a start date object and an end date object
     and generates the dates between and returns all
@@ -559,7 +559,7 @@ def return_all_places():
 
 # --------------------------------------------------------------------------- #
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     connect_to_db(app, os.environ.get("DATABASE_URL"))
 
     db.create_all(app=app)

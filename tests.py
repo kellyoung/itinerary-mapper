@@ -6,7 +6,6 @@ from server import app
 from model import db, example_data, connect_to_db, User, Trip, Place, PlaceCategory
 
 import json
-import bcrypt
 
 
 class ItineraryTests(unittest.TestCase):

@@ -104,7 +104,7 @@ class Place(db.Model):
 
 
 # create the categories
-def create_cat_table():
+def create_cat_table(): # pragma: no cover
     """create the table for place categories"""
 
     # example categories
@@ -177,7 +177,7 @@ def connect_to_db(app, db_uri=None):
     print "Connected to DB."
 
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     #can run module interactiviely and work with database directly
 
     from server import app
