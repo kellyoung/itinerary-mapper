@@ -22,10 +22,10 @@ function displayForm(){
         $("#edit-tripnotes").val(decode_utf8(results.notes));
 
         var selectedDate = '#edit-tripday option[value="'+results.day_num+','+results.formatted_date+'"]';
-        $(selectedDate).attr("selected", "selected");
+        $(selectedDate).prop("selected", "selected");
 
         var selectedCategory = '#edit-tripcat option[value="'+results.cat_id+'"]';
-        $(selectedCategory).attr("selected", "selected");
+        $(selectedCategory).prop("selected", "selected");
 
         var icon = {
           url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
