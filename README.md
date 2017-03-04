@@ -19,8 +19,12 @@ __Deployment:__ Heroku<br>
 ## <a name="features"></a>Features
 To begin using the app, the user must log in or create an account. The passwords are hashed with bcrypt before they are stored in the database.
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/homepage.png?raw=true "Homepage Image")
-Once a user creates an account or logs in, they can create a trip. The trip takes in a name, a location, a start date, and
+Once a user creates an account or logs in, they can view all their trips.
+![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/alltrips.png?raw=true "All Trips Page Image")
+They can also create a trip. The trip takes in a name, a location, a start date, and
 an end date. The Google Places API is used to get the geographic bounds of the place selected by the user.
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/createtrip.png?raw=true "Create Trip Image")
 After a trip is created, the user can add places to the trip. The Add Place form's map and location search bar are centered at the location the user entered in the Trip Creation form. This way the Google Places API will recommend places geographically near the user specified location. The user enteres additional information such as a trip name, category, day of the trip, and optional notes and picture upload. If a picture is uploaded, the Imgur API will be called to store the file and provide the link to it.
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/addplace.png?raw=true "Add Place Image")
+The place is added to the trip page where users can see all the places they added. The trip can be made public or private. If made public, people with the link can view the trip's map and collage view.
+![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/trippage.png?raw=true "Trip Page Image")
