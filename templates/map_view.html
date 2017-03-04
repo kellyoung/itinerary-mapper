@@ -85,7 +85,7 @@
               <div class="fb-share-button" data-href="https://journey-teller.herokuapp.com/{{user.username}}/{{trip.trip_id}}/mapview" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
               <br>
               <a data-pin-do="buttonPin" data-pin-save="true" href=
-              "https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fjourney-teller.herokuapp.com%2F{{username}}%2F{{trip.trip_id}}%2Fmapview&media={{ trip.places[0].pic_file}}
+              "https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fjourney-teller.herokuapp.com%2F{{username}}%2F{{trip.trip_id}}%2Fmapview&media={{ picture }}
               &description=JourneyTeller: {{trip.trip_name}}%20 by %20{{user.name}}"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png" /></a>
 
           {% endif %}

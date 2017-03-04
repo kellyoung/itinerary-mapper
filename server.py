@@ -451,11 +451,23 @@ def display_map(username, trip_id):
     trip = Trip.query.get(trip_id)
     username = session.get('username')
 
+    # get a non default picture
+    picture = "https://cdn.pixabay.com/photo/2016/04/20/10/54/sea-1340866_1280.jpg"
+    default_pics = ['/uploads/explore.png', '/uploads/eat.png', '/uploads/sleep.png', '/uploads/transport.png']
+
+    for place in trip.places:
+        if place.pic_file not in default_pics:
+            picture = place.pic_file
+            break
+
+
+
     if username or trip.published:
         return render_template('map_view.html',
                                user=user,
                                trip=trip,
-                               username=username)
+                               username=username,
+                               picture=picture)
     else:
         # if trip is not public yet or it isn't the user visiting.
         flash('Sorry! You don\'t have access to this page.')
