@@ -28,3 +28,9 @@ After a trip is created, the user can add places to the trip. The Add Place form
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/addplace.png?raw=true "Add Place Image")
 The place is added to the trip page where users can see all the places they added. The trip can be made public or private. If made public, people with the link can view the trip's map and collage view.
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/trippage.png?raw=true "Trip Page Image")
+Once a place is added, it can also be edited or deleted. The Edit Place form preopulates the form with the information the user previously entered via an AJAX request to the server.
+![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/editplace.png?raw=true "Edit Place Image")
+The trip can be viewed as a map and as a collage. These pages can be shared with friends and family via Pinterest and Facebook.
+![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/mapview2.png?raw=true "Another Map View Image")
+![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/collageview.png?raw=true "Collage View Image")
+
