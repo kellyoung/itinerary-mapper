@@ -8,9 +8,12 @@ JourneyTeller is an interactive tool where users construct their travel stories 
 
 ## Table of Contents
 * [Technologies](#technologies)
+* [Features](#features)
 
 ## <a name="technologies"></a>Technologies
 __Backend:__ Python, Flask, PostgreSQL, SQLAlchemy<br>
 __Frontend:__ Javascript, jQuery, AJAX, Bootstrap<br>
 __APIs:__ Google Places API, Google Maps JavaScript API, Imgur API<br>
 __Deployment:__ Heroku<br>
+
+## <a name="features"></a>Features
