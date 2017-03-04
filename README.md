@@ -17,3 +17,6 @@ __APIs:__ Google Places API, Google Maps JavaScript API, Imgur API<br>
 __Deployment:__ Heroku<br>
 
 ## <a name="features"></a>Features
+Once a user creates an account or logs in, they can create a trip. The trip takes in a name, a location, a start date, and
+an end date. The Google Places API is used to get the geographic bounds of the place selected by the user.
+![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/createtrip.png?raw=true "Create Trip Image")
