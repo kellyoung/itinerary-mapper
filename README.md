@@ -9,6 +9,7 @@ JourneyTeller is an interactive tool where users construct their travel stories 
 ## Table of Contents
 * [Technologies](#technologies)
 * [Features](#features)
+* [About Me](#aboutme)
 
 ## <a name="technologies"></a>Technologies
 __Backend:__ Python, Flask, PostgreSQL, SQLAlchemy<br>
@@ -34,3 +35,6 @@ The trip can be viewed as a map and as a collage. These pages can be shared with
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/mapview2.png?raw=true "Another Map View Image")
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/collageview.png?raw=true "Collage View Image")
 
+## <a name="aboutme"></a>About Me
+Kelly is a Software Engineer and Hackbright Academy grad. This is her first fullstack application. She especially enjoyed creating a highly interactive application that could handle a lot of user input. She is looking forward to building more projects that connect people and encourage information sharing. <br>
+[LinkedIn](http://www.linkedin.com/in/kellyoung).
