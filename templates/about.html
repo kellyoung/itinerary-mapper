@@ -2,6 +2,27 @@
 {% block title %}About JourneyTeller{% endblock %}
 {% block style %}
 <link rel="stylesheet" href="/static/css/all_trips-v2.css">
+<style>
+@media only screen and (max-width : 600px) {
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 30px; height: 0; overflow: hidden;
+    }
+         
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+</style>
 {% endblock %}
 {% block navbar %}
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -16,7 +37,13 @@
 {% block content %}
 <br><br>
 <div class="row text-center">
-    <h4>Coming soon.</h4>
+    <div class="col-xs-12 text-center">
+    <div class="video-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/2vHBoPWBZIk" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <h4>Github: <a href="https://github.com/kellyoung/itinerary-mapper">https://github.com/kellyoung/itinerary-mapper</a></h4>
+    <h4>Linkedin: <a href="https://www.linkedin.com/in/kellyoung">https://www.linkedin.com/in/kellyoung</a></h4>
+    </div>
 </div>
 
 {% endblock %}
