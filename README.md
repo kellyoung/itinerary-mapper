@@ -1,4 +1,4 @@
-#JourneyTeller
+# JourneyTeller
 
 ![](https://github.com/kellyoung/itinerary-mapper/blob/post-hackbright/readme-pics/mapview.png?raw=true "Map View Image")
 
